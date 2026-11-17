@@ -115,7 +115,7 @@ def make_background(palette):
 def build_caption_chunks(words, max_chars=16):
     chunks, cur = [], []
     for w in words:
-        if w.get("type") != "word":
+        if w.get("type") != "word" or w["text"].startswith("["):
             continue
         txt = w["text"]
         if cur and (sum(len(x["text"]) + 1 for x in cur) + len(txt) > max_chars or len(cur) >= 3):
