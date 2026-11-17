@@ -2,7 +2,7 @@
 
 Canal: curiosidades de todo tipo (animales, historia, cuerpo humano, ingeniería, espacio, ciencia, geografía, tecnología, comida…), en **español de España**.
 Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y programados** a las **17:00 y 20:00 (Europe/Madrid)**. El dueño los revisa antes y borra o edita los que no le gusten.
-(Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_flash_v2_5`, ~270 créditos/vídeo → ~16.000/mes; el resto es margen para repetir voces.)
+(Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de ~420 caracteres → ~420 créditos/vídeo → ~25.000/mes.)
 
 ## 0. Preparar
 1. `add_repo` ch1qu1t1t0tumadre-eng/shorts-curiosidades con access "push", clonarlo en /home/claude/shorts-curiosidades.
@@ -12,12 +12,13 @@ Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y progr
 ## 1. Elegir y escribir los 2 guiones
 - 2 temas de categorías distintas, nada repetido de `temas_usados.md`; alterna las categorías respecto a los últimos días.
 - Verifica cada dato con WebSearch (fuentes fiables). Si un dato no se confirma, cámbialo.
-- Guion: 80–95 palabras (30–40 s). Empieza con un gancho tipo "¿Sabías que…?" con el dato más sorprendente en la primera frase. Frases cortas. Números escritos con letras para la voz ("cuatrocientos kilos"). Termina siempre con "Síguenos para más curiosidades."
+- Guion: 65–75 palabras, **máximo 450 caracteres** (25–30 s). Cuenta los caracteres con Python antes de generar la voz. Empieza con un gancho tipo "¿Sabías que…?" con el dato más sorprendente en la primera frase. Frases cortas. Números escritos con letras para la voz ("cuatrocientos kilos"). Termina siempre con "Síguenos para más curiosidades."
 - Nada de temas delicados (tragedias recientes, política, medicina con consejos de dosis).
 
 ## 2. Voz (ElevenLabs, conector MCP)
-- Antes, `account_get_usage`: si quedan menos de 700 créditos, NO generes; avisa al dueño y termina.
-- `creative_generate_speech` con model_id `eleven_flash_v2_5`, voice_id `1lUeAlGYnkWZz31Wixae` (Leo, español peninsular), generations_count **1**. No reintentar llamadas: cada una cobra.
+- Antes, `account_get_usage`: si quedan menos de 950 créditos, NO generes; avisa al dueño y termina.
+- Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten (p. ej. `[con asombro]` antes del dato clave), sin abusar.
+- `creative_generate_speech` con model_id `eleven_v4`, voice_id `1lUeAlGYnkWZz31Wixae` (Leo, español peninsular), generations_count **1**. No reintentar llamadas: cada una cobra.
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
 - `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
 
@@ -70,4 +71,4 @@ Si el ordenador no responde (navegador integrado offline): guardar igualmente lo
 - Enviar al dueño (SendUserMessage + notificación): título, hora y enlace de cada vídeo, créditos de ElevenLabs que quedan, y recordarle que los revise antes de las 17:00. Indicar cualquier problema.
 
 ## Coste aproximado
-Voz con eleven_flash_v2_5: ~270 créditos por vídeo de 35 s → 2/día ≈ 16.000/mes (plan Starter: 30.000).
+Voz con eleven_v4: ~420 créditos por vídeo → 2/día ≈ 25.000/mes (plan Starter: 30.000).
