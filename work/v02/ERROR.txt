@@ -1,0 +1,5 @@
+fetch_images.py falló: commons.wikimedia.org no es accesible desde el entorno cloud.
+Fecha: 2026-11-17
+Error: urllib.error.URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+curl https://commons.wikimedia.org/w/api.php -> "CONNECT tunnel failed, response 403" (el proxy de salida bloquea el dominio).
+No se descargó ninguna imagen (work/v02/img vacío).
