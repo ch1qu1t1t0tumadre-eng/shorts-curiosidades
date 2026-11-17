@@ -1,0 +1,77 @@
+{
+  "id": "v02",
+  "categoria": "INGENIERÍA",
+  "hook": "La Torre Eiffel crece en verano",
+  "palette": [
+    "#1a0b05",
+    "#5a2410",
+    "#ff8a3d"
+  ],
+  "beats": [
+    {
+      "t": 0.0,
+      "emoji": "🗼",
+      "big": "TORRE EIFFEL",
+      "small": "no mide lo mismo todo el año",
+      "buscar": "Eiffel Tower blue sky summer"
+    },
+    {
+      "t": 3.9,
+      "emoji": "☀",
+      "big": "CALOR",
+      "small": "su hierro se dilata",
+      "buscar": "Eiffel Tower iron lattice detail sunlight"
+    },
+    {
+      "t": 6.4,
+      "emoji": "📏",
+      "big": "HASTA +15 CM",
+      "small": "más alta en verano",
+      "buscar": "Eiffel Tower from below"
+    },
+    {
+      "t": 8.7,
+      "emoji": "🤯",
+      "big": "PERO HAY MÁS",
+      "small": "en un día de sol...",
+      "buscar": "Eiffel Tower sunset"
+    },
+    {
+      "t": 11.0,
+      "emoji": "🌗",
+      "big": "SE INCLINA",
+      "small": "el lado al sol se estira más",
+      "buscar": "Eiffel Tower shadow Champ de Mars"
+    },
+    {
+      "t": 15.6,
+      "emoji": "🔄",
+      "big": "DIBUJA UN CÍRCULO",
+      "small": "con su punta en el cielo",
+      "buscar": "Eiffel Tower top summit"
+    },
+    {
+      "t": 18.4,
+      "emoji": "👷",
+      "big": "DESDE 1889",
+      "small": "sus ingenieros ya lo sabían",
+      "buscar": "Eiffel Tower construction 1888"
+    },
+    {
+      "t": 22.3,
+      "emoji": "👉",
+      "big": "SÍGUENOS",
+      "small": "para más curiosidades"
+    }
+  ],
+  "title": "La Torre Eiffel crece en verano (y se inclina con el sol) 🗼 #shorts",
+  "description": "Con el calor, el hierro de la Torre Eiffel se dilata: puede ganar hasta unos 15 cm de altura y su punta se inclina siguiendo al sol. Curiosidades de ingeniería, historia, animales y ciencia cada día.\n\n#curiosidades #sabiasque #torreeiffel #ingenieria #paris #datoscuriosos #shorts",
+  "tags": [
+    "curiosidades",
+    "sabías que",
+    "torre eiffel",
+    "ingeniería",
+    "dilatación térmica",
+    "shorts"
+  ]
+}

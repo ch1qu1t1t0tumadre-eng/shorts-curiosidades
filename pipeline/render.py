@@ -112,6 +112,42 @@ def make_background(palette):
     return Image.alpha_composite(img, g)
 
 
+def load_photo(path, zoom=1.14):
+    """Cover-crop a photo to the 9:16 frame, enlarged by `zoom` so we can pan/zoom inside it."""
+    im = Image.open(path).convert("RGB")
+    tw, th = int(W * zoom), int(H * zoom)
+    r = max(tw / im.width, th / im.height)
+    im = im.resize((int(im.width * r + 1), int(im.height * r + 1)), Image.LANCZOS)
+    x0, y0 = (im.width - tw) // 2, (im.height - th) // 2
+    return im.crop((x0, y0, x0 + tw, y0 + th))
+
+
+def photo_frame(big, lt, dur, direction):
+    """Ken Burns: slow zoom (in or out) plus a gentle horizontal pan across the beat."""
+    p = max(0.0, min(1.0, lt / max(dur, 0.1)))
+    z = 1.0 + 0.12 * (p if direction % 2 == 0 else 1 - p)  # extra zoom over the base crop
+    cw = int(big.width / z)  # big is the frame enlarged 1.14x, so there is always room to pan
+    ch = int(cw * H / W)
+    pan = (p - 0.5) * (1 if direction % 3 else -1)
+    cx = big.width / 2 + pan * (big.width - cw) * 0.8
+    cy = big.height / 2
+    x0 = int(max(0, min(big.width - cw, cx - cw / 2)))
+    y0 = int(max(0, min(big.height - ch, cy - ch / 2)))
+    return big.crop((x0, y0, x0 + cw, y0 + ch)).resize((W, H), Image.BILINEAR)
+
+
+def make_shade():
+    """Dark gradients top and bottom so text stays readable over any photo."""
+    a = np.zeros((H, 1), dtype=np.float32)
+    y = np.arange(H)[:, None] / H
+    a += np.clip((0.22 - y) / 0.22, 0, 1) * 0.65
+    a += np.clip((y - 0.40) / 0.35, 0, 1) * 0.85
+    a = np.clip(a, 0, 0.9)
+    arr = np.zeros((H, W, 4), dtype=np.uint8)
+    arr[..., 3] = (np.repeat(a, W, axis=1) * 255).astype(np.uint8)
+    return Image.fromarray(arr, "RGBA")
+
+
 def build_caption_chunks(words, max_chars=16):
     chunks, cur = [], []
     for w in words:
@@ -179,6 +215,13 @@ def render(workdir):
         big = text_layer(b["big"], fit_font(ANTON, b["big"], W - 140, 190), YELLOW, stroke=10)
         small = text_layer(b["small"].upper(), fit_font(INTER_K, b["small"].upper(), W - 160, 58), (255, 255, 255), stroke=5)
         beat_layers.append((emoji_img(b["emoji"], 470), big, small))
+    # photos (optional, per beat): spec beat "img" = path relative to workdir
+    photos = {}
+    for k, b in enumerate(beats):
+        if b.get("img") and os.path.exists(os.path.join(workdir, b["img"])):
+            photos[k] = load_photo(os.path.join(workdir, b["img"]))
+    shade = make_shade() if photos else None
+    beat_end = [beats[k + 1]["t"] if k + 1 < len(beats) else dur for k in range(len(beats))]
 
     cat_f = font(INTER_K, 42)
     cat_txt = "¿SABÍAS QUE...?  ·  " + spec["categoria"]
@@ -201,8 +244,6 @@ def render(workdir):
         oy = 100 + 80 * math.cos(t * 0.18)
         frame = bg.crop((int(ox), int(oy), int(ox) + W, int(oy) + H))
 
-        paste_center(frame, pill, W / 2, 230)
-
         # current beat
         bi = max([k for k, b in enumerate(beats) if b["t"] <= t] or [0])
         b = beats[bi]
@@ -210,6 +251,37 @@ def render(workdir):
         if i == 0:
             lt = 1.0  # first frame fully drawn (it is the Shorts preview)
         em, big, small = beat_layers[bi]
+
+        if photos:
+            # photo of this beat (or the last beat that had one), with crossfade from the previous photo
+            pk = max([k for k in photos if k <= bi] or [min(photos)])
+            pt = t - beats[pk]["t"] if t >= beats[pk]["t"] else 1.0
+            ph = photo_frame(photos[pk], pt + 0.0, beat_end[pk] - beats[pk]["t"] + 0.6, pk).convert("RGBA")
+            prev = [k for k in photos if k < pk]
+            if prev and pt < 0.35 and i > 0:
+                q = prev[-1]
+                old = photo_frame(photos[q], beat_end[q] - beats[q]["t"] + pt, beat_end[q] - beats[q]["t"] + 0.6, q).convert("RGBA")
+                ph = Image.blend(old, ph, ease_out(pt / 0.35))
+            frame = Image.alpha_composite(ph, shade)
+            paste_center(frame, pill, W / 2, 230)
+            if bi not in photos:  # beat without its own photo: show its emoji as a badge
+                paste_center(frame, em.resize((300, 300)), W / 2, 640, scale=ease_out_back(lt / 0.45), alpha=min(1, lt / 0.15))
+            paste_center(frame, big, W / 2, 1110 + 40 * (1 - ease_out(lt / 0.35)), scale=0.7 + 0.3 * ease_out_back((lt - 0.08) / 0.35),
+                         alpha=min(1, max(0, (lt - 0.05) / 0.2)))
+            paste_center(frame, small, W / 2, 1255, alpha=min(1, max(0, (lt - 0.2) / 0.25)))
+            ch = next((c for c in chunks if c["start"] <= t < c["end"]), None)
+            if ch:
+                draw_captions(frame, ch, t)
+            d = ImageDraw.Draw(frame)
+            d.rounded_rectangle((80, 1600, W - 80, 1612), radius=6, fill=(255, 255, 255, 60))
+            d.rounded_rectangle((80, 1600, 80 + (W - 160) * (i / nframes), 1612), radius=6, fill=YELLOW + (255,))
+            rgb = frame.convert("RGB")
+            if i == 0:
+                thumb_frame = rgb
+            ff.stdin.write(rgb.tobytes())
+            continue
+
+        paste_center(frame, pill, W / 2, 230)
         glow_r = 300 + 12 * math.sin(t * 3)
         glow = Image.new("RGBA", (int(glow_r * 2.4), int(glow_r * 2.4)), (0, 0, 0, 0))
         ImageDraw.Draw(glow).ellipse((glow.width / 2 - glow_r, glow.height / 2 - glow_r,
@@ -240,7 +312,10 @@ def render(workdir):
     if ff.wait() != 0:
         raise SystemExit("ffmpeg failed")
     os.replace(out, os.path.join(workdir, "short.mp4"))
-    make_thumb(spec, bg, beat_layers[0][0], workdir)
+    if photos:
+        thumb_frame.save(os.path.join(workdir, "thumb.jpg"), quality=92)
+    else:
+        make_thumb(spec, bg, beat_layers[0][0], workdir)
     print("ok", workdir, f"{dur:.1f}s")
 
 
