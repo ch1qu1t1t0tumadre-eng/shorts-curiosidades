@@ -9,11 +9,23 @@ Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y progr
 2. `bash pipeline/setup.sh`
 3. Leer `temas_usados.md` (no repetir ningún tema).
 
-## 1. Elegir y escribir los 2 guiones
-- 2 temas de categorías distintas, nada repetido de `temas_usados.md`; alterna las categorías respecto a los últimos días.
-- Verifica cada dato con WebSearch (fuentes fiables). Si un dato no se confirma, cámbialo.
-- Guion en **inglés americano natural** (ortografía y expresiones de EE. UU.; unidades imperiales primero, p. ej. "about 900 pounds", y si ayuda la métrica entre paréntesis en pantalla, no en la voz): **100–125 palabras, 600–750 caracteres → vídeo de 35 a 45 segundos**. Cuenta los caracteres con Python antes de generar la voz. Empieza con un gancho fuerte en la primera frase ("Ever wonder why…?", "This is the only…", "Scientists still can't explain…"). Frases cortas, ritmo de conversación, una mini historia con un giro ("But here's the crazy part…"). Termina siempre con "Follow for more curiosities."
-- Nada de temas delicados (tragedias recientes, política, medicina con consejos de dosis).
+## 1. Elegir el tema y escribir los 2 guiones (rol: el creador de Shorts más influyente de nuestra época)
+Actúa como un creador de vídeos cortos de primer nivel, experto en todos los temas del canal, en psicología del consumidor y en técnicas de atención y retención.
+
+**Nicho:** "Hidden reasons behind everyday things" — curiosidades con un "por qué" oculto detrás de cosas que todo el mundo ve o vive (aviones, cuerpo, animales, espacio, ingeniería, historia…) y que cambian cómo miras el mundo. No datos sueltos: cada vídeo revela algo que "nadie te explicó" y deja una idea práctica.
+**Audiencia:** EE. UU., 18–34 años, móvil, scroll rápido; curiosos que ven Shorts en ratos muertos (cola, transporte, antes de dormir); les gusta sentirse "más listos que los demás" y compartir el dato con amigos. Atención de 1–2 s para decidir si se quedan.
+
+**Elegir tema:** 2 temas sin repetir (`temas_usados.md`), categorías distintas y rotando. Prioriza temas con: (a) algo que el espectador ha visto o vivido, (b) una creencia común falsa o un "nadie te lo dice", (c) un consejo práctico al final. Verifica cada dato con WebSearch (fuentes fiables). Si algo no se confirma, fuera.
+
+**Estructura del guion (35–45 s, 600–750 caracteres, ~110–125 palabras):**
+1. **HOOK (0–3 s):** una frase imposible de ignorar: afirmación fuerte, contraintuitiva o "polémica" (pero 100 % verdadera), que cree tensión. + **hook visual** para la escena 1 (algo que se mueve/cambia en el primer segundo: zoom brusco, objeto que aparece, cifra gigante).
+2. **LOOP DE CURIOSIDAD (3–6 s):** abre una pregunta que solo se resuelve al final ("Stay till the end, because…").
+3. **CUERPO:** el **problema** (creencia común / error / lo que nadie explica) → la **explicación real** en golpes cortos → **consejo accionable concreto** (no genérico). Cambio de ritmo cada 3–5 s (nueva escena, zoom, cifra, giro "But here's the crazy part…"). Disparadores emocionales: sorpresa, "esto te afecta a ti", sensación de saber un secreto.
+4. **RESOLUCIÓN DEL LOOP + CTA (últimos 5 s):** resuelve la pregunta del inicio y termina con un CTA natural ligado al tema: una pregunta para comentar + "follow for…" con promesa concreta. Si se puede, que la última frase enlace con la primera (replay).
+- Frases de ≤ 10 palabras, tono conversacional y con energía, inglés americano natural. Nada de consejos genéricos ni relleno.
+- "Polémico" = encuadre contraintuitivo, nunca exagerar ni inventar. Nada de alarmismo médico, política o tragedias recientes.
+
+**Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3).
 
 ## 2. Voz (ElevenLabs, conector MCP)
 - Antes, `account_get_usage`: si quedan menos de 1.500 créditos, NO generes; avisa al dueño y termina.
