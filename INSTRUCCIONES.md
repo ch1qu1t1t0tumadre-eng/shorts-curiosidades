@@ -75,7 +75,11 @@ all(document,'tp-yt-paper-radio-button[name=VIDEO_MADE_FOR_KIDS_NOT_MFK]')[0].cl
 all(document,'#textbox').map(e=>e.innerText)
 ```
 5. Pulsar `#next-button` 3 veces (esperar ~1,2 s entre clics) hasta el paso Visibilidad.
-6. Programar: expandir la sección "Programar" (`#second-container-expand-button`), poner la fecha de hoy y la hora que le toca (17:00 o 20:00). Usar `read_page`/`find` para localizar los campos de fecha y hora; comprobar con captura que se ven bien antes de pulsar el botón final (`#done-button`, dice "Programar").
+6. Programar (probado el 17/11/2026): `#next-button` 3 veces → en Visibilidad pulsar `#second-container-expand-button` ("Programar").
+   - Fecha: `find` "textbox" → hay dos: la hora ("0:00") y, tras abrir el calendario con `#datepicker-trigger` (o clic en la fecha), el campo de fecha. Hacer `triple_click` en el campo de fecha (por ref), escribir p. ej. `17 nov 2026` con `type` y pulsar Return. (Escribir con JS NO funciona.)
+   - Hora: abrir la lista de horas haciendo clic en el campo de hora y, con JS, hacer clic en la opción exacta: `all(document,'tp-yt-paper-item, [role=option]').find(o=>o.innerText.trim()==='17:00').click()`.
+   - Comprobar con JS que `#datepicker-trigger` muestra la fecha correcta y el input de hora la hora correcta, y que no aparece "Selecciona una fecha y una hora en el futuro". La zona horaria por defecto es GMT+1 (Madrid).
+   - Pulsar `#done-button` (pone "Programar"). El diálogo final confirma "El vídeo pasará a ser público el … a las …" y da el enlace youtube.com/shorts/ID.
 7. Comprobar en `…/videos/short` que el vídeo aparece como "Programado" con la hora correcta y que no hay duplicados. Guardar el enlace `youtube.com/shorts/ID`.
 
 Si el ordenador no responde (navegador integrado offline): guardar igualmente los vídeos en la rama `media`, y avisar al dueño con los enlaces raw para que los suba él.
