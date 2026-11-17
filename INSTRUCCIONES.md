@@ -1,21 +1,23 @@
-# Rutina diaria: 6 Shorts de curiosidades
+# Rutina diaria: 1 Short de curiosidades
 
 Canal: curiosidades de todo tipo (animales, historia, cuerpo humano, ingeniería, espacio, ciencia, geografía, tecnología, comida…), en **español de España**.
-Cada día se crean **6 Shorts** y se suben a YouTube Studio en **privado y programados** a las **16:00, 17:00, 18:00, 19:00, 20:00 y 21:00 (Europe/Madrid)**. El dueño los revisa antes de esas horas y borra o edita los que no le gusten.
+Cada día se crea **1 Short** y se sube a YouTube Studio en **privado y programado** a las **19:00 (Europe/Madrid)**. El dueño lo revisa antes y lo borra o edita si no le gusta.
+(El plan de ElevenLabs es el gratuito: 10.000 créditos/mes. Por eso 1 vídeo al día y el modelo `eleven_flash_v2_5`, que gasta la mitad.)
 
 ## 0. Preparar
 1. `add_repo` ch1qu1t1t0tumadre-eng/shorts-curiosidades con access "push", clonarlo en /home/claude/shorts-curiosidades.
 2. `bash pipeline/setup.sh`
 3. Leer `temas_usados.md` (no repetir ningún tema).
 
-## 1. Elegir y escribir los 6 guiones
-- 6 temas de 6 categorías distintas, nada repetido de `temas_usados.md`.
+## 1. Elegir y escribir el guion
+- 1 tema nada repetido de `temas_usados.md`; alterna la categoría respecto a los últimos días.
 - Verifica cada dato con WebSearch (fuentes fiables). Si un dato no se confirma, cámbialo.
 - Guion: 80–95 palabras (30–40 s). Empieza con un gancho tipo "¿Sabías que…?" con el dato más sorprendente en la primera frase. Frases cortas. Números escritos con letras para la voz ("cuatrocientos kilos"). Termina siempre con "Síguenos para más curiosidades."
 - Nada de temas delicados (tragedias recientes, política, medicina con consejos de dosis).
 
 ## 2. Voz (ElevenLabs, conector MCP)
-- `creative_generate_speech` con model_id `eleven_v4`, voice_id `1lUeAlGYnkWZz31Wixae` (Leo, español peninsular), generations_count **1**. No reintentar llamadas: cada una cobra.
+- Antes, `account_get_usage`: si quedan menos de 400 créditos, NO generes; avisa al dueño y termina.
+- `creative_generate_speech` con model_id `eleven_flash_v2_5`, voice_id `1lUeAlGYnkWZz31Wixae` (Leo, español peninsular), generations_count **1**. No reintentar llamadas: cada una cobra.
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
 - `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
 
@@ -28,17 +30,16 @@ Cada día se crean **6 Shorts** y se suben a YouTube Studio en **privado y progr
 ```
 cd /home/claude/shorts-curiosidades
 git checkout --orphan media-tmp && git rm -rq --cached . 2>/dev/null; rm -rf media; mkdir media
-cp work/v*/short.mp4 → media/AAAAMMDD_N.mp4   (N = 1..6)
+cp work/vNN/short.mp4 → media/AAAAMMDD.mp4
 git add media && git commit -m "media AAAAMMDD" && git push -f origin HEAD:media
 git rev-parse HEAD   → SHA
 git checkout -f main
 ```
-URL de cada vídeo: `https://raw.githubusercontent.com/ch1qu1t1t0tumadre-eng/shorts-curiosidades/SHA/media/AAAAMMDD_N.mp4`
+URL de cada vídeo: `https://raw.githubusercontent.com/ch1qu1t1t0tumadre-eng/shorts-curiosidades/SHA/media/AAAAMMDD.mp4`
 (La rama `media` se sobrescribe cada día; así el repositorio no crece.)
 
 ## 5. Subir a YouTube Studio (navegador integrado, `mcp__remote-devices__Claude_Browser__*`)
 Canal: https://studio.youtube.com/channel/UC-xRUl9MD0FkZ94w83yAFKQ — la sesión ya está iniciada y los sitios permitidos.
-Para cada vídeo:
 1. `navigate` a `https://studio.youtube.com/channel/UC-xRUl9MD0FkZ94w83yAFKQ/videos/upload?d=ud`
 2. `javascript_tool` (inyecta el archivo interceptando el selector de archivos):
 ```js
@@ -58,14 +59,14 @@ all(document,'tp-yt-paper-radio-button[name=VIDEO_MADE_FOR_KIDS_NOT_MFK]')[0].cl
 all(document,'#textbox').map(e=>e.innerText)
 ```
 5. Pulsar `#next-button` 3 veces (esperar ~1,2 s entre clics) hasta el paso Visibilidad.
-6. Programar: expandir la sección "Programar" (`#second-container-expand-button`), poner la fecha de hoy y la hora (16:00 para el 1º, 17:00 el 2º … 21:00 el 6º). Usar `read_page`/`find` para localizar los campos de fecha y hora; comprobar con captura que se ven bien antes de pulsar el botón final (`#done-button`, dice "Programar").
+6. Programar: expandir la sección "Programar" (`#second-container-expand-button`), poner la fecha de hoy y la hora 19:00. Usar `read_page`/`find` para localizar los campos de fecha y hora; comprobar con captura que se ven bien antes de pulsar el botón final (`#done-button`, dice "Programar").
 7. Comprobar en `…/videos/short` que el vídeo aparece como "Programado" con la hora correcta y que no hay duplicados. Guardar el enlace `youtube.com/shorts/ID`.
 
 Si el ordenador no responde (navegador integrado offline): guardar igualmente los vídeos en la rama `media`, y avisar al dueño con los enlaces raw para que los suba él.
 
 ## 6. Cerrar
-- Añadir los 6 temas a `temas_usados.md`, commit y push a `main`.
-- Enviar al dueño (SendUserMessage + notificación): lista de los 6 vídeos con hora, título y enlace de Studio, y recordarle que los revise antes de las 16:00. Indicar cualquier vídeo que no se haya podido subir.
+- Añadir el tema a `temas_usados.md`, commit y push a `main`.
+- Enviar al dueño (SendUserMessage + notificación): título, hora y enlace del vídeo, créditos de ElevenLabs que quedan, y recordarle que lo revise antes de las 19:00. Indicar cualquier problema.
 
 ## Coste aproximado
-Voz: ~540 créditos de ElevenLabs por vídeo de 35 s → ~3.200 créditos/día (~97.000/mes).
+Voz con eleven_flash_v2_5: ~270 créditos por vídeo de 35 s → ~8.100/mes (el plan gratuito da 10.000).
