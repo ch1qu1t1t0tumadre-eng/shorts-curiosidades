@@ -28,7 +28,12 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 **Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3).
 
 ## 2. Voz (ElevenLabs, conector MCP)
-- Antes, `account_get_usage`: si quedan menos de 1.500 créditos, NO generes; avisa al dueño y termina.
+- Antes de nada, `account_get_usage` y decide **cuántos vídeos hacer hoy** (regla del dueño: cuando no lleguen los créditos para 2 al día, pasar a 1 al día, nunca quedarse sin vídeo):
+  - `quedan = character_limit - character_count`; `dias = días que faltan hasta next_character_count_reset_unix` (redondeando hacia arriba, mínimo 1).
+  - Si `quedan - 1400 >= (dias - 1) * 700` → **2 vídeos** (17:00 y 20:00).
+  - Si no, si `quedan >= 750` → **1 vídeo** (a las 20:00).
+  - Si `quedan < 750` → no generes nada y avisa al dueño (en español) de que faltan créditos hasta la renovación.
+  - Indica en el resumen final cuántos vídeos se hicieron y por qué.
 - Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten en inglés (p. ej. `[excited]` o `[curious]` antes del dato clave), sin abusar; si alguna se lee en voz alta, quítala.
 - `creative_generate_speech` con model_id `eleven_v4`, voice_id `hqsADTrqjrr0sI9LFcYV` (Dean, inglés americano, cálido y claro), generations_count **1**. No reintentar llamadas: cada una cobra.
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
