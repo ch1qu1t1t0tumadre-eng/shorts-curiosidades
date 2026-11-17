@@ -556,16 +556,24 @@ def render(workdir):
     nframes = int(dur * FPS)
     escenas = sorted(mod.ESCENAS, key=lambda e: e[0])
     chunks = build_chunks(words, getattr(mod, "PALABRAS_POR_SUBTITULO", 2))
-    musica = getattr(mod, "MUSICA", None)
+    # sonido: whoosh en cada cambio de escena + efectos que pida escenas.py (SFX = [(t, "pop"|"ding"|"tick"|"rise"|"whoosh"), ...])
+    sys.path.insert(0, HERE)
+    import sonido
+    eventos = [(e[0] - 0.12, "whoosh") for e in escenas[1:]] + list(getattr(mod, "SFX", []))
+    fx_path = os.path.join(workdir, "fx.wav")
+    sonido.mezcla(dur, eventos, fx_path, seed=abs(hash(os.path.basename(os.path.abspath(workdir)))) % 1000)
 
     surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
     out = os.path.join(workdir, "short.tmp.mp4")
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}",
            "-r", str(FPS), "-i", "-", "-i", voz]
-    filt = "[1:a]apad[a]"
-    if musica and os.path.exists(musica):
-        cmd += ["-stream_loop", "-1", "-i", musica]
-        filt = "[2:a]volume=0.10[m];[1:a]apad[v];[v][m]amix=inputs=2:duration=first:dropout_transition=0[a]"
+    cmd += ["-i", fx_path]
+    # voz: limpieza ligera + presencia + volumen estándar; música/efectos se agachan cuando habla la voz
+    filt = ("[1:a]highpass=f=70,equalizer=f=3500:t=q:w=1.2:g=2.5,acompressor=threshold=-20dB:ratio=3:attack=5:release=120,"
+            "loudnorm=I=-14:TP=-1.5:LRA=9,apad,asplit=2[v][vk];"
+            "[2:a]aformat=sample_rates=44100:channel_layouts=mono[f];"
+            "[f][vk]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=300[fd];"
+            "[v][fd]amix=inputs=2:duration=first:normalize=0[a]")
     cmd += ["-filter_complex", filt, "-map", "0:v", "-map", "[a]",
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "160k", "-t", f"{nframes / FPS:.3f}", "-movflags", "+faststart", out]

@@ -198,3 +198,6 @@ def e7(ctx, lt, dur, T):
 
 ESCENAS = [(0.0, e1), (3.9, e2), (8.7, e3), (11.0, e4), (15.6, e5), (18.4, e6), (22.3, e7)]
 PALABRAS_POR_SUBTITULO = 2
+
+SFX = [(2.2, "pop"), (5.3, "rise"), (6.3, "ding"), (9.0, "pop"), (12.0, "pop"), (13.2, "pop"),
+       (16.4, "pop"), (20.0, "pop"), (20.4, "ding"), (22.6, "pop")]
