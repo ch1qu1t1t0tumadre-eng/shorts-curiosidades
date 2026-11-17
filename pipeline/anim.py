@@ -16,7 +16,11 @@ import cairocffi as cairo
 import cairosvg
 import numpy as np
 
-W, H, FPS = 1080, 1920, 30
+W, H, FPS = 1080, 1920, 60
+# Salida en 1440x2560 (2K): YouTube da más calidad (VP9) a los vídeos de más de 1080p.
+# Se dibuja con coordenadas de 1080x1920 y se escala (es vectorial, no pierde nitidez).
+OUT_W, OUT_H = 1440, 2560
+SCALE = OUT_W / W
 HERE = os.path.dirname(os.path.abspath(__file__))
 EMOJI_DIR = os.path.join(HERE, "assets/package/color/svg")
 FONT = "Inter"            # instalada en el sistema
@@ -563,9 +567,9 @@ def render(workdir):
     fx_path = os.path.join(workdir, "fx.wav")
     sonido.mezcla(dur, eventos, fx_path, seed=abs(hash(os.path.basename(os.path.abspath(workdir)))) % 1000)
 
-    surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
+    surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, OUT_W, OUT_H)
     out = os.path.join(workdir, "short.tmp.mp4")
-    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}",
+    cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{OUT_W}x{OUT_H}",
            "-r", str(FPS), "-i", "-", "-i", voz]
     cmd += ["-i", fx_path]
     # voz: limpieza ligera + presencia + volumen estándar; música/efectos se agachan cuando habla la voz
@@ -575,8 +579,9 @@ def render(workdir):
             "[f][vk]sidechaincompress=threshold=0.02:ratio=4:attack=15:release=500[fd];"
             "[v][fd]amix=inputs=2:duration=first:normalize=0[a]")
     cmd += ["-filter_complex", filt, "-map", "0:v", "-map", "[a]",
-            "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "160k", "-t", f"{nframes / FPS:.3f}", "-movflags", "+faststart", out]
+            "-c:v", "libx264", "-preset", "slow", "-tune", "animation", "-crf", "16", "-profile:v", "high",
+            "-pix_fmt", "yuv420p", "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709",
+            "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-t", f"{nframes / FPS:.3f}", "-movflags", "+faststart", out]
     ff = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     for i in range(nframes):
         T = i / FPS
@@ -585,6 +590,7 @@ def render(workdir):
         t1 = escenas[k + 1][0] if k + 1 < len(escenas) else dur
         ctx = cairo.Context(surf)
         ctx.set_antialias(cairo.ANTIALIAS_GOOD)
+        ctx.scale(SCALE, SCALE)
         ctx.save()
         fn(ctx, T - t0 if i else max(T - t0, 0.6), t1 - t0, T)
         ctx.restore()
