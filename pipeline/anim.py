@@ -559,7 +559,7 @@ def render(workdir):
     # sonido: whoosh en cada cambio de escena + efectos que pida escenas.py (SFX = [(t, "pop"|"ding"|"tick"|"rise"|"whoosh"), ...])
     sys.path.insert(0, HERE)
     import sonido
-    eventos = [(e[0] - 0.12, "whoosh") for e in escenas[1:]] + list(getattr(mod, "SFX", []))
+    eventos = [(e[0] - 0.12, "whoosh") for e in escenas[1:]] + [x for x in getattr(mod, "SFX", []) if x[1] in ("pop", "ding")]
     fx_path = os.path.join(workdir, "fx.wav")
     sonido.mezcla(dur, eventos, fx_path, seed=abs(hash(os.path.basename(os.path.abspath(workdir)))) % 1000)
 
@@ -572,7 +572,7 @@ def render(workdir):
     filt = ("[1:a]highpass=f=70,equalizer=f=3500:t=q:w=1.2:g=2.5,acompressor=threshold=-20dB:ratio=3:attack=5:release=120,"
             "loudnorm=I=-14:TP=-1.5:LRA=9,apad,asplit=2[v][vk];"
             "[2:a]aformat=sample_rates=44100:channel_layouts=mono[f];"
-            "[f][vk]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=300[fd];"
+            "[f][vk]sidechaincompress=threshold=0.05:ratio=2.5:attack=80:release=600[fd];"
             "[v][fd]amix=inputs=2:duration=first:normalize=0[a]")
     cmd += ["-filter_complex", filt, "-map", "0:v", "-map", "[a]",
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",

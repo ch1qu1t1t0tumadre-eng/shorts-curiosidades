@@ -37,12 +37,12 @@ def whoosh(d=0.45, seed=0):
     return 0.9 * out / (np.abs(out).max() + 1e-9)
 
 
-def pop(f0=520):
+def pop(f0=420):
     n = int(SR * 0.12)
     t = np.arange(n) / SR
     f = f0 * (1 + 1.6 * np.exp(-t * 60))
     ph = 2 * np.pi * np.cumsum(f) / SR
-    return 0.8 * np.sin(ph) * _env(n, 0.002, 0.035)
+    return 0.5 * np.sin(ph) * _env(n, 0.004, 0.03)
 
 
 def ding(f0=1320):
@@ -70,7 +70,7 @@ def rise(d=1.0):
 SFX = {"whoosh": whoosh, "pop": pop, "ding": ding, "tick": tick, "rise": rise}
 
 
-def musica(d, seed=0, bpm=96):
+def musica(d, seed=0, bpm=70):
     """Base suave: acordes de pad + bajo + pulso de hi-hat. Tonalidad y progresión según seed."""
     rng = np.random.default_rng(seed)
     n = int(SR * d)
@@ -78,7 +78,7 @@ def musica(d, seed=0, bpm=96):
     root = 110 * 2 ** (rng.integers(0, 12) / 12)
     progs = [[0, 5, 3, 4], [0, 3, 5, 4], [0, 4, 5, 3], [5, 3, 0, 4]]
     prog = progs[rng.integers(0, len(progs))]
-    scale = [0, 2, 3, 5, 7, 8, 10]  # menor natural: misterio/curiosidad
+    scale = [0, 2, 4, 5, 7, 9, 11]  # mayor: ambiente agradable y relajado
     beat = 60 / bpm
     bar = beat * 4
     out = np.zeros(n)
@@ -89,7 +89,7 @@ def musica(d, seed=0, bpm=96):
         if i0 >= n:
             break
         tt = t[i0:i1] - t0
-        env = np.minimum(1, tt / 0.4) * np.minimum(1, (bar - tt) / 0.4)
+        env = np.minimum(1, tt / 1.2) * np.minimum(1, (bar - tt) / 1.2) * 0.85 + 0.15
         for step in (0, 2, 4):
             semi = scale[(deg + step) % 7] + 12 * ((deg + step) // 7)
             f = root * 2 * 2 ** (semi / 12)
@@ -101,13 +101,10 @@ def musica(d, seed=0, bpm=96):
             if bi0 >= n:
                 break
             tb = t[bi0:bi1] - (t0 + b * beat)
-            out[bi0:bi1] += 0.18 * np.sin(2 * np.pi * fb * tb) * np.exp(-tb * 3)
-    # hi-hat en contratiempo
-    hh = tick() * 0.35
-    for b in range(int(d / (beat / 2))):
-        if b % 2 == 1:
-            i = int(b * beat / 2 * SR)
-            out[i:i + len(hh)] += hh[: max(0, min(len(hh), n - i))]
+            out[bi0:bi1] += (0.08 if b == 0 else 0.0) * np.sin(2 * np.pi * fb * tb) * np.exp(-tb * 1.2)
+    # suavizado (pasa-bajos sencillo) para que quede cálida y de fondo
+    for _ in range(3):
+        out = np.convolve(out, np.ones(9) / 9, mode="same")
     out *= np.minimum(1, t / 1.5) * np.minimum(1, (d - t) / 1.5)
     return 0.6 * out / (np.abs(out).max() + 1e-9)
 
@@ -124,7 +121,7 @@ def mezcla(d, eventos, path, seed=0):
         m = min(len(s), n - i)
         fx[i:i + m] += s[:m]
     mus = musica(d, seed)
-    out = 0.32 * fx + 0.16 * mus
+    out = 0.14 * fx + 0.22 * mus  # música de ambiente; efectos muy discretos
     out = np.clip(out, -1, 1)
     with wave.open(path, "wb") as w:
         w.setnchannels(1)

@@ -35,7 +35,7 @@ El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el pe
    - Datos en pantalla con `pill` (etiqueta con borde), `badge` (etiqueta roja), `digital_clock`, `counter`, `line_chart`, `arrow`. Que aparezcan con `pop(lt, segundo)` justo cuando la voz dice el dato.
    - Todo lo importante dentro de la zona segura: x 80–1000, y 250–1550 (abajo van los subtítulos y la interfaz de YouTube).
    - `ESCENAS = [(0.0, e1), (t2, e2), ...]` y `PALABRAS_POR_SUBTITULO = 2`.
-   - `SFX = [(t, "pop"), (t, "ding"), (t, "rise"), (t, "tick"), ...]`: un "pop" cada vez que aparece una etiqueta u objeto, "ding" en la cifra clave, "rise" justo antes del dato sorprendente. Los "whoosh" de cambio de escena y la música se ponen solos (pipeline/sonido.py), y la voz se ecualiza y normaliza sola.
+   - Sonido: el ambiente debe ser de FONDO, solo para que el espectador esté a gusto. La música ambiental suave y los "whoosh" discretos de cambio de escena se ponen solos (pipeline/sonido.py) y la voz se trata sola. Opcional y con moderación: `SFX = [(t, "pop"), (t, "ding")]` (máximo 4–5 por vídeo, solo en los datos clave).
 2. Revisa: `python3 pipeline/anim.py work/vNN preview 1 5 9 ...` (un instante de cada escena) y mira las imágenes con Read. Corrige lo que se salga, se solape o se vea vacío. Repite hasta que todas las escenas se vean bien.
 3. Render: `python3 pipeline/anim.py work/vNN` → `short.mp4` (+ `thumb.png`).
 4. Escribe también `work/vNN/meta.json` con `title` (≤ 90 caracteres, termina en emoji + " #shorts"), `description` (2 frases + hashtags) y `tags`.
