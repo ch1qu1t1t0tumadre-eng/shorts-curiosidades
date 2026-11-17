@@ -1,8 +1,8 @@
 # Rutina diaria: 2 Shorts de curiosidades
 
-Canal: curiosidades de todo tipo, en **español de España**. Categorías (ir rotando, que no se repita la misma dos días seguidos): animales, historia, cuerpo humano, ingeniería, **aviación**, **astronomía y espacio**, ciencia, geografía, tecnología, comida, océanos, mente y psicología…
+Canal: curiosidades de todo tipo. **TODO EN INGLÉS AMERICANO** (guion, voz, textos en pantalla, subtítulos, título, descripción y hashtags), pensado para público de EE. UU. Categorías (ir rotando, que no se repita la misma dos días seguidos): animales, historia, cuerpo humano, ingeniería, **aviación**, **astronomía y espacio**, ciencia, geografía, tecnología, comida, océanos, mente y psicología…
 Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y programados** a las **17:00 y 20:00 (Europe/Madrid)**. El dueño los revisa antes y borra o edita los que no le gusten.
-(Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de ~420 caracteres → ~420 créditos/vídeo → ~25.000/mes.)
+(Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de 600–750 caracteres → ~680 créditos/vídeo. Con 2 vídeos/día el plan Starter NO llega a todo el mes: el freno de créditos para la tarea cuando se acaban.)
 
 ## 0. Preparar
 1. `add_repo` ch1qu1t1t0tumadre-eng/shorts-curiosidades con access "push", clonarlo en /home/claude/shorts-curiosidades.
@@ -12,17 +12,17 @@ Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y progr
 ## 1. Elegir y escribir los 2 guiones
 - 2 temas de categorías distintas, nada repetido de `temas_usados.md`; alterna las categorías respecto a los últimos días.
 - Verifica cada dato con WebSearch (fuentes fiables). Si un dato no se confirma, cámbialo.
-- Guion: 65–75 palabras, **máximo 450 caracteres** (25–30 s). Cuenta los caracteres con Python antes de generar la voz. Empieza con un gancho tipo "¿Sabías que…?" con el dato más sorprendente en la primera frase. Frases cortas. Números escritos con letras para la voz ("cuatrocientos kilos"). Termina siempre con "Síguenos para más curiosidades."
+- Guion en **inglés americano natural** (ortografía y expresiones de EE. UU.; unidades imperiales primero, p. ej. "about 900 pounds", y si ayuda la métrica entre paréntesis en pantalla, no en la voz): **100–125 palabras, 600–750 caracteres → vídeo de 35 a 45 segundos**. Cuenta los caracteres con Python antes de generar la voz. Empieza con un gancho fuerte en la primera frase ("Ever wonder why…?", "This is the only…", "Scientists still can't explain…"). Frases cortas, ritmo de conversación, una mini historia con un giro ("But here's the crazy part…"). Termina siempre con "Follow for more curiosities."
 - Nada de temas delicados (tragedias recientes, política, medicina con consejos de dosis).
 
 ## 2. Voz (ElevenLabs, conector MCP)
-- Antes, `account_get_usage`: si quedan menos de 950 créditos, NO generes; avisa al dueño y termina.
+- Antes, `account_get_usage`: si quedan menos de 1.500 créditos, NO generes; avisa al dueño y termina.
 - Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten en inglés (p. ej. `[excited]` o `[curious]` antes del dato clave), sin abusar; si alguna se lee en voz alta, quítala.
-- `creative_generate_speech` con model_id `eleven_v4`, voice_id `1lUeAlGYnkWZz31Wixae` (Leo, español peninsular), generations_count **1**. No reintentar llamadas: cada una cobra.
+- `creative_generate_speech` con model_id `eleven_v4`, voice_id `hqsADTrqjrr0sI9LFcYV` (Dean, inglés americano, cálido y claro), generations_count **1**. No reintentar llamadas: cada una cobra.
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
 - **La voz es prioritaria.** Escribe el guion para ser escuchado: frases cortas, ritmo, una pausa ("...") antes del dato clave, y 1–2 etiquetas en inglés como `[excited]` o `[curious]`.
 - `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
-- Control de calidad de la voz: compara la transcripción con el guion. Si falta o cambia alguna palabra, si se lee en voz alta una etiqueta o si la duración es rara (>32 s), regenera esa voz una vez (cuesta créditos: solo si hace falta).
+- Control de calidad de la voz: compara la transcripción con el guion. Si falta o cambia alguna palabra, si se lee en voz alta una etiqueta o si la duración queda fuera de 35–45 s, regenera esa voz una vez (cuesta créditos: solo si hace falta).
 
 ## 3. Montaje (estilo ANIMADO 2D — es el estilo fijo del canal)
 El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el personaje propio del canal, movimientos de cámara y etiquetas de datos. Motor: `pipeline/anim.py`. Ejemplo completo a imitar: `ejemplos/escenas_torre_eiffel.py`.
@@ -31,14 +31,14 @@ El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el pe
    - Una escena por frase del guion (5–8 escenas). El inicio de cada escena = segundo en que empieza esa frase en `words.json`.
    - Cada escena es `def eN(ctx, lt, dur, T):` y SIEMPRE: fija la cámara con `camera(ctx, zoom, cx, cy)` usando `keyframes(...)` para que se mueva (acercar, alejar, desplazar), dibuja un fondo (`bg_night`, `bg_sky`, `bg_dark`, `bg_blueprint`, `ground`, `sun`…) y el protagonista del tema.
    - Dibuja el objeto del tema con primitivas de cairo (como la función `tower` del ejemplo): un avión, un planeta, un corazón, un puente… Formas planas con degradados suaves, paleta azul marino/morado de fondo y colores vivos para lo importante. Los emojis de OpenMoji (`icon`) solo como objetos secundarios.
-   - El personaje del canal (`character`) aparece en al menos 2 escenas, con la expresión que pida la frase (`duda`, `sorpresa`, `feliz`, `dormido`; `helmet=True`, `wave=1.0`…). Siempre en la escena final saludando junto a la etiqueta "SÍGUENOS".
+   - El personaje del canal (`character`) aparece en al menos 2 escenas, con la expresión que pida la frase (`duda`, `sorpresa`, `feliz`, `dormido`; `helmet=True`, `wave=1.0`…). Siempre en la escena final saludando junto a la etiqueta "FOLLOW". Todas las etiquetas y textos en pantalla, en inglés americano (MPH, MILES, POUNDS, °F…).
    - Datos en pantalla con `pill` (etiqueta con borde), `badge` (etiqueta roja), `digital_clock`, `counter`, `line_chart`, `arrow`. Que aparezcan con `pop(lt, segundo)` justo cuando la voz dice el dato.
    - Todo lo importante dentro de la zona segura: x 80–1000, y 250–1550 (abajo van los subtítulos y la interfaz de YouTube).
    - `ESCENAS = [(0.0, e1), (t2, e2), ...]` y `PALABRAS_POR_SUBTITULO = 2`.
    - Sonido: el ambiente debe ser de FONDO, solo para que el espectador esté a gusto. La música ambiental suave y los "whoosh" discretos de cambio de escena se ponen solos (pipeline/sonido.py) y la voz se trata sola. Opcional y con moderación: `SFX = [(t, "pop"), (t, "ding")]` (máximo 4–5 por vídeo, solo en los datos clave).
 2. Revisa: `python3 pipeline/anim.py work/vNN preview 1 5 9 ...` (un instante de cada escena) y mira las imágenes con Read. Corrige lo que se salga, se solape o se vea vacío. Repite hasta que todas las escenas se vean bien.
 3. Render: `python3 pipeline/anim.py work/vNN` → `short.mp4` en 1440x2560 (2K) a 60 fps con codificación de alta calidad (tarda ~2 min por vídeo; no bajar la calidad).
-4. Escribe también `work/vNN/meta.json` con `title` (≤ 90 caracteres, termina en emoji + " #shorts"), `description` (2 frases + hashtags) y `tags`.
+4. Escribe también `work/vNN/meta.json` en inglés: `title` (≤ 90 caracteres, gancho + emoji + " #shorts"), `description` (2 frases + hashtags en inglés: #didyouknow #facts #curiosities #shorts…) y `tags`.
 5. Cada vídeo tiene que parecer distinto: cambia fondos, colores de acento, objetos y planos de cámara entre vídeos.
 
 ## 4. Publicar los vídeos en GitHub (rama `media`)
@@ -89,4 +89,4 @@ Si el ordenador no responde (navegador integrado offline): guardar igualmente lo
 - Enviar al dueño (SendUserMessage + notificación): título, hora y enlace de cada vídeo, créditos de ElevenLabs que quedan, y recordarle que los revise antes de las 17:00. Indicar cualquier problema.
 
 ## Coste aproximado
-Voz con eleven_v4: ~420 créditos por vídeo → 2/día ≈ 25.000/mes (plan Starter: 30.000).
+Voz con eleven_v4: ~680 créditos por vídeo (35–45 s) → 2/día ≈ 41.000/mes. Plan Starter: 30.000 → da para ~44 vídeos/mes. Plan Creator (121.000) daría de sobra.

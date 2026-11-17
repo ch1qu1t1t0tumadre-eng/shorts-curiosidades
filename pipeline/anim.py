@@ -627,7 +627,9 @@ def preview(workdir, times):
         t1 = escenas[k + 1][0] if k + 1 < len(escenas) else T + 5
         surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
         ctx = cairo.Context(surf)
+        ctx.save()
         escenas[k][1](ctx, T - escenas[k][0], t1 - escenas[k][0], T)
+        ctx.restore()
         ch = next((c for c in chunks if c["start"] <= T < c["end"]), None)
         if ch:
             draw_captions(ctx, ch, T)
