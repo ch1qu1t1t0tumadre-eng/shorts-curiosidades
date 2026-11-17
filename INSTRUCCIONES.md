@@ -22,10 +22,21 @@ Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y progr
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
 - `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
 
-## 3. Montaje
-- Escribir `work/vNN/spec.json` como `pipeline/ejemplo_spec.json`: 6–9 beats, cada beat con `t` = segundo en que se dice la palabra clave (sacado de words.json), un emoji (OpenMoji), `big` (2–3 palabras en mayúsculas, el dato) y `small` (contexto corto). `categoria` en mayúsculas. `palette` = 3 colores (fondo oscuro, medio, acento) distinta por categoría. Título ≤ 90 caracteres terminado en emoji + " #shorts". Descripción de 2 frases + hashtags.
-- `python3 pipeline/render.py work/vNN` → `short.mp4` y `thumb.jpg`.
-- Revisar 3 fotogramas (ffmpeg -ss) mirándolos con Read: texto que no se salga, emoji correcto.
+## 3. Montaje (estilo ANIMADO 2D — es el estilo fijo del canal)
+El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el personaje propio del canal, movimientos de cámara y etiquetas de datos. Motor: `pipeline/anim.py`. Ejemplo completo a imitar: `ejemplos/escenas_torre_eiffel.py`.
+
+1. Escribe `work/vNN/escenas.py` (empieza con `from anim import *`):
+   - Una escena por frase del guion (5–8 escenas). El inicio de cada escena = segundo en que empieza esa frase en `words.json`.
+   - Cada escena es `def eN(ctx, lt, dur, T):` y SIEMPRE: fija la cámara con `camera(ctx, zoom, cx, cy)` usando `keyframes(...)` para que se mueva (acercar, alejar, desplazar), dibuja un fondo (`bg_night`, `bg_sky`, `bg_dark`, `bg_blueprint`, `ground`, `sun`…) y el protagonista del tema.
+   - Dibuja el objeto del tema con primitivas de cairo (como la función `tower` del ejemplo): un avión, un planeta, un corazón, un puente… Formas planas con degradados suaves, paleta azul marino/morado de fondo y colores vivos para lo importante. Los emojis de OpenMoji (`icon`) solo como objetos secundarios.
+   - El personaje del canal (`character`) aparece en al menos 2 escenas, con la expresión que pida la frase (`duda`, `sorpresa`, `feliz`, `dormido`; `helmet=True`, `wave=1.0`…). Siempre en la escena final saludando junto a la etiqueta "SÍGUENOS".
+   - Datos en pantalla con `pill` (etiqueta con borde), `badge` (etiqueta roja), `digital_clock`, `counter`, `line_chart`, `arrow`. Que aparezcan con `pop(lt, segundo)` justo cuando la voz dice el dato.
+   - Todo lo importante dentro de la zona segura: x 80–1000, y 250–1550 (abajo van los subtítulos y la interfaz de YouTube).
+   - `ESCENAS = [(0.0, e1), (t2, e2), ...]` y `PALABRAS_POR_SUBTITULO = 2`.
+2. Revisa: `python3 pipeline/anim.py work/vNN preview 1 5 9 ...` (un instante de cada escena) y mira las imágenes con Read. Corrige lo que se salga, se solape o se vea vacío. Repite hasta que todas las escenas se vean bien.
+3. Render: `python3 pipeline/anim.py work/vNN` → `short.mp4` (+ `thumb.png`).
+4. Escribe también `work/vNN/meta.json` con `title` (≤ 90 caracteres, termina en emoji + " #shorts"), `description` (2 frases + hashtags) y `tags`.
+5. Cada vídeo tiene que parecer distinto: cambia fondos, colores de acento, objetos y planos de cámara entre vídeos.
 
 ## 4. Publicar los vídeos en GitHub (rama `media`)
 ```
@@ -56,7 +67,7 @@ HTMLInputElement.prototype.click = function(){ if(this.type==='file' && window._
 ```js
 function all(root,sel,out=[]){root.querySelectorAll(sel).forEach(x=>out.push(x));root.querySelectorAll('*').forEach(x=>{if(x.shadowRoot)all(x.shadowRoot,sel,out)});return out}
 function setBox(el,text){el.focus();document.execCommand('selectAll',false,null);document.execCommand('insertText',false,text);el.dispatchEvent(new Event('input',{bubbles:true}));el.blur();}
-const [t,d]=all(document,'#textbox'); setBox(t,'TITULO'); await new Promise(r=>setTimeout(r,300)); setBox(d,'DESCRIPCION');
+const [t,d]=all(document,'#textbox'); setBox(t,'TITULO de meta.json'); await new Promise(r=>setTimeout(r,300)); setBox(d,'DESCRIPCION');
 all(document,'tp-yt-paper-radio-button[name=VIDEO_MADE_FOR_KIDS_NOT_MFK]')[0].click();
 all(document,'#textbox').map(e=>e.innerText)
 ```
