@@ -17,7 +17,7 @@ Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y progr
 
 ## 2. Voz (ElevenLabs, conector MCP)
 - Antes, `account_get_usage`: si quedan menos de 950 créditos, NO generes; avisa al dueño y termina.
-- Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten (p. ej. `[con asombro]` antes del dato clave), sin abusar.
+- Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten en inglés (p. ej. `[excited]` o `[curious]` antes del dato clave), sin abusar; si alguna se lee en voz alta, quítala.
 - `creative_generate_speech` con model_id `eleven_v4`, voice_id `1lUeAlGYnkWZz31Wixae` (Leo, español peninsular), generations_count **1**. No reintentar llamadas: cada una cobra.
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
 - `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
