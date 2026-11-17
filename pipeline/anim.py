@@ -571,8 +571,8 @@ def render(workdir):
     # voz: limpieza ligera + presencia + volumen estándar; música/efectos se agachan cuando habla la voz
     filt = ("[1:a]highpass=f=70,equalizer=f=3500:t=q:w=1.2:g=2.5,acompressor=threshold=-20dB:ratio=3:attack=5:release=120,"
             "loudnorm=I=-14:TP=-1.5:LRA=9,apad,asplit=2[v][vk];"
-            "[2:a]aformat=sample_rates=44100:channel_layouts=mono[f];"
-            "[f][vk]sidechaincompress=threshold=0.05:ratio=2.5:attack=80:release=600[fd];"
+            "[2:a]aformat=sample_rates=44100:channel_layouts=mono,volume=4.0,equalizer=f=1200:t=q:w=1.5:g=-7,equalizer=f=350:t=q:w=1:g=-4[f];"
+            "[f][vk]sidechaincompress=threshold=0.02:ratio=4:attack=15:release=500[fd];"
             "[v][fd]amix=inputs=2:duration=first:normalize=0[a]")
     cmd += ["-filter_complex", filt, "-map", "0:v", "-map", "[a]",
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",

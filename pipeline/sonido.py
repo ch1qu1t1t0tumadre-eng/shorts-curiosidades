@@ -114,7 +114,7 @@ def mezcla(d, eventos, path, seed=0):
     n = int(SR * d)
     fx = np.zeros(n)
     for k, (t, name) in enumerate(eventos):
-        s = SFX[name]() if name != "whoosh" else whoosh(seed=k)
+        s = SFX[name]() if name != "whoosh" else 0.4 * whoosh(seed=k)
         i = int(t * SR)
         if i >= n:
             continue
