@@ -1,6 +1,6 @@
 # Rutina diaria: 2 Shorts de curiosidades
 
-Canal: curiosidades de todo tipo (animales, historia, cuerpo humano, ingeniería, espacio, ciencia, geografía, tecnología, comida…), en **español de España**.
+Canal: curiosidades de todo tipo, en **español de España**. Categorías (ir rotando, que no se repita la misma dos días seguidos): animales, historia, cuerpo humano, ingeniería, **aviación**, **astronomía y espacio**, ciencia, geografía, tecnología, comida, océanos, mente y psicología…
 Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y programados** a las **17:00 y 20:00 (Europe/Madrid)**. El dueño los revisa antes y borra o edita los que no le gusten.
 (Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de ~420 caracteres → ~420 créditos/vídeo → ~25.000/mes.)
 
