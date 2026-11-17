@@ -20,7 +20,9 @@ Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y progr
 - Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten en inglés (p. ej. `[excited]` o `[curious]` antes del dato clave), sin abusar; si alguna se lee en voz alta, quítala.
 - `creative_generate_speech` con model_id `eleven_v4`, voice_id `1lUeAlGYnkWZz31Wixae` (Leo, español peninsular), generations_count **1**. No reintentar llamadas: cada una cobra.
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
+- **La voz es prioritaria.** Escribe el guion para ser escuchado: frases cortas, ritmo, una pausa ("...") antes del dato clave, y 1–2 etiquetas en inglés como `[excited]` o `[curious]`.
 - `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
+- Control de calidad de la voz: compara la transcripción con el guion. Si falta o cambia alguna palabra, si se lee en voz alta una etiqueta o si la duración es rara (>32 s), regenera esa voz una vez (cuesta créditos: solo si hace falta).
 
 ## 3. Montaje (estilo ANIMADO 2D — es el estilo fijo del canal)
 El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el personaje propio del canal, movimientos de cámara y etiquetas de datos. Motor: `pipeline/anim.py`. Ejemplo completo a imitar: `ejemplos/escenas_torre_eiffel.py`.
@@ -33,6 +35,7 @@ El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el pe
    - Datos en pantalla con `pill` (etiqueta con borde), `badge` (etiqueta roja), `digital_clock`, `counter`, `line_chart`, `arrow`. Que aparezcan con `pop(lt, segundo)` justo cuando la voz dice el dato.
    - Todo lo importante dentro de la zona segura: x 80–1000, y 250–1550 (abajo van los subtítulos y la interfaz de YouTube).
    - `ESCENAS = [(0.0, e1), (t2, e2), ...]` y `PALABRAS_POR_SUBTITULO = 2`.
+   - `SFX = [(t, "pop"), (t, "ding"), (t, "rise"), (t, "tick"), ...]`: un "pop" cada vez que aparece una etiqueta u objeto, "ding" en la cifra clave, "rise" justo antes del dato sorprendente. Los "whoosh" de cambio de escena y la música se ponen solos (pipeline/sonido.py), y la voz se ecualiza y normaliza sola.
 2. Revisa: `python3 pipeline/anim.py work/vNN preview 1 5 9 ...` (un instante de cada escena) y mira las imágenes con Read. Corrige lo que se salga, se solape o se vea vacío. Repite hasta que todas las escenas se vean bien.
 3. Render: `python3 pipeline/anim.py work/vNN` → `short.mp4` (+ `thumb.png`).
 4. Escribe también `work/vNN/meta.json` con `title` (≤ 90 caracteres, termina en emoji + " #shorts"), `description` (2 frases + hashtags) y `tags`.
