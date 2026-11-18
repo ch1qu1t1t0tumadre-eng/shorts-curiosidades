@@ -2,7 +2,7 @@
 
 Canal: curiosidades de todo tipo. **TODO EN INGLÉS AMERICANO** (guion, voz, textos en pantalla, subtítulos, título, descripción y hashtags), pensado para público de EE. UU. Categorías (ir rotando, que no se repita la misma dos días seguidos): animales, historia, cuerpo humano, ingeniería, **aviación**, **astronomía y espacio**, ciencia, geografía, tecnología, comida, océanos, mente y psicología…
 Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y programados** a las **17:00 y 20:00 (Europe/Madrid)**. El dueño los revisa antes y borra o edita los que no le gusten.
-(La voz es propia del canal y se genera aquí mismo con `pipeline/narrador.py`: sin ElevenLabs, sin créditos y sin límite. Siempre 2 vídeos al día.)
+(Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de 600–750 caracteres → ~680 créditos/vídeo. Con 2 vídeos/día el plan Starter NO llega a todo el mes: el freno de créditos para la tarea cuando se acaban.)
 
 ## 0. Preparar
 1. `add_repo` ch1qu1t1t0tumadre-eng/shorts-curiosidades con access "push", clonarlo en /home/claude/shorts-curiosidades.
@@ -27,12 +27,19 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 
 **Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3).
 
-## 2. Voz (propia del canal, sin ElevenLabs)
-- La voz del narrador está guardada en `pipeline/narrador.py` (`NARRADOR`). Es siempre la misma: no la cambies. No se usa ElevenLabs para nada.
-- Guarda el texto exacto de la voz en `work/vNN/texto_voz.txt`. Puedes usar 1–2 etiquetas `[excited]` (más vivo) o `[curious]` (más pausado) donde aporten, y "..." para la pausa antes del dato clave. Escribe los números en palabras cuando haya duda de cómo se leen ("thirty-five thousand feet").
-- `python3 pipeline/narrador.py work/vNN` → `voz.mp3` + `words.json` (mismo formato que antes, con el segundo de cada palabra). Tarda unos segundos.
-- **La voz es prioritaria.** Escribe el guion para ser escuchado: frases cortas, ritmo y una pausa ("...") antes del dato clave.
-- Comprueba la duración que imprime: entre 35 y 45 s. Si se pasa, recorta el guion (no aceleres la voz); si se queda corta, añade una frase.
+## 2. Voz (ElevenLabs, conector MCP)
+- Antes de nada, `account_get_usage` y decide **cuántos vídeos hacer hoy** (regla del dueño: cuando no lleguen los créditos para 2 al día, pasar a 1 al día, nunca quedarse sin vídeo):
+  - `quedan = character_limit - character_count`; `dias = días que faltan hasta next_character_count_reset_unix` (redondeando hacia arriba, mínimo 1).
+  - Si `quedan - 1400 >= (dias - 1) * 700` → **2 vídeos** (17:00 y 20:00).
+  - Si no, si `quedan >= 750` → **1 vídeo** (a las 20:00).
+  - Si `quedan < 750` → no generes nada y avisa al dueño (en español) de que faltan créditos hasta la renovación.
+  - Indica en el resumen final cuántos vídeos se hicieron y por qué.
+- Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten en inglés (p. ej. `[excited]` o `[curious]` antes del dato clave), sin abusar; si alguna se lee en voz alta, quítala.
+- `creative_generate_speech` con model_id `eleven_v4`, voice_id `hqsADTrqjrr0sI9LFcYV` (Dean, inglés americano, cálido y claro), generations_count **1**. No reintentar llamadas: cada una cobra.
+- Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
+- **La voz es prioritaria.** Escribe el guion para ser escuchado: frases cortas, ritmo, una pausa ("...") antes del dato clave, y 1–2 etiquetas en inglés como `[excited]` o `[curious]`.
+- `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
+- Control de calidad de la voz: compara la transcripción con el guion. Si falta o cambia alguna palabra, si se lee en voz alta una etiqueta o si la duración queda fuera de 35–45 s, regenera esa voz una vez (cuesta créditos: solo si hace falta).
 
 ## 3. Montaje (estilo ANIMADO 2D — es el estilo fijo del canal)
 El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el personaje propio del canal, movimientos de cámara y etiquetas de datos. Motor: `pipeline/anim.py`. Ejemplo completo a imitar: `ejemplos/escenas_torre_eiffel.py`.
@@ -96,7 +103,7 @@ Si el ordenador no responde (navegador integrado offline): guardar igualmente lo
 
 ## 6. Cerrar
 - Añadir los 2 temas a `temas_usados.md`, commit y push a `main`.
-- Enviar al dueño (SendUserMessage + notificación): título, hora y enlace de cada vídeo, y recordarle que los revise antes de las 17:00. Indicar cualquier problema.
+- Enviar al dueño (SendUserMessage + notificación): título, hora y enlace de cada vídeo, créditos de ElevenLabs que quedan, y recordarle que los revise antes de las 17:00. Indicar cualquier problema.
 
 ## Coste aproximado
-Voz: propia y local (`pipeline/narrador.py`), sin coste.
+Voz con eleven_v4: ~680 créditos por vídeo (35–45 s) → 2/día ≈ 41.000/mes. Plan Starter: 30.000 → da para ~44 vídeos/mes. Plan Creator (121.000) daría de sobra.
