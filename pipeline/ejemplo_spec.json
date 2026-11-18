@@ -1,0 +1,19 @@
+{
+  "id": "v01",
+  "categoria": "ANIMALES",
+  "hook": "Su corazón pesa como un coche",
+  "palette": ["#04192e", "#0a4a7a", "#19b6d9"],
+  "beats": [
+    {"t": 0.0,  "emoji": "🐋", "big": "BALLENA AZUL", "small": "su corazón pesa como un coche"},
+    {"t": 4.6,  "emoji": "🫀", "big": "400 KG", "small": "solo el corazón"},
+    {"t": 6.8,  "emoji": "📡", "big": "+3 KM", "small": "se oye su latido"},
+    {"t": 11.5, "emoji": "🤿", "big": "2 LATIDOS", "small": "por minuto al bucear"},
+    {"t": 19.2, "emoji": "🫧", "big": "MODO AHORRO", "small": "bajo el agua"},
+    {"t": 22.1, "emoji": "👶", "big": "ARTERIAS XXL", "small": "un niño podría gatear dentro"},
+    {"t": 27.7, "emoji": "🦕", "big": "MÁS GRANDE", "small": "que cualquier dinosaurio"},
+    {"t": 32.8, "emoji": "👉", "big": "SÍGUENOS", "small": "para más curiosidades"}
+  ],
+  "title": "El corazón de la ballena azul pesa como un coche 🐋 #shorts",
+  "description": "¿Sabías que el corazón de una ballena azul pesa unos 400 kilos y que al bucear puede latir solo 2 veces por minuto? Curiosidades de animales, historia, cuerpo humano e ingeniería cada día.\n\n#curiosidades #sabiasque #ballenaazul #animales #datoscuriosos #shorts",
+  "tags": ["curiosidades", "sabías que", "ballena azul", "animales", "datos curiosos", "shorts"]
+}
