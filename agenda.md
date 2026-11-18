@@ -4,4 +4,4 @@ La tarea diaria (11:41, Madrid) mira aquí antes de hacer vídeos: solo hace los
 
 | Fecha | Hora | Vídeo | Estado |
 |---|---|---|---|
-| 2026-11-19 | 17:00 | What Happened To Edison's Last Breath? 🧪 (ejemplo formato bucle, v10) | programado el 18/11 a mano → hoy solo falta el de las 20:00 |
+| 2026-11-19 | 17:00 | What Happened To Edison's Last Breath? 🧪 (ejemplo formato bucle, v10) | youtube.com/shorts/Es08eytBIDY · programado el 18/11 a mano → hoy solo falta el de las 20:00 |
