@@ -8,6 +8,7 @@ Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y progr
 1. `add_repo` ch1qu1t1t0tumadre-eng/shorts-curiosidades con access "push", clonarlo en /home/claude/shorts-curiosidades.
 2. `bash pipeline/setup.sh`
 3. Leer `temas_usados.md` (no repetir ningún tema).
+4. Leer `agenda.md`: si hoy ya hay una hora ocupada por un vídeo programado antes (p. ej. un vídeo de ejemplo), haz solo los vídeos de las horas libres.
 
 ## 1. Elegir el tema y escribir los 2 guiones (rol: el creador de Shorts más influyente de nuestra época)
 Actúa como un creador de vídeos cortos de primer nivel, experto en todos los temas del canal, en psicología del consumidor y en técnicas de atención y retención.
@@ -58,6 +59,7 @@ El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el pe
    - Cada escena es `def eN(ctx, lt, dur, T):` y SIEMPRE: fija la cámara con `camera(ctx, zoom, cx, cy)` usando `keyframes(...)` para que se mueva (acercar, alejar, desplazar), dibuja un fondo (`bg_night`, `bg_sky`, `bg_dark`, `bg_blueprint`, `ground`, `sun`…) y el protagonista del tema.
    - Dibuja el objeto del tema con primitivas de cairo (como la función `tower` del ejemplo): un avión, un planeta, un corazón, un puente… Formas planas con degradados suaves, paleta azul marino/morado de fondo y colores vivos para lo importante. Los emojis de OpenMoji (`icon`) solo como objetos secundarios.
    - El personaje del canal (`character`) aparece en al menos 2 escenas, con la expresión que pida la frase (`duda`, `sorpresa`, `feliz`, `dormido`; `helmet=True`, `wave=1.0`…). NO pongas "FOLLOW" ni despedida al final (rompe el bucle). Todas las etiquetas y textos en pantalla, en inglés americano (MPH, MILES, POUNDS, °F…).
+   - **Personajes famosos (18/11/2026):** cada vez que la voz nombre a alguien conocido, en ese plano aparece su **ficha** para que el espectador lo ubique al instante: `ficha(ctx, "THOMAS EDISON", "INVENTOR · 1847–1931", x, y, pop(lt, t), "💡", YELLOW)` (nombre gigante + a qué se dedica/años + su objeto icónico en el círculo). Si el famoso es el protagonista, su ficha va también en el plano del gancho (y por tanto en el último, por el bucle). **No se usan fotos de personas reales** (ni descargadas ni copiadas): solo la ficha, su objeto icónico y siluetas genéricas (`gent` en ejemplos/escenas_edison_bucle_en.py).
    - Datos en pantalla con `pill` (etiqueta con borde), `badge` (etiqueta roja), `digital_clock`, `counter`, `line_chart`, `arrow`. Que aparezcan con `pop(lt, segundo)` justo cuando la voz dice el dato.
    - Todo lo importante dentro de la zona segura: x 80–1000, y 250–1550 (abajo van los subtítulos y la interfaz de YouTube).
    - `ESCENAS = [(0.0, e1), (t2, e2), ...]`. Subtítulos: por defecto el estilo nuevo (`ESTILO_SUBTITULO = "grande"`): **una palabra gigante** amarilla con borde negro en el centro de la pantalla (y≈1060), como los Shorts virales. No pongas `PALABRAS_POR_SUBTITULO` (por defecto 1). Deja la zona y 900–1200 libre de objetos importantes (o mueve el texto con `Y_SUBTITULO`).

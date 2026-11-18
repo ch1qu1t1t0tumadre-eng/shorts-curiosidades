@@ -607,6 +607,44 @@ def _captions(ctx, mod, ch, T):
         draw_captions(ctx, ch, T)
 
 
+def ficha(ctx, nombre, sub, x, y, appear=1.0, emoji="⭐", accent=YELLOW, w=840):
+    """Ficha de personaje famoso: marco redondo con su símbolo (bombilla, coche...) + NOMBRE grande
+    + a qué se dedica / años. Sirve para que el espectador ubique al personaje al instante.
+    (No se usan fotos de personas reales: solo nombre, datos y su objeto icónico.)"""
+    if appear <= 0.01:
+        return
+    h = 210
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.scale(appear, appear)
+    rrect(ctx, -w / 2, -h / 2 + 8, w, h, 36)
+    fill(ctx, (0, 0, 0), 0.35)
+    rrect(ctx, -w / 2, -h / 2, w, h, 36)
+    fill_keep(ctx, (0.06, 0.07, 0.14), 0.92)
+    stroke(ctx, accent, 6)
+    cx = -w / 2 + h / 2 + 6
+    circle(ctx, cx, 0, h / 2 - 22)
+    fill_keep(ctx, (0.13, 0.15, 0.28))
+    stroke(ctx, accent, 6)
+    icon(ctx, emoji, cx, 0, h - 80)
+    tx = cx + h / 2 + 14
+    ctx.select_font_face(FONT_CAPTION, cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    fs = 92
+    ctx.set_font_size(fs)
+    adv = ctx.text_extents(nombre)[4]
+    maxw = w / 2 - tx - 30
+    if adv > maxw:
+        fs *= maxw / adv
+        ctx.set_font_size(fs)
+    ctx.move_to(tx, -8)
+    ctx.text_path(nombre)
+    ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+    ctx.set_source_rgb(0, 0, 0); ctx.set_line_width(12); ctx.stroke_preserve()
+    ctx.set_source_rgb(*accent); ctx.fill()
+    text(ctx, sub, tx, 52, 34, (0.85, 0.87, 0.95), align="left", shadow=False)
+    ctx.restore()
+
+
 # ---------- miniaturas (pipeline/miniatura.py) ----------
 def thumb_text(ctx, lines, y=330, size=170, rgb=YELLOW, rot=-0.04, gap=0.95):
     """Texto de miniatura: 1–3 líneas gigantes, fuente de cómic, borde negro grueso y sombra roja."""

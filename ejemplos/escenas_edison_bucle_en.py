@@ -113,6 +113,9 @@ def hero_tube(ctx, T, zoom, cy=900):
     bg_lab(ctx, T)
     spotlight(ctx, W / 2, 700, 900, 0.18, (0.8, 0.9, 1.0))
     tube(ctx, W / 2, 820, 1.25, T, wax=1.0, breath=1.0, glow=1.0, tilt=0.06)
+    ctx.restore()
+    ctx.save()
+    ficha(ctx, "THOMAS EDISON", "INVENTOR · 1847–1931", W / 2, 1520, 1.0, "💡", YELLOW)
 
 
 def rack(ctx, x, y, n_show, T, wax=None, sc=1.0):
@@ -386,10 +389,10 @@ def e9(ctx, lt, dur, T):
     camera(ctx, keyframes(lt, [(0, 1.05), (dur, 1.0)]), W / 2, 900)
     bg_blueprint(ctx, T)
     pill(ctx, "EDISON", 230, 420, pop(lt, 0.1), rgb=GOLD)
-    pill(ctx, "FORD", 850, 1500, pop(lt, 2.4), rgb=TEAL)
-    arrow(ctx, 230, 500, 850, 1400, ease((lt - 0.3) / 2.0), WHITE, 8, dashed=True)
+    arrow(ctx, 230, 500, 760, 1250, ease((lt - 0.3) / 2.0), WHITE, 8, dashed=True)
     p = ease((lt - 0.3) / 2.0)
-    box(ctx, lerp(230, 850, p), lerp(560, 1340, p) - 60 * math.sin(p * math.pi), 1.1, 0.15 * math.sin(T * 5))
+    box(ctx, lerp(230, 760, p), lerp(560, 1250, p) - 60 * math.sin(p * math.pi), 1.1, 0.15 * math.sin(T * 5))
+    ficha(ctx, "HENRY FORD", "FORD MOTOR CO. · 1863–1947", W / 2, 1540, pop(lt, 2.4), "🚗", TEAL)
 
 
 # 24.9 "Ford idolized Edison."
@@ -402,7 +405,7 @@ def e10(ctx, lt, dur, T):
         a = k / 7 * math.tau + T
         icon(ctx, "⭐", W / 2 + math.cos(a) * 330, 520 + math.sin(a) * 260, 70, pop(lt, 0.1 * k))
     gent(ctx, W / 2, 1480, 1.0)
-    pill(ctx, "HIS HERO", W / 2, 1300, pop(lt, 0.5), rgb=GOLD)
+    pill(ctx, "FORD'S HERO", W / 2, 1300, pop(lt, 0.5), rgb=GOLD)
 
 
 # 26.1 "Legend says Ford believed the soul leaves the body with the last breath."
