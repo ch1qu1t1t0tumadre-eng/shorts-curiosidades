@@ -44,7 +44,6 @@ RIGS = {
             "cola2": {"padre": "cola", "pivote": (480, 1880), "fin": (230, 1690)},
         },
         "zonas": [
-            ("mandibula", [(790, 480), (870, 470), (1000, 520), (1140, 530), (1150, 600), (1080, 660), (960, 690), (820, 690), (760, 620)], ["mandibula"], 7, "boca"),
             ("oreja_d", [(1090, 20), (1420, 60), (1420, 280), (1180, 270), (1080, 160)], ["oreja_d"], 8, "pegada"),
             ("oreja_i", [(430, 270), (640, 240), (690, 620), (560, 650), (420, 520)], ["oreja_i"], 7, "pegada"),
             ("cabeza", [(380, 0), (1460, 0), (1460, 560), (1240, 600), (1120, 650), (1060, 700), (900, 720), (720, 690), (560, 650), (380, 650)], ["cabeza"], 6, "pegada"),
@@ -56,6 +55,10 @@ RIGS = {
             ("cuerpo", None, ["raiz", "pecho"], 2, "cuerpo"),
         ],
         "boca_rgb": (60, 18, 30),
+        # su boca dibujada está abierta con la lengua fuera: se tapa (queda la línea del labio) y se dibuja al hablar
+        "tapar_auto": {"caja": (770, 470, 1112, 724), "labio": [(812, 488), (965, 526), (1095, 550)]},
+        # los dedos del dibujo miran a la izquierda: se da la vuelta a la pierna para que miren hacia donde anda
+        "espejos": {"pierna_i": 960},
         # pierna de atrás = copia de su pierna recta (el dibujo original tiene una pierna levantada, de baile)
         "clones": {"pierna_d": {"de": "pierna_i", "dx": 170, "dy": -12, "capa": 0.5, "luz": 0.86,
                                 "huesos": {"muslo_d": "muslo_i", "pierna_d": "pierna_i", "pie_d": "pie_i"}}},
@@ -70,6 +73,7 @@ RIGS = {
             "pie_d": {"padre": "raiz", "pivote": (760, 1340), "fin": (780, 1490)},
         },
         "zonas": [
+            ("labios", [(468, 596), (762, 596), (762, 684), (468, 684)], ["cabeza"], 9, "labios"),
             ("taza", [(410, 785), (790, 785), (830, 880), (820, 1075), (390, 1075), (370, 880)], ["brazos"], 5, "suelta"),
             ("cabeza", [(0, 0), (1184, 0), (1184, 600), (950, 650), (800, 700), (590, 730), (380, 700), (230, 650), (0, 600)], ["cabeza"], 4, "pegada"),
             ("pie_i", [(330, 1300), (560, 1300), (560, 1492), (330, 1492)], ["pie_i"], 1, "pegada"),
@@ -90,6 +94,7 @@ RIGS = {
             "pie_d": {"padre": "raiz", "pivote": (1010, 1530), "fin": (1010, 1840)},
         },
         "zonas": [
+            ("labios", [(318, 638), (504, 638), (504, 724), (318, 724)], ["cabeza"], 9, "labios"),
             ("cabeza", [(60, 0), (900, 0), (1000, 300), (1130, 450), (1130, 700), (850, 720), (700, 860), (520, 900), (300, 860), (100, 760), (60, 400)], ["cabeza"], 5, "pegada"),
             ("brazo_i", [(0, 830), (330, 820), (420, 900), (470, 1000), (420, 1330), (200, 1360), (0, 1300)], ["brazo_i", "antebrazo_i"], 4, "pegada"),
             ("mano_d", [(570, 1150), (1100, 1080), (1140, 1200), (900, 1300), (720, 1420), (560, 1360)], ["brazo_d", "mano_d"], 4, "suelta"),
@@ -115,6 +120,7 @@ RIGS = {
             "cola2": {"padre": "cola", "pivote": (1050, 1500), "fin": (1060, 1000)},
         },
         "zonas": [
+            ("labios", [(268, 788), (502, 788), (502, 862), (268, 862)], ["cabeza"], 9, "labios"),
             ("oreja_i", [(110, 170), (330, 230), (330, 500), (60, 520)], ["oreja_i"], 7, "pegada"),
             ("oreja_d", [(560, 210), (740, 190), (770, 500), (580, 520)], ["oreja_d"], 7, "pegada"),
             ("coleta", [(470, 0), (1000, 0), (1000, 620), (760, 640), (640, 500), (470, 260)], ["coleta"], 5, "pegada"),
@@ -223,7 +229,7 @@ def malla(nombre):
             m = (cv2.dilate(m.astype(np.uint8), k12) > 0) & alpha
         tex[zi][m] = im[m]
     for zi, (zn, poly, cadena, capa, tipo) in enumerate(rig["zonas"]):
-        if tipo == "cuerpo":
+        if tipo in ("cuerpo", "labios"):
             continue
         padre = _padre_de(rig, cadena[0])
         pz = zona_de_hueso.get(padre, len(rig["zonas"]) - 1)
@@ -238,9 +244,70 @@ def malla(nombre):
         elif tipo == "boca":  # interior de la boca debajo de la mandíbula
             tex[pz][m, :3] = rig.get("boca_rgb", (60, 18, 30))
             tex[pz][m, 3] = 255
+    zidx = {z[0]: i for i, z in enumerate(rig["zonas"])}
+    rgb_bgr = cv2.cvtColor(im[..., :3], cv2.COLOR_RGB2BGR)
+
+    def _inpaint_en(ti, m):
+        base = cv2.cvtColor(tex[ti][..., :3], cv2.COLOR_RGB2BGR)
+        base[~(tex[ti][..., 3] > 0)] = rgb_bgr[~(tex[ti][..., 3] > 0)]
+        # fuera del dibujo no hay color que copiar: se rellena con el color medio del borde de la zona
+        borde = cv2.dilate(m.astype(np.uint8), np.ones((15, 15), np.uint8)).astype(bool) & ~m & alpha
+        if borde.any():
+            base[~alpha] = np.median(base[borde], axis=0).astype(np.uint8)
+        out = cv2.inpaint(base, m.astype(np.uint8) * 255, 15, cv2.INPAINT_TELEA)
+        tex[ti][m, :3] = cv2.cvtColor(out, cv2.COLOR_BGR2RGB)[m]
+        tex[ti][m, 3] = 255
+    def _rellenar(ti, m):
+        """Rellena con el color plano de la piel de alrededor y suaviza sólo el borde (el dibujo es de colores planos)."""
+        anillo = cv2.dilate(m.astype(np.uint8), np.ones((25, 25), np.uint8)).astype(bool) & ~m & alpha
+        pix = im[anillo][:, :3].astype(np.float32)
+        v = pix.max(1)
+        pix = pix[v > np.percentile(v, 35)]  # sin los trazos oscuros
+        col = np.median(pix, axis=0)
+        tex[ti][m, :3] = col.astype(np.uint8)
+        tex[ti][m, 3] = 255
+        banda = cv2.dilate(m.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool) & ~cv2.erode(m.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool)
+        bl = cv2.GaussianBlur(tex[ti][..., :3], (9, 9), 0)
+        tex[ti][banda & alpha, :3] = bl[banda & alpha]
+    # Teddy: se quita su boca abierta (interior, lengua, barbilla) y queda la línea del labio de arriba
+    ta = rig.get("tapar_auto")
+    if ta:
+        x0, y0, x1, y1 = ta["caja"]
+        hsv = cv2.cvtColor(im[..., :3], cv2.COLOR_RGB2HSV)
+        caja = np.zeros((h, w), bool)
+        caja[y0:y1, x0:x1] = True
+        piel = (hsv[..., 0] > 8) & (hsv[..., 0] < 25) & (hsv[..., 1] > 90) & (hsv[..., 2] > 170)
+        m = caja & alpha & ~piel
+        lab = np.zeros((h, w), np.uint8)
+        cv2.polylines(lab, [np.array(ta["labio"], np.int32)], False, 1, 20)
+        m &= ~lab.astype(bool)
+        m &= ~(np.arange(h)[:, None] < np.interp(np.arange(w), [p_[0] for p_ in ta["labio"]], [p_[1] for p_ in ta["labio"]])[None, :] + 6)
+        m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((7, 7), np.uint8)).astype(bool) & caja & alpha
+        m = cv2.dilate(m.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool) & caja & alpha & ~lab.astype(bool)
+        _rellenar(zidx["cabeza"], m)
+    for zi, z in enumerate(rig["zonas"]):
+        if z[4] == "labios":
+            m = cv2.dilate(masks[zi].astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool) & alpha
+            _rellenar(zidx["cabeza"], m)
+            tex[zi] = np.zeros_like(im)
+            tex[zi][masks[zi]] = im[masks[zi]]
+    # piernas dadas la vuelta (espejo sobre un eje vertical): textura y huesos de la cadena
+    for zn, ax in rig.get("espejos", {}).items():
+        zi = zidx[zn]
+        src = tex[zi]
+        out_ = np.zeros_like(src)
+        xs = np.arange(w)
+        xm = (2 * ax - xs).astype(int)
+        ok = (xm >= 0) & (xm < w)
+        out_[:, xs[ok]] = src[:, xm[ok]]
+        tex[zi] = out_
+        masks[zi] = out_[..., 3] > 0
+        for b in rig["zonas"][zi][2]:
+            hb = rig["huesos"][b]
+            hb["pivote"] = (2 * ax - hb["pivote"][0], hb["pivote"][1])
+            hb["fin"] = (2 * ax - hb["fin"][0], hb["fin"][1])
     # piezas clonadas: la textura de otra pieza desplazada (y sus huesos, desplazados igual)
     clones = rig.get("clones", {})
-    zidx = {z[0]: i for i, z in enumerate(rig["zonas"])}
     for zn, c in clones.items():
         # fuera de todas las piezas lo que quedaba de la pieza original (p. ej. la pierna levantada)
         poly = rig["zonas"][zidx[zn]][1]
@@ -278,6 +345,9 @@ def malla(nombre):
         Wt = np.zeros((len(V), len(names)))
         for k, b in enumerate(cadena):
             Wt[:, bi[b]] = E[:, k]
+        if tipo == "labios":
+            Wt[:] = 0
+            Wt[:, bi["cabeza"]] = 1.0
         if tipo in ("pegada", "boca"):
             padre = _padre_de(rig, cadena[0])
             pz = zona_de_hueso.get(padre, len(rig["zonas"]) - 1)

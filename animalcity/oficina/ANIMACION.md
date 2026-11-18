@@ -7,7 +7,7 @@ Motor: `pipeline/sitcom.py`, más `pipeline/efectos.py` (movimiento, partículas
 ## Qué hay en la caja de herramientas
 **Personajes: muñecos articulados.** `pipeline/rig.py` separa cada dibujo oficial en piezas con esqueleto: hombros, codos, muñecas, caderas, rodillas, cuello, mandíbula (Teddy), cola (Teddy, Mia), orejas y coleta. Debajo de las piezas que tapan el cuerpo se rellena solo, y las costuras no se abren. No hay que tocar nada para usarlo.
 - Movimiento natural automático: respiran, cambian el peso, la cabeza sigue al cuerpo con retraso y asiente al hablar, la cola y las orejas tienen inercia, y los brazos gesticulan con la energía de la voz.
-- **Boca articulada:** pasa `talk=L.boca("pj", T)` (no `L.talk`). La boca se abre con el volumen y cambia de forma según la vocal ("oo" redonda, "ee" ancha, con dientes cuando se abre mucho). Teddy abre la mandíbula de verdad. Para que gesticule más, pasa `ene=L.energia("pj", T)`.
+- **Boca:** pasa `talk=L.boca("pj", T)` (no `L.talk`). En silencio se ve la boca del dibujo; al hablar se oculta y se dibuja una boca abierta sobre la cara limpia, con la forma de cada vocal (dientes y lengua). Teddy tiene la boca cerrada (solo la línea del labio) y la abre al hablar. Para que gesticule más, pasa `ene=L.energia("pj", T)`.
 - `gesto=`:
   - Generales: `agitar` (pánico), `arriba`, `celebrar`, `caido`, `punos`, `tranquilo`, `saludo`, `suplicar`, `correr`, `andar`, `encoger`.
   - Propios: `sorber` (Moe sube la taza), `teclear` (Nana; sale solo con `typing=True`).
@@ -76,7 +76,7 @@ Motor: `pipeline/sitcom.py`, más `pipeline/efectos.py` (movimiento, partículas
 
 ## Pasos
 1. Escribe `work/epNN/escenas.py` (`from sitcom import *`):
-   - Un plano por línea más o menos, con un corte o una transición cada 1–2,5 s. **Que se muevan por las escenas:** que entren andando o corriendo, que crucen el decorado y que se vayan. Las conversaciones van en plano a dos, mirándose. Cada escena es `def eN(ctx, lt, dur, T, L):`, con `zoom_cam(...)` en movimiento, un decorado, los personajes con `talk=L.boca(...)`, un `gesto` que cuente lo que siente y al menos **un movimiento de cartoon o un efecto** (nada de personajes quietos).
+   - **Pocas escenas y largas (3–4 por episodio), sin cortar cada segundo.** Los personajes ENTRAN y SALEN del plano andando o corriendo, la cámara se mueve con `suave(T, [...])` hacia quien habla y los gags (un móvil en burbuja, un "!", luz rosa al suplicar, el temblor de un grito) aparecen encima sin cortar. Solo se corta para un gag que lo pida (el edificio entero oyendo el grito). Ejemplo: `episodios/ep01/escenas.py` (s1, s2, s3). **Que se muevan por las escenas:** que entren andando o corriendo, que crucen el decorado y que se vayan. Las conversaciones van en plano a dos, mirándose. Cada escena es `def eN(ctx, lt, dur, T, L):`, con `zoom_cam(...)` en movimiento, un decorado, los personajes con `talk=L.boca(...)`, un `gesto` que cuente lo que siente y al menos **un movimiento de cartoon o un efecto** (nada de personajes quietos).
    - Gancho: en el fotograma 0 ya pasa algo (alguien entra disparado, un "take", un grito con `lineas_foco`).
    - Cada frase importante lleva un gesto: anticipación antes de un salto, aplastón al caer, estela al correr, "take" en las sorpresas.
    - Zona segura: lo importante entre x 80–1000 e y 250–1550. Los subtítulos van en y≈1330 (cámbialo con `SUB_Y` si tapan algo).

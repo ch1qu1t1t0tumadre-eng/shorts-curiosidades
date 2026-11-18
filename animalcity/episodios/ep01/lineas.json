@@ -10,19 +10,19 @@
   "pj": "nana",
   "texto": "[smug] Say please.",
   "audio": "audio/02.wav",
-  "pausa": 0.35
+  "pausa": 0.6
  },
  {
   "pj": "teddy",
   "texto": "PLEASE!",
   "audio": "audio/03.wav",
-  "pausa": 0.1
+  "pausa": 0.4
  },
  {
   "pj": "nana",
   "texto": "It's TeddyStillSleepsWithANightlight. One word. Capital T.",
   "audio": "audio/04.wav",
-  "pausa": 0.3,
+  "pausa": 0.6,
   "sub": "It's TeddyStillSleeps WithANightlight. One word. Capital T.",
   "voz": "[smug] It's Teddy Still Sleeps With A Nightlight. One word. Capital T."
  },
@@ -30,26 +30,26 @@
   "pj": "moe",
   "texto": "[nervous] Oh no.",
   "audio": "audio/05.wav",
-  "pausa": 0.9
+  "pausa": 1.0
  },
  {
   "pj": "teddy",
   "texto": "[panicked] My new friend is at the door!",
   "audio": "audio/06.wav",
-  "pausa": 0.2,
+  "pausa": 0.5,
   "sub": "My new friend is at the door!"
  },
  {
   "pj": "mia",
   "texto": "[excited] Hey! What's your Wi-Fi?",
   "audio": "audio/07.wav",
-  "pausa": 1.35
+  "pausa": 1.6
  },
  {
   "pj": "teddy",
   "texto": "[mumbles] teddystillsleepswithanightlight",
   "audio": "audio/08.wav",
-  "pausa": 0.6,
+  "pausa": 0.8,
   "sub": "*mumble mumble*",
   "voz": "[mumbles] teddy still sleeps with a nightlight"
  },
@@ -57,39 +57,39 @@
   "pj": "mia",
   "texto": "Sorry?",
   "audio": "audio/09.wav",
-  "pausa": 0.25
+  "pausa": 0.5
  },
  {
   "pj": "teddy",
   "texto": "TEDDY STILL SLEEPS WITH A NIGHTLIGHT!",
   "audio": "audio/10.wav",
-  "pausa": 0.2,
+  "pausa": 0.4,
   "voz": "[shouting] Teddy still sleeps with a nightlight!"
  },
  {
   "pj": "mia",
   "texto": "[flatly] Nope. Wrong password.",
   "audio": "audio/11.wav",
-  "pausa": 1.5,
+  "pausa": 1.6,
   "sub": "Nope. Wrong password."
  },
  {
   "pj": "nana",
   "texto": "[smug] I changed it.",
   "audio": "audio/12.wav",
-  "pausa": 0.3
+  "pausa": 1.4
  },
  {
   "pj": "mia",
   "texto": "[reading slowly] Nana... Is... The... Best. [delighted] It works!",
   "audio": "audio/13.wav",
-  "pausa": 1.1,
+  "pausa": 1.2,
   "sub": "Nana Is The Best... It works!"
  },
  {
   "pj": "teddy",
   "texto": "[sad] Nana...",
   "audio": "audio/14.wav",
-  "pausa": 1.1
+  "pausa": 1.2
  }
 ]

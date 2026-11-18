@@ -197,7 +197,7 @@ PUP = {
               "head": (930, 330), "cheeks": [(790, 470), (1100, 430)]},
     "moe": {"eyes": [(496, 476, 60), (708, 476, 60)], "mouth": (612, 632, 250), "hand": ("brazos", (612, 900)),
             "head": (600, 470), "cheeks": [(450, 590), (760, 590)]},
-    "nana": {"eyes": [(228, 508, 46), (484, 516, 46)], "mouth": (412, 676, 120), "hand": ("antebrazo_i", (130, 990)),
+    "nana": {"eyes": [(228, 508, 46), (484, 516, 46)], "mouth": (412, 680, 150), "hand": ("antebrazo_i", (130, 990)),
              "screen": (128, 990, -0.38), "head": (360, 520), "cheeks": [(250, 610), (500, 620)]},
     "mia": {"eyes": [(192, 708, 52), (440, 716, 52)], "mouth": (380, 824, 190), "hand": ("brazos", (560, 1380)),
             "head": (330, 700), "cheeks": [(200, 810), (470, 820)]},
@@ -364,7 +364,6 @@ def _pose(name, T, mood, abre, ancho, ene, gesto, lean, nod, head_dy, paso=None,
         P["brazo_d"] = 0.7 - rR - fr * sw
         P["antebrazo_d"] = 0.55 - fR
         P["mano_d"] = -0.25 * fR
-        P["mandibula"] = -0.05 + abre * (0.34 + 0.12 * (1 - ancho))
         li = piernas.get("i", (0.04 * _ruido(T, 0.8, 6), 0.0, 0.0))
         ld = piernas.get("d", (-0.04 * _ruido(T, 0.8, 6), 0.0, 0.0))
         P["muslo_i"], P["pierna_i"], P["pie_i"] = li
@@ -434,11 +433,68 @@ def recorrido(lt, puntos, zancada=330.0):
     return pts[-1][1], dist / zancada, pts[-1][1] >= pts[-2][1] if len(pts) > 1 else True, False
 
 
+_BOCA_TEDDY = ((812, 488), (965, 526), (1095, 550))  # línea del labio de arriba (queda en el dibujo)
+
+
+def _boca(ctx, name, meta, abre, ancho, T):
+    """Boca abierta dibujada en el estilo del personaje (trazo oscuro grueso, interior granate, lengua y dientes),
+    sobre la cara limpia: la boca original se oculta mientras habla."""
+    a = clamp(abre)
+    if name == "teddy":
+        (x0, y0), (xm, ym), (x1, y1) = _BOCA_TEDDY
+        d = 40 + 210 * a * (1.15 - 0.3 * ancho)
+        ctx.move_to(x0, y0)
+        ctx.curve_to(x0 + 50, y0 + 22, xm - 60, ym + 6, xm, ym)
+        ctx.curve_to(xm + 60, ym - 2, x1 - 40, y1 - 6, x1, y1)
+        ctx.curve_to(x1 - 10, y1 + d * 0.9, xm + 40, ym + d * 1.05, xm - 30, ym + d * 0.95)
+        ctx.curve_to(x0 + 60, ym + d * 0.75, x0 - 10, y0 + d * 0.45, x0, y0)
+        ctx.close_path()
+        ctx.set_source_rgb(0.27, 0.06, 0.1)
+        ctx.fill_preserve()
+        ctx.save()
+        ctx.clip_preserve()
+        ctx.new_path()
+        ellipse(ctx, xm - 30, ym + d * 0.95, 95 + 30 * a, 26 + 55 * a)  # lengua
+        ctx.set_source_rgb(0.92, 0.45, 0.52)
+        ctx.fill()
+        ctx.restore()
+        ctx.set_source_rgb(*INK)
+        ctx.set_line_width(13)
+        ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+        ctx.stroke()
+        return
+    mx, my, mw = meta["mouth"]
+    wid = mw * (0.72 + 0.5 * ancho)
+    hgt = mw * (0.12 + 0.62 * a) * (1.2 - 0.35 * ancho)
+    top = my - mw * 0.06
+    ctx.move_to(mx - wid / 2, top)
+    ctx.curve_to(mx - wid / 4, top - hgt * 0.12, mx + wid / 4, top - hgt * 0.12, mx + wid / 2, top)
+    ctx.curve_to(mx + wid / 2, top + hgt * 1.25, mx - wid / 2, top + hgt * 1.25, mx - wid / 2, top)
+    ctx.close_path()
+    ctx.set_source_rgb(0.3, 0.06, 0.11)
+    ctx.fill_preserve()
+    ctx.save()
+    ctx.clip_preserve()
+    ctx.new_path()
+    if a > 0.3:  # dientes de arriba
+        ctx.rectangle(mx - wid / 2, top - 4, wid, hgt * 0.26)
+        ctx.set_source_rgb(0.97, 0.96, 0.92)
+        ctx.fill()
+    ellipse(ctx, mx, top + hgt * 0.98, wid * 0.26, hgt * 0.32)  # lengua
+    ctx.set_source_rgb(0.92, 0.45, 0.52)
+    ctx.fill()
+    ctx.restore()
+    ctx.set_source_rgb(*INK)
+    ctx.set_line_width(mw * 0.075)
+    ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+    ctx.stroke()
+
+
 def _mat(M):
     return cairo.Matrix(M[0, 0], M[1, 0], M[0, 1], M[1, 1], M[0, 2], M[1, 2])
 
 
-def _dibuja_malla(ctx, name, pose, alpha=1.0, tint=None, smear=0.0, k=1.0, sgn=1):
+def _dibuja_malla(ctx, name, pose, alpha=1.0, tint=None, smear=0.0, k=1.0, sgn=1, alfas=None):
     """Deforma las piezas del personaje y las pinta con skia en coordenadas de pantalla."""
     piezas, M = _rig.deformar(name, pose)
     m = ctx.get_matrix()
@@ -464,11 +520,16 @@ def _dibuja_malla(ctx, name, pose, alpha=1.0, tint=None, smear=0.0, k=1.0, sgn=1
     cv.clear(_skia.ColorTRANSPARENT)
     samp = _skia.SamplingOptions(_skia.FilterMode.kLinear, _skia.MipmapMode.kLinear)
     for p, dxs, dys in devs:
+        ap = (alfas or {}).get(p["nombre"], 1.0)
+        if ap <= 0.01:
+            continue
         pts = [_skia.Point(float(a - bx0), float(b - by0)) for a, b in zip(dxs, dys)]
         uv = [_skia.Point(float(a), float(b)) for a, b in p["V"]]
         v = _skia.Vertices(_skia.Vertices.kTriangles_VertexMode, pts, uv, None, p["T"].ravel().tolist())
         paint = _skia.Paint(Shader=_img_pieza(p).makeShader(_skia.TileMode.kDecal, _skia.TileMode.kDecal, samp),
                             AntiAlias=True)
+        if ap < 0.999:
+            paint.setAlphaf(ap)
         cv.drawVertices(v, paint)
     arr = np.ascontiguousarray(sk.toarray())
     cs = cairo.ImageSurface.create_for_data(memoryview(arr.reshape(-1)), cairo.FORMAT_ARGB32, bw, bh, bw * 4)
@@ -543,7 +604,8 @@ def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), 
     sgn = -1 if flip else 1
     ctx.scale(k * sgn / (sq_t ** 0.6), k * sq_t)
     ctx.translate(-fx, -fb)
-    M = _dibuja_malla(ctx, name, P, alpha, tint, smear, k, sgn)
+    habla = clamp((abre - 0.05) / 0.1)
+    M = _dibuja_malla(ctx, name, P, alpha, tint, smear, k, sgn, {"labios": 1.0 - habla})
     Mh = M["cabeza"]
     # --- colorete, párpados y boca (pegados a la cabeza)
     ctx.save()
@@ -578,35 +640,8 @@ def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), 
             ctx.set_line_width(er * 0.16)
             ctx.stroke()
             ctx.restore()
-    if meta["mouth"] and abre > 0.05:  # boca con forma de vocal: "oo" redonda, "ee" ancha
-        mx, my, mw = meta["mouth"]
-        ellipse(ctx, mx, my, mw * 0.74, mw * 0.3)
-        ctx.set_source_rgb(*meta["skin"])
-        ctx.fill()
-        wid = mw * (0.75 + 0.6 * ancho)
-        hgt = mw * (0.14 + 0.66 * abre) * (1.25 - 0.4 * ancho)
-        ctx.move_to(mx - wid / 2, my)
-        ctx.curve_to(mx - wid / 2, my + hgt * 1.3, mx + wid / 2, my + hgt * 1.3, mx + wid / 2, my)
-        ctx.curve_to(mx + wid / 4, my - hgt * 0.25, mx - wid / 4, my - hgt * 0.25, mx - wid / 2, my)
-        ctx.close_path()
-        ctx.set_source_rgb(0.3, 0.06, 0.11)
-        ctx.fill_preserve()
-        ctx.set_source_rgb(*INK)
-        ctx.set_line_width(mw * 0.06)
-        ctx.stroke()
-        if abre > 0.35:  # dientes de arriba
-            ctx.save()
-            ctx.move_to(mx - wid / 2, my)
-            ctx.curve_to(mx - wid / 2, my + hgt * 1.3, mx + wid / 2, my + hgt * 1.3, mx + wid / 2, my)
-            ctx.close_path()
-            ctx.clip()
-            ctx.rectangle(mx - wid / 2, my - 2, wid, hgt * 0.28)
-            ctx.set_source_rgb(0.97, 0.96, 0.92)
-            ctx.fill()
-            ctx.restore()
-        ellipse(ctx, mx, my + hgt * 0.92, wid * 0.22, hgt * 0.3)
-        ctx.set_source_rgb(0.93, 0.45, 0.52)
-        ctx.fill()
+    if abre > 0.05:
+        _boca(ctx, name, meta, abre, ancho, T)
     ctx.restore()
     # --- móvil en la mano (Teddy / Mia) y texto en la pantalla del móvil de Nana
     hb, (hx_, hy_) = meta["hand"]
@@ -691,10 +726,10 @@ def moe(ctx, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), arms="taz
 
 
 def nana(ctx, x, y, s=1.0, T=0.0, mood="smug", talk=0.0, look=(0, 0), gafas=None, prop="movil", screen_text=None, typing=False,
-         flip=False, **kw):
+         flip=False, bounce=False, **kw):
     if typing:
         kw.setdefault("gesto", "teclear")
-    return puppet(ctx, "nana", x, y, s, T, mood, talk, look, flip, 0.0, screen_text=screen_text,
+    return puppet(ctx, "nana", x, y, s, T, mood, talk, look, flip, 0.2 if bounce else 0.0, screen_text=screen_text,
                   rot=kw.pop("rot", 0.0), **kw)
 
 

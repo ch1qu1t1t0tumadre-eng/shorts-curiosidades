@@ -1,15 +1,17 @@
 # Mesa de Voz y audio · Polly la Lora
 
 Las voces son **propias del canal** y se generan aquí, sin ElevenLabs, sin conexión y sin créditos: `pipeline/voces.py`.
-- Motor: Kokoro-82M (Apache 2.0, uso comercial permitido) más un procesado de tono y formantes (WORLD).
+- Motor: Kokoro-82M (Apache 2.0, uso comercial permitido), con las voces tal cual (sin procesar).
 - La voz de cada personaje está guardada en `VOCES` (mezcla de voces base + tono, formantes, entonación y temblor). **Es la misma en todos los vídeos: no la cambies.**
 
-| Personaje | Voz guardada |
+| Personaje | Voz guardada (sin retocar el tono: retocada sonaba robótica) |
 | --- | --- |
-| Teddy | joven, aguda y con energía (am_puck + am_liam, +8 semitonos, rápida, muy expresiva) |
-| Moe | nerviosa y temblorosa (am_echo + am_michael, +5,5 semitonos, temblor ligero) |
-| Nana | de abuela, lenta y socarrona (af_sarah + bf_emma, −5 semitonos, formantes de mayor, temblor de voz) |
-| Mia | joven y con chispa (af_heart + af_bella, +3,5 semitonos, expresiva) |
+| Teddy | am_puck, ritmo 0,94 |
+| Moe | am_liam + am_echo, ritmo 0,9 |
+| Nana | bf_emma, ritmo 0,86 (pausada) |
+| Mia | af_heart, ritmo 0,93 |
+
+**Que se entienda bien es lo primero, aunque el episodio dure más.** Pausas de 0,4–0,8 s entre frases (1–1,6 s cuando hay un silencio cómico). No aceleres las voces.
 
 ## Pasos
 1. En `work/epNN/lineas.json`, `texto` admite al principio de cada trozo una emoción entre corchetes:

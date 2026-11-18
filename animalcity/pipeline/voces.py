@@ -1,7 +1,7 @@
 """Voces propias de AnimalCity TV (sin ElevenLabs, sin créditos, sin conexión).
 
-Motor: Kokoro-82M (Apache 2.0, uso comercial permitido) en ONNX, que corre aquí mismo, más un procesado WORLD
-(pyworld) que da a cada personaje su voz fija: tono, formantes (tamaño de la "cabeza"), entonación, temblor...
+Motor: Kokoro-82M (Apache 2.0, uso comercial permitido) en ONNX, que corre aquí mismo. Cada personaje tiene su
+voz fija del motor, sin retoques de tono (sonaban robóticos), a un ritmo tranquilo para que se entienda bien.
 La voz de cada personaje está GUARDADA en VOCES (mezcla de voces base + ajustes) y es la misma en todos los vídeos.
 
     python3 voces.py work/epNN            # genera audio/NN.wav de cada línea de lineas.json y monta el diálogo
@@ -22,28 +22,26 @@ SR = 24000
 
 # ---------------------------------------------------------------- las voces del reparto (no cambiar: son "su" voz)
 VOCES = {
-    "teddy": {"mezcla": [("am_puck", 0.65), ("am_liam", 0.35)], "velocidad": 1.08, "semitonos": 8.0, "formante": 1.12,
-              "expresion": 1.35, "temblor": 0.0},
-    "moe": {"mezcla": [("am_echo", 0.55), ("am_michael", 0.45)], "velocidad": 1.02, "semitonos": 5.5, "formante": 1.12,
-            "expresion": 1.1, "temblor": 0.012},
-    "nana": {"mezcla": [("af_sarah", 0.6), ("bf_emma", 0.4)], "velocidad": 0.9, "semitonos": -5.0, "formante": 0.95,
-             "expresion": 0.85, "temblor": 0.025},
-    "mia": {"mezcla": [("af_heart", 0.6), ("af_bella", 0.4)], "velocidad": 1.05, "semitonos": 3.5, "formante": 1.05,
-            "expresion": 1.2, "temblor": 0.0},
+    # voces limpias del motor (sin retocar el tono: el retoque las hacía sonar robóticas), algo lentas para entenderse bien
+    "teddy": {"mezcla": [("am_puck", 1.0)], "velocidad": 0.94},
+    "moe": {"mezcla": [("am_liam", 0.7), ("am_echo", 0.3)], "velocidad": 0.9},
+    "nana": {"mezcla": [("bf_emma", 1.0)], "velocidad": 0.86},
+    "mia": {"mezcla": [("af_heart", 1.0)], "velocidad": 0.93},
 }
 
+# las emociones solo cambian el ritmo y el volumen (nada de tono)
 EMOCIONES = {
-    "panicked": {"velocidad": 1.14, "semitonos": 1.5, "expresion": 1.35, "gan": 2},
-    "nervous": {"velocidad": 1.08, "semitonos": 1.0, "expresion": 1.2, "temblor": 0.02},
-    "shouting": {"velocidad": 1.06, "semitonos": 3.0, "expresion": 1.45, "gan": 5, "grito": True},
-    "whispers": {"velocidad": 1.0, "susurro": True, "gan": -9},
-    "mumbles": {"velocidad": 1.25, "susurro": True, "gan": -11, "apagada": True},
-    "flatly": {"velocidad": 0.94, "expresion": 0.45, "semitonos": -0.5},
-    "smug": {"velocidad": 0.9, "expresion": 0.8},
-    "reading slowly": {"velocidad": 0.78, "expresion": 0.9},
-    "delighted": {"velocidad": 1.04, "semitonos": 1.5, "expresion": 1.45, "gan": 1},
-    "excited": {"velocidad": 1.1, "semitonos": 2.0, "expresion": 1.5, "gan": 2},
-    "sad": {"velocidad": 0.86, "semitonos": -1.0, "expresion": 0.7, "gan": -2},
+    "panicked": {"velocidad": 1.08, "gan": 2},
+    "nervous": {"velocidad": 1.02},
+    "shouting": {"velocidad": 1.02, "gan": 5, "grito": True},
+    "whispers": {"velocidad": 0.98, "gan": -8, "apagada": True},
+    "mumbles": {"velocidad": 1.12, "gan": -10, "apagada": True},
+    "flatly": {"velocidad": 0.9},
+    "smug": {"velocidad": 0.92},
+    "reading slowly": {"velocidad": 0.8},
+    "delighted": {"velocidad": 1.0, "gan": 1},
+    "excited": {"velocidad": 1.05, "gan": 2},
+    "sad": {"velocidad": 0.86, "gan": -2},
 }
 
 _K = None
@@ -117,10 +115,10 @@ def _world(y, cfg):
 
 def _filtro(y, cfg):
     if cfg.get("apagada"):  # como dicho entre dientes
-        k = np.ones(9) / 9
+        k = np.ones(7) / 7
         y = np.convolve(y, k, mode="same")
     if cfg.get("grito"):
-        y = np.tanh(y * 2.2) / np.tanh(2.2)
+        y = np.tanh(y * 1.6) / np.tanh(1.6)
     y = y * (10 ** (cfg.get("gan", 0) / 20))
     return y
 
@@ -138,20 +136,13 @@ def decir(pj, texto):
         if decir_txt.isupper() and len(re.sub(r"[^A-Z]", "", decir_txt)) > 2 and not e.get("grito"):
             e = dict(EMOCIONES["shouting"])
         if decir_txt.isupper():
-            decir_txt = decir_txt.lower().capitalize()  # el motor lee mejor en minúsculas; la emoción lo grita
+            decir_txt = decir_txt.lower().capitalize()
         cfg["velocidad"] *= e.pop("velocidad", 1.0)
-        for kk in ("semitonos",):
-            cfg[kk] += e.pop(kk, 0.0)
-        for kk in ("expresion",):
-            cfg[kk] *= e.pop(kk, 1.0)
-        if "temblor" in e:
-            cfg["temblor"] = cfg.get("temblor", 0) + e.pop("temblor")
         cfg.update(e)
         y, sr = k.create(decir_txt, voice=estilo, speed=cfg["velocidad"], lang="en-us")
-        y = _world(np.asarray(y, np.float32), cfg)
-        y = _filtro(y, cfg)
+        y = _filtro(np.asarray(y, np.float32), cfg)
         piezas.append(y)
-        piezas.append(np.zeros(int(SR * 0.12), np.float32))
+        piezas.append(np.zeros(int(SR * 0.3), np.float32))
     y = np.concatenate(piezas[:-1]) if piezas else np.zeros(1, np.float32)
     pk = np.abs(y).max() + 1e-9
     return (y / pk * 0.89).astype(np.float32) if pk > 0.89 else y
