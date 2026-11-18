@@ -607,6 +607,75 @@ def _captions(ctx, mod, ch, T):
         draw_captions(ctx, ch, T)
 
 
+# ---------- miniaturas (pipeline/miniatura.py) ----------
+def thumb_text(ctx, lines, y=330, size=170, rgb=YELLOW, rot=-0.04, gap=0.95):
+    """Texto de miniatura: 1–3 líneas gigantes, fuente de cómic, borde negro grueso y sombra roja."""
+    ctx.save()
+    ctx.translate(W / 2, y)
+    ctx.rotate(rot)
+    yy = 0
+    for ln in lines:
+        col = rgb
+        if isinstance(ln, tuple):
+            ln, col = ln
+        ctx.select_font_face(FONT_CAPTION, cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+        fs = size
+        ctx.set_font_size(fs)
+        adv = ctx.text_extents(ln)[4]
+        if adv > 960:
+            fs = fs * 960 / adv
+            ctx.set_font_size(fs)
+            adv = ctx.text_extents(ln)[4]
+        x0, y0 = -adv / 2, yy + fs * 0.35
+        ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+        for dx, dy, c, lw in ((10, 13, (0.55, 0.05, 0.05), 30), (0, 0, (0, 0, 0), 26)):
+            ctx.new_path(); ctx.move_to(x0 + dx, y0 + dy); ctx.text_path(ln)
+            ctx.set_source_rgb(*c); ctx.set_line_width(lw); ctx.stroke_preserve(); ctx.fill()
+        ctx.new_path(); ctx.move_to(x0, y0); ctx.text_path(ln)
+        ctx.set_source_rgb(*col); ctx.fill()
+        yy += fs * gap
+    ctx.restore()
+
+
+def thumb_circle(ctx, x, y, rx, ry, rgb=RED, w=16):
+    """Círculo rojo 'a mano' alrededor del detalle intrigante."""
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.scale(1, ry / rx)
+    ctx.new_path()
+    ctx.arc(0, 0, rx, -2.6, -2.6 + math.tau * 1.06)
+    ctx.restore()
+    ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+    stroke(ctx, (0, 0, 0), w + 10, 0.6)
+    ctx.save(); ctx.translate(x, y); ctx.scale(1, ry / rx); ctx.new_path()
+    ctx.arc(0, 0, rx, -2.6, -2.6 + math.tau * 1.06); ctx.restore()
+    stroke(ctx, rgb, w)
+
+
+def thumb_arrow(ctx, x0, y0, x1, y1, rgb=RED, w=34):
+    """Flecha gruesa de miniatura (con borde negro)."""
+    ang = math.atan2(y1 - y0, x1 - x0)
+    L = math.hypot(x1 - x0, y1 - y0)
+    for col, ext in (((0, 0, 0), 8), (rgb, 0)):
+        ctx.save()
+        ctx.translate(x0, y0)
+        ctx.rotate(ang)
+        ctx.new_path()
+        ctx.move_to(0, -w / 2 - ext); ctx.line_to(L - w * 2.2, -w / 2 - ext); ctx.line_to(L - w * 2.2, -w * 1.6 - ext)
+        ctx.line_to(L + ext * 1.5, 0); ctx.line_to(L - w * 2.2, w * 1.6 + ext); ctx.line_to(L - w * 2.2, w / 2 + ext)
+        ctx.line_to(0, w / 2 + ext); ctx.close_path()
+        fill(ctx, col)
+        ctx.restore()
+
+
+def thumb_vignette(ctx, a=0.55):
+    g = cairo.RadialGradient(W / 2, H * 0.45, W * 0.35, W / 2, H * 0.45, H * 0.75)
+    g.add_color_stop_rgba(0, 0, 0, 0, 0)
+    g.add_color_stop_rgba(1, 0, 0, 0, a)
+    ctx.set_source(g)
+    ctx.paint()
+
+
 # ---------- render ----------
 def render(workdir):
     spec_mod = importlib.util.spec_from_file_location("escenas", os.path.join(workdir, "escenas.py"))
