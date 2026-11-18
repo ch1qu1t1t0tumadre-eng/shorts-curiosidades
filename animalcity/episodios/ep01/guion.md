@@ -9,7 +9,7 @@
 | 0,0–2,9 | Primer plano de Teddy (salón, noche) | Pánico, móvil en alto | TEDDY: "Nana. Wi-Fi password. Now." | NOW. (1,7 s) | pop | Arranca en plena urgencia: ¿por qué tanta prisa? |
 | 2,9–4,5 | Nana en el sillón | Baja las gafas muy despacio | NANA: "Say please." | — | ding | Cambio de ritmo, de rápido a lento. Presenta a quien manda |
 | 4,5–5,6 | Ráfaga amarilla | Teddy grita con los brazos arriba | TEDDY: "PLEASE!" | PLEASE. | whoosh | Primer pico de volumen |
-| 5,6–11,2 | Nana tecleando → tablet a pantalla completa | La contraseña se escribe letra a letra | NANA: "It's TeddyStillSleepsWithANightlight. One word. Capital T." | Contraseña + SAVED | typing | El chiste que el resto del episodio va a pagar |
+| 5,6–11,2 | Nana tecleando → móvil a pantalla completa | La contraseña se escribe letra a letra | NANA: "It's TeddyStillSleepsWithANightlight. One word. Capital T." | Contraseña + SAVED | typing | El chiste que el resto del episodio va a pagar |
 | 11,2–12,6 | Moe en el sofá | Escupe el zumo, suda | MOE: "Oh no." | — | spit | Reacción que deja respirar |
 | 12,6–15,6 | Teddy de cerca | Susurra con rabia; suena el timbre | TEDDY: "My date is literally at the door." | — | doorbell | Sube lo que está en juego |
 | 15,6–17,7 | Puerta: Mia | Simpática, con el móvil | MIA: "Hey! What's your Wi-Fi?" | — | — | La pregunta del principio, ahora con público |
