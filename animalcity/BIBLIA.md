@@ -9,15 +9,18 @@ Situación que todo el mundo reconoce → conflicto en el **primer segundo** →
 - El chiste tiene que entenderse sin sonido: los rótulos y las caras cuentan la historia.
 - Comedia blanca de situación: nada de política, sexo, violencia real, insultos fuertes, marcas ni famosos. Tampoco se parodian personajes de otras series.
 
-## Reparto (personajes originales del canal)
-| Personaje | Animal | Personalidad | Cómo actúa | Frases o tics | Voz ElevenLabs (eleven_v4) |
-| --- | --- | --- | --- | --- | --- |
-| **Teddy** (24) | Golden retriever, sudadera roja | Entusiasta, dice que sí a todo, no se entera de nada. Casi siempre es el que provoca el lío | Energía alta, salta, grita, cara de pánico cuando sale mal | "Okay okay okay…", "Nana…" | Jake · `WAYsiv3Yudejrr5Di4lf` |
-| **Moe** (25) | Hámster con gafas | Ansioso, lo piensa todo demasiado. Es el que se queda serio mientras los demás hacen el tonto: reacciona en vez de actuar | Tiembla, suda, escupe la bebida, susurra "Oh no." | Mira a cámara | Timmy (Anxious Nerd) · `mrQhZWGbb2k9qWJb5qeA` |
-| **Nana June** (84) | Tortuga con gafas de sol, perlas y tablet | Abuela de Teddy. Más conectada que nadie, tranquila y letal. **Siempre gana.** No levanta la vista de la tablet | Lenta, cara de póquer, baja las gafas para mirar por encima | "I changed it." | Grandma Muffins · `vFLqXa8bgbofGarf6fZh` (voz dulce que contrasta con lo que dice) |
-| **Mia** (23) | Zorra, chaqueta verde azulado | Cita/novia de Teddy. Lista y simpática. Siempre se pone de parte de Nana | Ladea la cabeza, choque de puños con Nana | — | Melody · `Lb0YjiVdotJrGAKbDrUs` |
+## Reparto (personajes originales del canal · diseño oficial "variante 2")
+Los personajes son **los dibujos oficiales** creados en el flujo "Personajes" de ElevenLabs (variante 2 del reparto, `referencias/reparto_v2.png`). No se redibujan: `pipeline/recortar_reparto.py` los recorta en `pipeline/assets/personajes/*.png` y `sitcom.py` los anima como marionetas (respiran, rebotan, parpadean y mueven la boca con la voz).
 
-Colores fijos (cuerpo, rótulo y miniatura): Teddy naranja `#F2A93B` · Moe azul `#5EB8F2` · Nana morado `#B07CE8` · Mia naranja zorro `#FF7A45`.
+| Personaje | Animal y aspecto | Personalidad | Cómo actúa | Frases o tics | Voz ElevenLabs (eleven_v4) |
+| --- | --- | --- | --- | --- | --- |
+| **Teddy** (24) | Golden retriever larguirucho, sudadera naranja con capucha, lengua fuera | Entusiasta, dice que sí a todo, no se entera de nada. Casi siempre es el que provoca el lío | Energía alta, salta, grita, cara de pánico cuando sale mal | "Okay okay okay…", "Nana…" | Jake · `WAYsiv3Yudejrr5Di4lf` |
+| **Moe** (25) | Erizo azul marino con gafas redondas, rebeca azul y taza | Ansioso, lo piensa todo demasiado. Reacciona en vez de actuar | Tiembla, suda, escupe la bebida, susurra "Oh no." | Mira a cámara | Timmy (Anxious Nerd) · `mrQhZWGbb2k9qWJb5qeA` |
+| **Nana June** (84) | Tortuga, gorro morado de lana, chal morado, pelo blanco rizado, gafas de cerca colgadas de una cadena, móvil en la mano | Abuela de Teddy. Más conectada que nadie, tranquila y letal. **Siempre gana.** No levanta la vista del móvil | Lenta, cara de póquer, mirada de reojo | "I changed it." | Grandma Muffins · `vFLqXa8bgbofGarf6fZh` |
+| **Mia** (23) | Zorra con coleta pelirroja, bomber verde, brazos cruzados | Cita/novia de Teddy. Lista y con chispa. Siempre se pone de parte de Nana | Sonrisa de lado, ceja levantada | — | Melody · `Lb0YjiVdotJrGAKbDrUs` |
+
+Colores fijos (rótulo y miniatura): Teddy naranja `#F08A3C` · Moe azul `#5B8FE0` · Nana morado `#B07CE8` · Mia verde `#6CC26A`.
+Para poses nuevas (p. ej. Mia con el puño en alto, Teddy sentado) hay que generar la pose en el mismo flujo "Personajes" partiendo del dibujo oficial y recortarla igual; nunca se sustituyen por dibujos hechos a mano.
 Se pueden añadir personajes secundarios (casero, vecino, jefe…), siempre animales originales y con su función en `sitcom.py`.
 
 ## Lugares

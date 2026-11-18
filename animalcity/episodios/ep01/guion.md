@@ -18,7 +18,7 @@
 | 20,7–23,4 | Ráfaga rosa | Teddy grita y se rinde | TEDDY: "TEDDY STILL SLEEPS WITH A NIGHTLIGHT!" | La frase en dos líneas | whoosh, grillos | Pico máximo + silencio |
 | 23,4–25,3 | Mia con el móvil | Teclea, duda | MIA: "...Incorrect." | INCORRECT | typing, error | Primer giro |
 | 25,3–26,5 | Nana | Sin levantar la vista | NANA: "I changed it." | — | — | La frase fija de Nana |
-| 26,5–30,6 | Mia lee la tablet de Nana | Sonríe, choque de puños | MIA: "'MiaCanDoBetter'... Connected!" | CONNECTED | connect, sting | Segundo giro: la cita se pone de parte de Nana |
+| 26,5–30,6 | Mia lee el móvil de Nana | Sonríe de lado, brazos cruzados (inserto del móvil) | MIA: "'MiaCanDoBetter'... Connected!" | CONNECTED | connect, sting | Segundo giro: la cita se pone de parte de Nana |
 | 30,6–31,8 | Teddy mira a cámara | Derrotado, vuelve a coger el móvil | TEDDY: "Nana..." | — | corte | Enlaza con el principio (bucle) |
 
 **Título:** Never ask Nana for the Wi-Fi password 💀 #animation #comedy #shorts

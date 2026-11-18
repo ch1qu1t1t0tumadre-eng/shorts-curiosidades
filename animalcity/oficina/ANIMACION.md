@@ -1,6 +1,6 @@
 # Mesa de Animación · Otto el Pulpo
 
-Motor: `pipeline/sitcom.py` (personajes `teddy`, `moe`, `nana`, `mia`; decorados `salon`, `puerta`, `cocina`, `rafaga`; `rotulo`, `impacto`, `badge`, `zoom_cam`, `phone`, `tablet`; efectos `SFX`). Ejemplo completo: `episodios/ep01/escenas.py`.
+Motor: `pipeline/sitcom.py` (personajes `teddy`, `moe`, `nana`, `mia` = marionetas hechas con los **dibujos oficiales** de `pipeline/assets/personajes/`, ver BIBLIA; decorados `salon`, `puerta`, `cocina`, `rafaga`; `rotulo`, `impacto`, `badge`, `zoom_cam`, `phone`, `tablet`; efectos `SFX`). Ejemplo completo: `episodios/ep01/escenas.py`.
 
 ## Regla de oro: no repetir ningún plano
 `registro/planos_usados.md` guarda cada plano ya emitido como `decorado:variante · encuadre · personajes · elemento distintivo`. En cada episodio:
@@ -12,7 +12,7 @@ Motor: `pipeline/sitcom.py` (personajes `teddy`, `moe`, `nana`, `mia`; decorados
 1. Escribe `work/epNN/escenas.py` (`from sitcom import *`):
    - Un plano por línea de diálogo aproximadamente, con cortes cada 1–2,5 s. Los cambios de plano coinciden con el `ini` de cada línea en `timeline.json`.
    - Cada escena es `def eN(ctx, lt, dur, T, L):`. Siempre lleva `zoom_cam(...)` con keyframes para que la cámara se mueva, un decorado y los personajes con `talk=L.talk("<pj>", T)` para que las bocas sigan la voz.
-   - Ánimo de cada personaje según la frase (`normal`, `feliz`, `sorpresa`, `panico`, `enfado`, `sospecha`, `smug`, `cansado`, `triste`). Nana: `gafas="puestas"|"bajadas"|"frente"`.
+   - Ánimo de cada personaje según la frase (`normal`, `feliz`, `sorpresa`, `panico`, `enfado`, `sospecha`, `smug`, `cansado`, `triste`). Poses: los personajes tienen una pose fija (la del dibujo oficial). Ánimo = parpadeo, gotas de sudor (`panico`), símbolo de enfado (`enfado`), líneas de sorpresa (`sorpresa`), temblor y rebote. `arms="movil"` pone un móvil en la mano de Teddy o Mia; Nana ya lleva el suyo (`screen_text` escribe en su pantalla). `flip=True` gira al personaje. Para enseñar una pantalla, haz un inserto a pantalla completa.
    - Gancho: el plano 1 es un primer plano con emoción extrema desde el fotograma 0, y lleva un `impacto(...)` en el segundo 1–2.
    - Los gritos van como `impacto` (y `rotulo:false` en `lineas.json`). Los rótulos de diálogo salen solos.
    - Zona segura: lo importante entre x 80–1000 e y 250–1550. Abajo va la interfaz de YouTube.

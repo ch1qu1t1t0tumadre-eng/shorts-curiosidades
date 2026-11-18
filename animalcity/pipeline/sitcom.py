@@ -30,10 +30,10 @@ INK = (0.08, 0.07, 0.12)
 
 # ---------------------------------------------------------------- paleta de personajes
 PJ = {
-    "teddy": {"nombre": "TEDDY", "color": hexc("#F2A93B"), "oscuro": hexc("#B8741E")},
-    "moe":   {"nombre": "MOE",   "color": hexc("#5EB8F2"), "oscuro": hexc("#2E7DB8")},
-    "nana":  {"nombre": "NANA",  "color": hexc("#B07CE8"), "oscuro": hexc("#7140A8")},
-    "mia":   {"nombre": "MIA",   "color": hexc("#FF7A45"), "oscuro": hexc("#C9461A")},
+    "teddy": {"nombre": "TEDDY", "color": hexc("#F08A3C"), "oscuro": hexc("#B9561A")},
+    "moe":   {"nombre": "MOE",   "color": hexc("#5B8FE0"), "oscuro": hexc("#2A4C8F")},
+    "nana":  {"nombre": "NANA",  "color": hexc("#B07CE8"), "oscuro": hexc("#6A3590")},
+    "mia":   {"nombre": "MIA",   "color": hexc("#6CC26A"), "oscuro": hexc("#3A6E37")},
 }
 
 
@@ -178,298 +178,183 @@ def tablet(ctx, x, y, s=1.0, rot=0.0, screen_text=None):
     ctx.restore()
 
 
-# ---------------------------------------------------------------- personajes
-def teddy(ctx, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), arms="abajo", prop=None, bounce=True):
-    """Teddy: golden retriever, 24 años, sudadera roja. (x, y) = pies; altura ~620*s."""
+# ---------------------------------------------------------------- personajes (marionetas)
+# Los personajes son los DIBUJOS OFICIALES del reparto (variante 2 del lineup "Sitcom – Personajes",
+# referencias/reparto_v2.png), recortados por pipeline/recortar_reparto.py en assets/personajes/*.png.
+# No se redibujan: se animan encima (respiración, rebote, temblor, parpadeo, boca con la voz, gestos).
+_PUP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "personajes")
+_PUP_WORLD = 0.29  # unidades del lienzo (1080x1920) por píxel del recorte (x4)
+# Puntos de la cara en píxeles del recorte: ojos (x, y, radio), boca (x, y, ancho), mano para el móvil, pantalla.
+PUP = {
+    "teddy": {"eyes": [(836, 340, 78), (1012, 300, 78)], "mouth": (976, 520, 150), "cover": False,
+              "hand": (1704, 948), "head": (930, 330)},
+    "moe": {"eyes": [(496, 476, 60), (708, 476, 60)], "mouth": (612, 632, 250), "cover": True,
+            "hand": (612, 900), "head": (600, 470)},
+    "nana": {"eyes": [(228, 508, 46), (484, 516, 46)], "mouth": (412, 676, 120), "cover": True,
+             "hand": (130, 990), "screen": (128, 990, -0.38), "head": (360, 520)},
+    "mia": {"eyes": [(192, 708, 52), (440, 716, 52)], "mouth": (380, 824, 190), "cover": True,
+            "hand": (560, 1440), "head": (330, 700)},
+}
+_pup_cache = {}
+
+
+def _pup(name):
+    if name not in _pup_cache:
+        surf = cairo.ImageSurface.create_from_png(os.path.join(_PUP_DIR, f"{name}.png"))
+        w, h = surf.get_width(), surf.get_height()
+        data = np.frombuffer(surf.get_data(), np.uint8).reshape(h, surf.get_stride() // 4, 4)[:, :w]
+        alpha = data[..., 3]
+        rows = np.where(alpha.max(1) > 200)[0]
+        bottom = rows[-1]
+        cols = np.where(alpha[max(0, bottom - 120):bottom + 1].max(0) > 200)[0]
+        foot_x = (cols[0] + cols[-1]) / 2
+        meta = dict(PUP[name])
+        # colores de piel/pelo para párpados y para tapar la boca (muestreados del propio dibujo)
+        def sample(px, py):
+            px, py = int(px), int(py)
+            b, g, r, a = data[py, px]
+            return (r / 255, g / 255, b / 255)
+        ex, ey, er = meta["eyes"][0]
+        meta["lid"] = sample(ex, ey - er * 1.35)
+        mx, my, mw = meta["mouth"]
+        meta["skin"] = sample(mx - mw * 0.75, my - mw * 0.05)
+        _pup_cache[name] = (surf, w, h, foot_x, bottom, meta)
+    return _pup_cache[name]
+
+
+def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), flip=False, bounce=0.0, phone_prop=False,
+           screen_text=None, rot=0.0):
+    """Dibuja a un personaje oficial con los pies en (x, y). s = escala (1 = tamaño estándar)."""
+    surf, w, h, fx, fb, meta = _pup(name)
+    k = _PUP_WORLD * s
     ctx.save()
     ctx.translate(x, y)
-    ctx.scale(s, s)
-    by = -6 * abs(math.sin(T * 3.2)) if bounce else 0
-    soft_shadow(ctx, 0, 0, 170, 26, 0.3)
-    ctx.translate(0, by)
-    fur, fur_d, muzzle = hexc("#EDB04A"), hexc("#C9832A"), hexc("#F8DDA4")
-    hood = hexc("#E04A3A")
-    # cuerpo
-    rrect(ctx, -135, -330, 270, 330, 95)
-    fill_keep(ctx, hood)
-    stroke(ctx, INK, 7)
-    rrect(ctx, -70, -150, 140, 70, 30)  # bolsillo
-    stroke(ctx, hexc("#A8302A"), 6)
-    if arms == "arriba":
-        _arm(ctx, -120, -290, 2.6, 170, hood, fur)
-        _arm(ctx, 120, -290, -2.6, 170, hood, fur)
-    elif arms == "movil":
-        _arm(ctx, -120, -290, 0.35, 150, hood, fur)
-        _arm(ctx, 115, -280, -2.2, 150, hood, fur)
-        phone(ctx, 175, -440, 0.95, 0.15, glow=0.5 + 0.5 * math.sin(T * 5))
-    else:
-        _arm(ctx, -120, -290, 0.25, 175, hood, fur)
-        _arm(ctx, 120, -290, -0.25, 175, hood, fur)
-    # cabeza
-    ctx.save()
-    ctx.translate(0, -470)
-    ctx.rotate(0.05 * math.sin(T * 2.1))
-    ellipse(ctx, 0, 0, 160, 150)
-    fill_keep(ctx, fur)
-    stroke(ctx, INK, 7)
-    for sx in (-1, 1):  # orejas caídas, por delante de la cabeza
+    soft_shadow(ctx, 0, 0, w * k * 0.38, 22 * s, 0.28)
+    # movimiento de cuerpo: respiración, rebote, temblor, salto de sorpresa, inclinación al hablar
+    breath = 1 + 0.012 * math.sin(T * 2.6 + len(name))
+    hop = -abs(math.sin(T * 7)) * 18 * s * bounce
+    if mood == "sorpresa":
+        hop -= 14 * s * abs(math.sin(T * 10))
+    jit = (3 * s * math.sin(T * 45), 0) if mood in ("panico",) else (0, 0)
+    tl = clamp(talk)
+    ctx.translate(jit[0], hop)
+    ctx.rotate(rot + 0.025 * math.sin(T * 1.9 + len(name)) + 0.03 * tl * math.sin(T * 13))
+    ctx.scale(k * (-1 if flip else 1) * (1 - 0.01 * tl), k * breath * (1 + 0.02 * tl))
+    ctx.translate(-fx, -fb)
+    ctx.set_source_surface(surf, 0, 0)
+    ctx.get_source().set_filter(cairo.FILTER_GOOD)
+    ctx.paint()
+    # --- párpados (parpadeo; medio cerrados con sospecha / cansado)
+    ph = (T + len(name) * 0.71) % 3.8
+    lid = 1.0 if ph < 0.11 else 0.0
+    if mood in ("sospecha", "cansado") and name in ("teddy", "moe"):
+        lid = max(lid, 0.5)
+    if mood == "dormido":
+        lid = 1.0
+    if lid > 0:
+        for ex, ey, er in meta["eyes"]:
+            ctx.save()
+            ellipse(ctx, ex, ey, er * 1.12, er * 1.12)
+            ctx.clip()
+            ctx.rectangle(ex - er * 1.3, ey - er * 1.25, er * 2.6, er * 2.5 * lid)
+            ctx.set_source_rgb(*meta["lid"])
+            ctx.fill()
+            ctx.move_to(ex - er * 1.05, ey - er * 1.2 + er * 2.4 * lid)
+            ctx.line_to(ex + er * 1.05, ey - er * 1.2 + er * 2.4 * lid)
+            ctx.set_source_rgb(*INK)
+            ctx.set_line_width(er * 0.16)
+            ctx.stroke()
+            ctx.restore()
+    # --- boca que habla
+    mx, my, mw = meta["mouth"]
+    if tl > 0.06:
+        if meta["cover"]:
+            ellipse(ctx, mx, my, mw * 0.62, mw * 0.24)
+            ctx.set_source_rgb(*meta["skin"])
+            ctx.fill()
+        hgt = mw * (0.12 + 0.42 * tl)
+        ctx.move_to(mx - mw / 2, my)
+        ctx.curve_to(mx - mw / 2, my + hgt * 1.35, mx + mw / 2, my + hgt * 1.35, mx + mw / 2, my)
+        ctx.curve_to(mx + mw / 4, my - hgt * 0.2, mx - mw / 4, my - hgt * 0.2, mx - mw / 2, my)
+        ctx.close_path()
+        ctx.set_source_rgb(0.33, 0.07, 0.12)
+        ctx.fill_preserve()
+        ctx.set_source_rgb(*INK)
+        ctx.set_line_width(mw * 0.06)
+        ctx.stroke()
+        ellipse(ctx, mx, my + hgt * 0.9, mw * 0.2, hgt * 0.3)
+        ctx.set_source_rgb(0.93, 0.45, 0.52)
+        ctx.fill()
+    # --- móvil en la mano (Teddy / Mia) y texto en la pantalla del móvil de Nana
+    if phone_prop and name != "nana":
+        hx, hy = meta["hand"]
+        phone(ctx, hx, hy - (0 if name == "mia" else 120), 3.2, 0.12, glow=0.5 + 0.5 * math.sin(T * 5))
+    if screen_text and "screen" in meta:
+        sx, sy, sr = meta["screen"]
         ctx.save()
-        ctx.translate(sx * 160, -75)
-        ctx.rotate(sx * (0.32 + 0.07 * math.sin(T * 4)))
-        ellipse(ctx, 0, 70, 44, 100)
-        fill_keep(ctx, fur_d)
-        stroke(ctx, INK, 7)
+        ctx.translate(sx, sy)
+        ctx.rotate(sr)
+        sz = 60
+        while sz > 18 and text_width(ctx, screen_text, sz) > 150:
+            sz -= 2
+        text(ctx, screen_text, 0, 0, sz, INK, shadow=False)
         ctx.restore()
-    ellipse(ctx, 0, 70, 95, 70)
-    fill_keep(ctx, muzzle)
-    stroke(ctx, INK, 5)
-    _eyes(ctx, 62, -25, 30, mood, T, look, lid_rgb=fur, seed=1)
-    ellipse(ctx, 0, 40, 34, 24)
-    fill(ctx, INK)
-    circle(ctx, -10, 33, 7)
-    fill(ctx, WHITE, 0.7)
-    _mouth(ctx, 0, 88, 78, talk, mood)
-    if mood == "feliz" and talk < 0.1:
-        ellipse(ctx, 18, 112, 18, 24)
-        fill_keep(ctx, (0.95, 0.45, 0.5))
-        stroke(ctx, INK, 4)
+    hx, hy = meta["head"]
+    ctx.restore()
+    # --- gestos encima (en coordenadas del mundo, junto a la cabeza)
+    sgn = -1 if flip else 1
+    head_x = x + (hx - fx) * k * sgn
+    head_y = y + hop + (hy - fb) * k
     if mood == "panico":
-        _sweat(ctx, 150, -60, T)
-    ctx.restore()
-    ctx.restore()
+        _sweat(ctx, head_x + 120 * s * sgn, head_y - 60 * s, T)
+    if mood == "enfado":
+        _anger(ctx, head_x + 120 * s * sgn, head_y - 110 * s, 40 * s, T)
+    if mood == "sorpresa":
+        _shock_lines(ctx, head_x, head_y - 30 * s, 190 * s, T)
 
 
-def moe(ctx, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), arms="abajo", prop=None, bounce=False):
-    """Moe: hámster, 25 años, nervioso, gafas redondas. Pequeño: altura ~430*s."""
+def _anger(ctx, x, y, r, T):
+    k = 1 + 0.12 * math.sin(T * 12)
     ctx.save()
     ctx.translate(x, y)
-    ctx.scale(s, s)
-    tremble = 2.5 * math.sin(T * 41) if mood in ("panico", "sorpresa") else 0
-    soft_shadow(ctx, 0, 0, 140, 22, 0.3)
-    ctx.translate(tremble, 0)
-    fur, belly, inner = hexc("#D9A066"), hexc("#FFF1DD"), hexc("#F2A0A8")
-    # cuerpo-bola
-    ellipse(ctx, 0, -200, 150, 190)
-    fill_keep(ctx, fur)
-    stroke(ctx, INK, 7)
-    ellipse(ctx, 0, -150, 95, 120)
-    fill(ctx, belly)
-    # bracitos
-    if arms == "arriba":
-        _arm(ctx, -110, -230, 2.5, 90, fur, inner, 26)
-        _arm(ctx, 110, -230, -2.5, 90, fur, inner, 26)
-    elif arms == "taza":
-        _arm(ctx, -95, -210, -0.9, 80, fur, inner, 26)
-        rrect(ctx, -45, -215, 60, 70, 10)
-        fill_keep(ctx, hexc("#5EB8F2"))
-        stroke(ctx, INK, 5)
-    else:
-        _arm(ctx, -110, -210, -0.7, 85, fur, inner, 26)
-        _arm(ctx, 110, -210, 0.7, 85, fur, inner, 26)
-    # cabeza
-    ctx.save()
-    ctx.translate(0, -390)
-    for sx in (-1, 1):
-        circle(ctx, sx * 95, -95, 42)
-        fill_keep(ctx, fur)
-        stroke(ctx, INK, 6)
-        circle(ctx, sx * 95, -95, 22)
-        fill(ctx, inner)
-    ellipse(ctx, 0, 0, 140, 125)
-    fill_keep(ctx, fur)
-    stroke(ctx, INK, 7)
-    for sx in (-1, 1):  # mofletes
-        ellipse(ctx, sx * 80, 45, 62, 52)
-        fill_keep(ctx, belly)
-        stroke(ctx, INK, 4)
-    _eyes(ctx, 52, -18, 24, mood, T, look, lid_rgb=fur, seed=2)
-    for sx in (-1, 1):  # gafas
-        circle(ctx, sx * 52, -18, 40)
-        stroke(ctx, hexc("#2E7DB8"), 7)
-    ctx.move_to(-12, -22)
-    ctx.line_to(12, -22)
-    stroke(ctx, hexc("#2E7DB8"), 7)
-    ellipse(ctx, 0, 28, 16, 11)
-    fill(ctx, inner)
-    _mouth(ctx, 0, 56, 50, talk, mood)
-    ctx.move_to(-6, 62)
-    ctx.line_to(-6, 74)
-    ctx.move_to(6, 62)
-    ctx.line_to(6, 74)
-    stroke(ctx, WHITE, 8)
-    for sx in (-1, 1):  # bigotes
-        for k in (-1, 0, 1):
-            ctx.move_to(sx * 40, 30 + k * 10)
-            ctx.line_to(sx * 115, 22 + k * 18)
-    stroke(ctx, INK, 2.5)
-    if mood in ("panico", "sorpresa"):
-        _sweat(ctx, 135, -50, T)
-    ctx.restore()
-    ctx.restore()
-
-
-def nana(ctx, x, y, s=1.0, T=0.0, mood="smug", talk=0.0, look=(0, 0), gafas="puestas", prop="tablet", screen_text=None, typing=False):
-    """Nana June: tortuga de 84 años, gafas de sol, collar de perlas, tablet. gafas: puestas | bajadas | none."""
-    ctx.save()
-    ctx.translate(x, y)
-    ctx.scale(s, s)
-    soft_shadow(ctx, 0, 0, 190, 26, 0.3)
-    skin, skin_d = hexc("#9CC27A"), hexc("#6E9550")
-    shell, shell_l = hexc("#8A6236"), hexc("#B98B4E")
-    # caparazón (detrás)
-    ctx.move_to(-200, -60)
-    ctx.curve_to(-210, -420, 210, -420, 200, -60)
-    ctx.close_path()
-    fill_keep(ctx, shell)
-    stroke(ctx, INK, 7)
-    for cx, cy in ((-95, -200), (0, -280), (95, -200), (-50, -110), (50, -110)):
+    ctx.scale(k, k)
+    for a in range(4):
         ctx.save()
-        ctx.translate(cx, cy)
-        ctx.new_sub_path()
-        for k in range(6):
-            a = math.pi / 3 * k
-            ctx.line_to(46 * math.cos(a), 40 * math.sin(a))
-        ctx.close_path()
-        fill_keep(ctx, shell_l)
-        stroke(ctx, INK, 4)
+        ctx.rotate(a * math.pi / 2)
+        ctx.move_to(r * 0.25, r * 0.25)
+        ctx.curve_to(r * 0.3, r * 0.9, r * 0.9, r * 0.3, r * 0.25, r * 0.25)
         ctx.restore()
-    # cuerpo / rebeca morada
-    rrect(ctx, -120, -230, 240, 230, 70)
-    fill_keep(ctx, PJ["nana"]["color"])
-    stroke(ctx, INK, 7)
-    for k in range(3):
-        circle(ctx, 0, -190 + k * 55, 8)
-        fill(ctx, WHITE)
-    # brazos + tablet
-    if prop == "tablet":
-        _arm(ctx, -110, -200, -0.95, 120, PJ["nana"]["color"], skin, 30)
-        _arm(ctx, 110, -200, 0.95, 120, PJ["nana"]["color"], skin, 30)
-        tablet(ctx, 0, -120 + (3 * math.sin(T * 30) if typing else 0), 0.9, 0.0, screen_text)
-        if typing:
-            for sx in (-1, 1):
-                circle(ctx, sx * 60 + 10 * math.sin(T * 35 + sx), -95, 20)
-                fill_keep(ctx, skin)
-                stroke(ctx, INK, 4)
-    else:
-        _arm(ctx, -110, -200, 0.4, 130, PJ["nana"]["color"], skin, 30)
-        _arm(ctx, 110, -200, -0.4, 130, PJ["nana"]["color"], skin, 30)
-    # cuello + cabeza
-    rrect(ctx, -50, -330, 100, 120, 40)
-    fill_keep(ctx, skin)
-    stroke(ctx, INK, 6)
-    for k in range(4):  # perlas
-        circle(ctx, -45 + k * 30, -240 + abs(k - 1.5) * 6, 13)
-        fill_keep(ctx, (0.98, 0.96, 0.92))
-        stroke(ctx, INK, 3)
-    ctx.save()
-    ctx.translate(0, -410)
-    ctx.rotate(0.03 * math.sin(T * 1.3))
-    ellipse(ctx, 0, 0, 125, 110)
-    fill_keep(ctx, skin)
-    stroke(ctx, INK, 7)
-    for k in (-1, 1):  # arrugas
-        ctx.move_to(k * 95, 30)
-        ctx.curve_to(k * 80, 40, k * 70, 40, k * 60, 32)
-    stroke(ctx, skin_d, 4)
-    ey = -15
-    if gafas == "puestas":
-        for sx in (-1, 1):
-            rrect(ctx, sx * 52 - 42, ey - 30, 84, 58, 24)
-            fill_keep(ctx, (0.06, 0.06, 0.1))
-            stroke(ctx, INK, 4)
-            ctx.move_to(sx * 52 - 20, ey - 18)
-            ctx.line_to(sx * 52 - 5, ey - 18)
-            stroke(ctx, WHITE, 5, 0.6)
-        ctx.move_to(-12, ey - 8)
-        ctx.line_to(12, ey - 8)
-        stroke(ctx, INK, 6)
-    else:
-        _eyes(ctx, 50, ey, 24, mood, T, look, lid_rgb=skin, seed=3)
-        if gafas == "bajadas":  # gafas de sol bajadas hasta la punta de la nariz: mira por encima
-            for sx in (-1, 1):
-                rrect(ctx, sx * 46 - 34, ey + 30, 68, 30, 14)
-                fill_keep(ctx, (0.06, 0.06, 0.1))
-                stroke(ctx, INK, 4)
-            ctx.move_to(-12, ey + 42)
-            ctx.line_to(12, ey + 42)
-            stroke(ctx, INK, 6)
-        elif gafas == "frente":  # gafas subidas a la frente
-            for sx in (-1, 1):
-                rrect(ctx, sx * 50 - 38, ey - 95, 76, 40, 16)
-                fill_keep(ctx, (0.06, 0.06, 0.1))
-                stroke(ctx, INK, 4)
-    _mouth(ctx, 0, 78, 54, talk, mood)
-    ctx.restore()
+    stroke(ctx, hexc("#FF3B3B"), r * 0.22)
     ctx.restore()
 
 
-def mia(ctx, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), arms="abajo", prop=None, bounce=False):
-    """Mia: zorra, cita de Teddy, chaqueta verde azulado. (x, y) = pies; altura ~600*s."""
-    ctx.save()
-    ctx.translate(x, y)
-    ctx.scale(s, s)
-    soft_shadow(ctx, 0, 0, 150, 24, 0.3)
-    fur, fur_d, white = hexc("#F07A3A"), hexc("#C2501E"), hexc("#FFF6EC")
-    jacket = hexc("#1FA59A")
-    # cola
-    ctx.save()
-    ctx.translate(110, -110)
-    ctx.rotate(-0.5 + 0.15 * math.sin(T * 2.4))
-    ellipse(ctx, 70, 0, 110, 52)
-    fill_keep(ctx, fur)
-    stroke(ctx, INK, 6)
-    ellipse(ctx, 150, 0, 40, 34)
-    fill(ctx, white)
-    ctx.restore()
-    rrect(ctx, -115, -320, 230, 320, 80)
-    fill_keep(ctx, jacket)
-    stroke(ctx, INK, 7)
-    ctx.move_to(0, -320)
-    ctx.line_to(0, -40)
-    stroke(ctx, hexc("#137A72"), 6)
-    if arms == "movil":
-        _arm(ctx, -105, -280, 0.3, 150, jacket, fur, 30)
-        _arm(ctx, 100, -270, -2.2, 140, jacket, fur, 30)
-        phone(ctx, 160, -420, 0.9, -0.1, glow=0.6)
-    elif arms == "puno":
-        _arm(ctx, -105, -280, 0.3, 150, jacket, fur, 30)
-        _arm(ctx, 100, -280, -1.57, 160, jacket, fur, 30)
-    else:
-        _arm(ctx, -105, -280, 0.25, 155, jacket, fur, 30)
-        _arm(ctx, 105, -280, -0.25, 155, jacket, fur, 30)
-    ctx.save()
-    ctx.translate(0, -460)
-    for sx in (-1, 1):  # orejas puntiagudas
-        ctx.move_to(sx * 40, -95)
-        ctx.line_to(sx * 135, -200)
-        ctx.line_to(sx * 135, -40)
-        ctx.close_path()
-        fill_keep(ctx, fur)
-        stroke(ctx, INK, 6)
-        ctx.move_to(sx * 110, -165)
-        ctx.line_to(sx * 135, -200)
-        ctx.line_to(sx * 135, -150)
-        ctx.close_path()
-        fill(ctx, INK)
-    ellipse(ctx, 0, 0, 145, 130)
-    fill_keep(ctx, fur)
-    stroke(ctx, INK, 7)
-    ctx.move_to(-130, 20)
-    ctx.curve_to(-60, 20, -30, 60, 0, 120)
-    ctx.curve_to(30, 60, 60, 20, 130, 20)
-    ctx.curve_to(110, 110, -110, 110, -130, 20)
-    fill_keep(ctx, white)
-    stroke(ctx, INK, 5)
-    _eyes(ctx, 55, -25, 26, mood, T, look, lid_rgb=fur, seed=4)
-    for sx in (-1, 1):  # pestañas
-        ctx.move_to(sx * 80, -48)
-        ctx.line_to(sx * 96, -60)
-        stroke(ctx, INK, 5)
-    ellipse(ctx, 0, 40, 22, 16)
-    fill(ctx, INK)
-    _mouth(ctx, 0, 78, 56, talk, mood)
-    ctx.restore()
-    ctx.restore()
+def _shock_lines(ctx, x, y, r, T):
+    a = 0.6 + 0.4 * math.sin(T * 20)
+    for k in (-2, -1, 0, 1, 2):
+        ang = -math.pi / 2 + k * 0.32
+        ctx.move_to(x + math.cos(ang) * r, y + math.sin(ang) * r)
+        ctx.line_to(x + math.cos(ang) * r * 1.35, y + math.sin(ang) * r * 1.35)
+    stroke(ctx, INK, 9, a)
+
+
+# Envoltorios con la misma firma que usan los escenas.py
+def teddy(ctx, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), arms="abajo", prop=None, bounce=True, flip=False):
+    puppet(ctx, "teddy", x, y, s, T, mood, talk, look, flip, 1.0 if bounce else 0.0, phone_prop=(arms == "movil"),
+           rot=(-0.06 if arms == "arriba" else 0.0))
+
+
+def moe(ctx, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), arms="taza", prop=None, bounce=False, flip=False):
+    puppet(ctx, "moe", x, y, s, T, mood, talk, look, flip, 0.4 if bounce else 0.0)
+
+
+def nana(ctx, x, y, s=1.0, T=0.0, mood="smug", talk=0.0, look=(0, 0), gafas=None, prop="movil", screen_text=None, typing=False,
+         flip=False):
+    puppet(ctx, "nana", x, y, s, T, mood, talk, look, flip, 0.0, screen_text=screen_text,
+           rot=(0.012 * math.sin(T * 30) if typing else 0.0))
+
+
+def mia(ctx, x, y, s=1.0, T=0.0, mood="smug", talk=0.0, look=(0, 0), arms="cruzados", prop=None, bounce=False, flip=False):
+    puppet(ctx, "mia", x, y, s, T, mood, talk, look, flip, 0.3 if bounce else 0.0, phone_prop=(arms == "movil"))
 
 
 PERSONAJES = {"teddy": teddy, "moe": moe, "nana": nana, "mia": mia}

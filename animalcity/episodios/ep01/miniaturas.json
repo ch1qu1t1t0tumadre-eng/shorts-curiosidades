@@ -1,7 +1,7 @@
 [
  {"id":"A","t":0.6,"texto":"NEVER ASK\nNANA","color":"#FFD23F","pos":"abajo","zoom":1.0,"cx":540,"cy":960},
  {"id":"B","t":4.9,"texto":"WI-FI WAR","color":"#FFFFFF","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"pegatina":"💀"},
- {"id":"C","t":3.6,"texto":"SAY\nPLEASE.","color":"#B07CE8","pos":"arriba","zoom":1.15,"cx":900,"cy":1120,"borde":"#B07CE8"},
+ {"id":"C","t":3.6,"texto":"SAY\nPLEASE.","color":"#B07CE8","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"borde":"#B07CE8"},
  {"id":"D","t":21.5,"texto":"HE SAID IT\nOUT LOUD","color":"#FFD23F","pos":"abajo","zoom":1.0,"cx":540,"cy":960},
  {"id":"E","t":9.9,"texto":"THE PASSWORD","color":"#FF5A5A","pos":"abajo","zoom":1.0,"cx":540,"cy":960},
  {"id":"F","t":28.4,"texto":"GRANDMA\nWINS","color":"#7CE38B","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"borde":"#7CE38B"},

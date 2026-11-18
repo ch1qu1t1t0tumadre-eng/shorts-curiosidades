@@ -1,7 +1,8 @@
 from sitcom import *
 
 # EP01 · "Never ask Nana for the Wi-Fi password"
-# Planos: salón noche var0 · puerta var1 · ráfagas amarilla y rosa · pantalla de tablet a pantalla completa.
+# Planos: salón noche var0 · puerta var1 · ráfagas amarilla y rosa · pantalla del móvil de Nana a pantalla completa.
+# Personajes: dibujos oficiales (assets/personajes) animados como marionetas.
 
 PASS = "TeddyStillSleepsWithANightlight"
 
@@ -34,7 +35,7 @@ def e3(ctx, lt, dur, T, L):  # PLEASE! en ráfaga
     impacto(ctx, "PLEASE.", 540, 560, 210, WHITE, pop(lt, 0.05, 0.2), T, 8)
 
 
-def e4(ctx, lt, dur, T, L):  # Nana teclea rapidísimo: la contraseña aparece en la tablet
+def e4(ctx, lt, dur, T, L):  # Nana teclea rapidísimo: la contraseña aparece en su móvil
     if lt < 2.4:
         ctx.save()
         zoom_cam(ctx, lt, [(0, (2.0, 900, 1250)), (2.4, (2.4, 900, 1280))])
@@ -42,28 +43,28 @@ def e4(ctx, lt, dur, T, L):  # Nana teclea rapidísimo: la contraseña aparece e
         nana(ctx, 900, 1420, 0.95, T, "smug", L.talk("nana", T), gafas="bajadas", typing=True)
         ctx.restore()
         return
-    # pantalla de la tablet a pantalla completa
+    # pantalla del móvil de Nana a pantalla completa
     ctx.rectangle(0, 0, W, H)
     fill(ctx, (0.08, 0.07, 0.12))
     k = keyframes(lt, [(2.4, 0.92), (dur, 1.0)])
     ctx.save()
-    ctx.translate(W / 2, H / 2)
-    ctx.scale(k, k)
-    rrect(ctx, -480, -330, 960, 660, 50)
+    ctx.translate(W / 2, H / 2 + 150)
+    ctx.scale(k * 0.84, k * 0.84)
+    rrect(ctx, -380, -700, 760, 1400, 90)
     fill_keep(ctx, (0.15, 0.14, 0.2))
-    stroke(ctx, INK, 10)
-    rrect(ctx, -430, -280, 860, 560, 24)
+    stroke(ctx, INK, 12)
+    rrect(ctx, -340, -650, 680, 1300, 64)
     fill(ctx, hexc("#E9F4FF"))
-    text(ctx, "Wi-Fi password", 0, -190, 46, (0.35, 0.4, 0.55), shadow=False)
+    text(ctx, "Wi-Fi password", 0, -330, 50, (0.35, 0.4, 0.55), shadow=False)
     n = int(clamp((lt - 2.5) / 1.6) * len(PASS))
     shown = PASS[:n]
-    rrect(ctx, -390, -110, 780, 230, 20)
+    rrect(ctx, -300, -230, 600, 330, 26)
     fill_keep(ctx, WHITE)
     stroke(ctx, hexc("#5EB8F2"), 6)
-    text(ctx, shown[:16], 0, -40, 60, INK, shadow=False)
-    text(ctx, shown[16:], 0, 50, 60, INK, shadow=False)
+    for i, part in enumerate((shown[:11], shown[11:21], shown[21:])):
+        text(ctx, part, 0, -150 + i * 95, 64, INK, shadow=False)
     if n >= len(PASS):
-        badge(ctx, "SAVED", 0, 200, pop(lt, 4.2, 0.3), 48, hexc("#7CE38B"), INK)
+        badge(ctx, "SAVED", 0, 260, pop(lt, 4.2, 0.3), 56, hexc("#7CE38B"), INK)
     ctx.restore()
 
 
@@ -151,14 +152,29 @@ def e12(ctx, lt, dur, T, L):  # Nana, sin levantar la vista
     ctx.restore()
 
 
-def e13(ctx, lt, dur, T, L):  # Mia lee la tablet de Nana: conectada, choque de puños
+def e13(ctx, lt, dur, T, L):  # Mia lee el móvil de Nana: conectada, complicidad entre las dos
     ctx.save()
     zoom_cam(ctx, lt, [(0, (1.35, 760, 1080)), (dur, (1.45, 760, 1060))])
     salon(ctx, T, var=0)
     nana(ctx, 900, 1420, 0.95, T, "feliz" if lt > 2.6 else "smug", 0, gafas="frente", screen_text="MiaCanDoBetter")
-    mia(ctx, 560, 1560, 0.95, T, "feliz", L.talk("mia", T), arms="puno" if lt > 2.6 else "abajo", look=(0.8, 0.4))
+    mia(ctx, 560, 1560, 0.95, T, "feliz", L.talk("mia", T), arms="cruzados", look=(0.8, 0.4))
     ctx.restore()
-    badge(ctx, "CONNECTED", 540, 1180, pop(lt, 2.9, 0.25), 70, hexc("#7CE38B"), INK)
+    k = pop(lt, 0.35, 0.3)
+    if k > 0:  # inserto: la pantalla del móvil de Nana
+        ctx.save()
+        ctx.translate(560, 1560)
+        ctx.rotate(-0.06)
+        ctx.scale(k * 0.75, k * 0.75)
+        rrect(ctx, -170, -300, 340, 600, 50)
+        fill_keep(ctx, (0.15, 0.14, 0.2))
+        stroke(ctx, INK, 9)
+        rrect(ctx, -148, -275, 296, 550, 34)
+        fill(ctx, hexc("#E9F4FF"))
+        text(ctx, "Wi-Fi", 0, -150, 40, (0.35, 0.4, 0.55), shadow=False)
+        text(ctx, "MiaCan", 0, -40, 52, INK, shadow=False)
+        text(ctx, "DoBetter", 0, 30, 52, INK, shadow=False)
+        ctx.restore()
+    badge(ctx, "CONNECTED", 540, 1240, pop(lt, 2.9, 0.25), 70, hexc("#7CE38B"), INK)
 
 
 def e14(ctx, lt, dur, T, L):  # Teddy mira a cámara, derrotado... y vuelve a empezar (bucle)
