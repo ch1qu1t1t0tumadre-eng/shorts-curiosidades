@@ -248,130 +248,190 @@ def _ruido(T, f, seed):
 
 # Gestos: cada uno devuelve ángulos (radianes) por hueso. Convención: "sube" el brazo izquierdo de la imagen con
 # ángulo positivo y el derecho con negativo; las piernas igual.
-def _pose(name, T, mood, abre, ancho, ene, gesto, lean, nod, head_dy):
+FRENTE = {"teddy": 1, "mia": 1, "moe": 1, "nana": -1}  # hacia dónde mira el dibujo original (+1 derecha)
+
+
+def _pose(name, T, mood, abre, ancho, ene, gesto, lean, nod, head_dy, paso=None, correr=False, escucha=0.0, mira=0):
+    """Ángulos de cada hueso. Brazos en unidades de "subida" (0 = colgando, ~2 = por encima de la cabeza)."""
     sd = len(name) * 1.37
+    fr = FRENTE[name]
     P = {}
-    # respiración y peso
     resp = math.sin(T * 2.4 + sd)
-    P["raiz"] = lean + 0.018 * _ruido(T, 0.9, sd)
-    P["pecho"] = (-0.4 * lean + 0.012 * _ruido(T, 1.1, sd + 1), 0.0, -3.0 * resp)
-    # la cabeza sigue al cuerpo con retraso + asiente al hablar
-    cab = 0.035 * _ruido(T - 0.15, 0.9, sd) + nod + ene * 0.05 * math.sin(T * 7.3 + sd) + abre * 0.03
-    P["cabeza"] = (cab, 0.0, head_dy - 6 * ene * abs(math.sin(T * 6.1 + sd)))
-    # brazos: en reposo se mecen; al hablar gesticulan con la energía de la voz
-    g_i = 0.05 * _ruido(T, 1.3, sd + 2) + ene * (0.18 + 0.16 * math.sin(T * 4.7 + sd))
-    g_d = 0.05 * _ruido(T, 1.2, sd + 3) + ene * (0.14 + 0.18 * math.sin(T * 5.3 + sd + 1.5))
-    f_i = 0.06 * _ruido(T - 0.08, 1.6, sd + 4) + ene * 0.22 * math.sin(T * 6.2 + sd)
-    f_d = 0.06 * _ruido(T - 0.08, 1.5, sd + 5) + ene * 0.22 * math.sin(T * 5.8 + sd + 2)
-    pierna = 0.03 * _ruido(T, 0.8, sd + 6)
+    raiz = lean + 0.016 * _ruido(T, 0.9, sd)
+    pecho_a = -0.4 * lean + 0.012 * _ruido(T, 1.1, sd + 1)
+    pecho_y = -3.0 * resp
+    # cabeza: sigue al cuerpo con retraso, asiente al hablar, escucha y mira al otro
+    cab = 0.03 * _ruido(T - 0.15, 0.9, sd) + nod + ene * 0.06 * math.sin(T * 7.3 + sd) + abre * 0.03
+    cab += escucha * (0.045 * math.sin(T * 4.3 + sd) + 0.05 * mira * fr)
+    cab_y = head_dy - 7 * ene * abs(math.sin(T * 6.1 + sd)) - 6 * escucha
+    # brazos: subida izquierda/derecha y codo
+    rL = 0.06 * _ruido(T, 1.3, sd + 2) + ene * (0.3 + 0.35 * (0.5 + 0.5 * math.sin(T * 4.7 + sd)))
+    rR = 0.06 * _ruido(T, 1.2, sd + 3) + ene * (0.25 + 0.4 * (0.5 + 0.5 * math.sin(T * 5.3 + sd + 1.5)))
+    fL = 0.15 + 0.08 * _ruido(T - 0.08, 1.6, sd + 4) + ene * (0.45 + 0.35 * math.sin(T * 6.2 + sd))
+    fR = 0.15 + 0.08 * _ruido(T - 0.08, 1.5, sd + 5) + ene * (0.45 + 0.35 * math.sin(T * 5.8 + sd + 2))
+    piernas = {}
+    dy_cuerpo = 0.0
     cola_a, cola_f = 0.18, 3.0
     g = gesto
     if g is None:
         g = {"panico": "agitar", "sorpresa": "arriba", "feliz": "celebrar", "triste": "caido", "cansado": "caido",
              "enfado": "punos", "smug": "tranquilo"}.get(mood)
     if g == "agitar":
-        g_i += 0.35 + 0.45 * math.sin(T * 13 + sd)
-        g_d += 0.35 + 0.45 * math.sin(T * 13 + sd + 2.2)
-        f_i += 0.5 * math.sin(T * 15 + sd + 1)
-        f_d += 0.5 * math.sin(T * 15 + sd + 3)
-        P["cabeza"] = (P["cabeza"][0] + 0.06 * math.sin(T * 11), 0.0, P["cabeza"][2])
-        pierna += 0.12 * math.sin(T * 12)
+        rL += 1.0 + 0.6 * math.sin(T * 13 + sd)
+        rR += 1.0 + 0.6 * math.sin(T * 13 + sd + 2.2)
+        fL += 0.5 * math.sin(T * 15 + sd + 1)
+        fR += 0.5 * math.sin(T * 15 + sd + 3)
+        cab += 0.06 * math.sin(T * 11)
         cola_a, cola_f = 0.35, 12
     elif g == "arriba":
-        g_i += 0.85
-        g_d += 0.85
-        f_i += 0.5
-        f_d += 0.5
+        rL += 2.0
+        rR += 2.0
+        fL += 0.4
+        fR += 0.4
     elif g == "celebrar":
         k = 0.5 + 0.5 * math.sin(T * 8)
-        g_i += 0.7 + 0.3 * k
-        g_d += 0.7 + 0.3 * k
-        f_i += 0.4 * k
-        f_d += 0.4 * k
+        rL += 1.8 + 0.4 * k
+        rR += 1.8 + 0.4 * k
+        fL += 0.4 * k
+        fR += 0.4 * k
         cola_a, cola_f = 0.4, 11
     elif g == "caido":
-        g_i -= 0.35
-        g_d -= 0.35
-        f_i -= 0.15
-        f_d -= 0.15
-        P["cabeza"] = (P["cabeza"][0] + 0.1, 0.0, P["cabeza"][2] + 25)
+        rL = 0.02 * _ruido(T, 0.7, 3)
+        rR = 0.02 * _ruido(T, 0.7, 4)
+        fL, fR = 0.05, 0.05
+        cab += 0.12
+        cab_y += 30
         cola_a, cola_f = 0.05, 1.2
     elif g == "punos":
-        g_i += 0.1 + 0.12 * math.sin(T * 22)
-        g_d += 0.1 + 0.12 * math.sin(T * 22 + 1)
-        f_i += 0.45
-        f_d += 0.45
+        rL += 0.5 + 0.15 * math.sin(T * 22)
+        rR += 0.5 + 0.15 * math.sin(T * 22 + 1)
+        fL += 1.3
+        fR += 1.3
     elif g == "tranquilo":
-        P["cabeza"] = (P["cabeza"][0] - 0.05, 0.0, P["cabeza"][2])
+        cab -= 0.05
     elif g == "saludo":
-        g_d += 0.9
-        f_d += 0.25 + 0.45 * math.sin(T * 10)
+        rR += 2.1
+        fR += 0.3 + 0.5 * math.sin(T * 10)
+    elif g == "senalar":
+        rR += 1.3
+        fR = 0.1
     elif g == "suplicar":
-        g_i += 0.15 + 0.06 * math.sin(T * 9)
-        g_d += 0.15 + 0.06 * math.sin(T * 9 + 0.4)
-        f_i += 0.8
-        f_d += 0.8
-        P["cabeza"] = (P["cabeza"][0] + 0.08, 0.0, P["cabeza"][2])
-    elif g in ("correr", "andar"):
-        w = 14 if g == "correr" else 7
-        a = 0.55 if g == "correr" else 0.3
-        ph = T * w
-        P["muslo_i"] = a * math.sin(ph)
-        P["pierna_i"] = -a * 1.2 * max(0, math.sin(ph + 1.2))
-        P["muslo_d"] = -a * math.sin(ph)
-        P["pierna_d"] = a * 1.2 * max(0, math.sin(ph + 1.2 + math.pi))
-        P["pie_i"] = 0.4 * a * math.sin(ph + 0.5)
-        P["pie_d"] = -0.4 * a * math.sin(ph + 0.5)
-        g_i += a * 0.9 * math.sin(ph + math.pi) + 0.2
-        g_d += a * 0.9 * math.sin(ph) + 0.2
-        f_i += 0.5
-        f_d += 0.5
-        P["raiz"] = P["raiz"] + 0.06
-        cola_a, cola_f = 0.3, w
+        rL += 0.9 + 0.08 * math.sin(T * 9)
+        rR += 0.9 + 0.08 * math.sin(T * 9 + 0.4)
+        fL += 1.1
+        fR += 1.1
+        cab += 0.08
     elif g == "encoger":
-        g_i += 0.25
-        g_d += 0.25
-        f_i += 0.6
-        f_d += 0.6
-        P["cabeza"] = (P["cabeza"][0], 0.0, P["cabeza"][2] + 20)
-    # aplicar a cada personaje según su esqueleto
+        rL += 0.45
+        rR += 0.45
+        fL += 0.9
+        fR += 0.9
+        cab_y += 18
+    elif g == "manos_cadera":
+        rL, rR, fL, fR = 0.6, 0.6, 1.4, 1.4
+    # ---- andar / correr: la fase sale de la distancia recorrida (los pies no resbalan)
+    if paso is not None:
+        ph = 2 * math.pi * paso
+        A, K, B = (0.75, 1.15, 26) if correr else (0.45, 0.6, 12)
+        piernas["i"] = (-fr * A * math.sin(ph), K * max(0.0, math.sin(ph + 0.9)), 0.35 * math.sin(ph + 0.4))
+        piernas["d"] = (fr * A * math.sin(ph), K * max(0.0, math.sin(ph + math.pi + 0.9)), -0.35 * math.sin(ph + 0.4))
+        dy_cuerpo = -B * abs(math.cos(ph))
+        raiz += fr * (0.1 if correr else 0.04)
+        swing = (0.9 if correr else 0.45)
+        if g not in ("agitar", "arriba", "celebrar", "saludo", "suplicar"):
+            rL += 0.4 if correr else 0.1
+            rR += 0.4 if correr else 0.1
+            fL += 1.0 if correr else 0.25
+            fR += 1.0 if correr else 0.25
+            P["_swing"] = swing * math.sin(ph)
+        else:
+            P["_swing"] = 0.0
+        cab += 0.03 * math.sin(2 * ph)
+        cola_a, cola_f = (0.3, 9) if correr else (0.22, 5)
+    else:
+        P["_swing"] = 0.0
+    P["_dy"] = dy_cuerpo
+    P["raiz"] = raiz
+    P["pecho"] = (pecho_a, 0.0, pecho_y)
+    P["cabeza"] = (cab, 0.0, cab_y)
+    sw = P.pop("_swing")
+    # ---- a cada esqueleto
     if name == "teddy":
-        P["brazo_i"], P["antebrazo_i"], P["mano_i"] = g_i, f_i, 0.3 * f_i
-        P["brazo_d"], P["antebrazo_d"], P["mano_d"] = -g_d, -f_d, -0.3 * f_d
-        P["mandibula"] = -0.04 + abre * (0.22 + 0.1 * (1 - ancho))
-        P.setdefault("muslo_i", pierna)
-        P.setdefault("muslo_d", 0.06 * _ruido(T, 1.4, 3) - pierna)
-        P.setdefault("pierna_d", 0.08 * _ruido(T, 1.7, 4))
+        # 0 = brazos colgando junto al cuerpo (el dibujo original los tiene abiertos: subida ~0,75)
+        P["brazo_i"] = -0.75 + rL + fr * sw
+        P["antebrazo_i"] = -0.3 + fL
+        P["mano_i"] = 0.25 * fL
+        P["brazo_d"] = 0.7 - rR - fr * sw
+        P["antebrazo_d"] = 0.55 - fR
+        P["mano_d"] = -0.25 * fR
+        P["mandibula"] = -0.05 + abre * (0.34 + 0.12 * (1 - ancho))
+        li = piernas.get("i", (0.04 * _ruido(T, 0.8, 6), 0.0, 0.0))
+        ld = piernas.get("d", (-0.04 * _ruido(T, 0.8, 6), 0.0, 0.0))
+        P["muslo_i"], P["pierna_i"], P["pie_i"] = li
+        P["muslo_d"], P["pierna_d"], P["pie_d"] = ld
         P["cola"] = cola_a * math.sin(T * cola_f)
         P["cola2"] = cola_a * 1.3 * math.sin(T * cola_f - 0.9)
-        dcab = P["cabeza"][0] - (0.035 * _ruido(T - 0.27, 0.9, sd))
-        P["oreja_i"] = -dcab * 4 + 0.05 * math.sin(T * 3.1)
-        P["oreja_d"] = dcab * 5 + 0.08 * math.sin(T * 2.7 + 1) + abre * 0.06
+        dcab = cab - (0.03 * _ruido(T - 0.27, 0.9, sd))
+        P["oreja_i"] = -dcab * 4 + 0.05 * math.sin(T * 3.1) + 0.1 * escucha
+        P["oreja_d"] = dcab * 5 + 0.08 * math.sin(T * 2.7 + 1) + abre * 0.06 - 0.12 * escucha
     elif name == "moe":
         sip = 1.0 if g == "sorber" else 0.0
-        P["brazos"] = (0.03 * _ruido(T, 1.2, 2) - g_i * 0.05, 0.0, -6 * resp - 25 * ene - 120 * sip + 20 * (g == "caido"))
-        P["pie_i"] = 0.05 * _ruido(T, 1.3, 1) + (0.25 * math.sin(T * 12) if g in ("agitar", "correr", "andar") else 0)
-        P["pie_d"] = 0.05 * _ruido(T, 1.1, 2) - (0.25 * math.sin(T * 12) if g in ("agitar", "correr", "andar") else 0)
-        P["cabeza"] = (P["cabeza"][0] * 0.5, 0.0, P["cabeza"][2] * 0.5)
+        P["brazos"] = (0.03 * _ruido(T, 1.2, 2), 0.0, -6 * resp - 30 * ene - 120 * sip + 20 * (g == "caido") - 25 * (g in ("arriba", "celebrar", "agitar")))
+        if paso is not None:
+            ph = 2 * math.pi * paso
+            P["pie_i"] = 0.45 * math.sin(ph)
+            P["pie_d"] = 0.45 * math.sin(ph + math.pi)
+            P["raiz"] = P["raiz"] + 0.07 * math.sin(ph)
+        else:
+            P["pie_i"] = 0.05 * _ruido(T, 1.3, 1) + (0.25 * math.sin(T * 12) if g == "agitar" else 0)
+            P["pie_d"] = 0.05 * _ruido(T, 1.1, 2) - (0.25 * math.sin(T * 12) if g == "agitar" else 0)
+        P["cabeza"] = (cab * 0.5, 0.0, cab_y * 0.5)
     elif name == "nana":
         tec = 1.0 if g == "teclear" else 0.0
-        P["brazo_i"] = 0.4 * g_i - 0.05 + 0.02 * tec * math.sin(T * 31)
-        P["antebrazo_i"] = 0.25 * f_i + 0.03 * tec * math.sin(T * 27 + 1)
-        P["brazo_d"] = (-0.25 * g_d + 0.04 * tec * math.sin(T * 23), 0.0, 0.0)
-        P["mano_d"] = -0.3 * f_d + 0.12 * tec * abs(math.sin(T * 17))
-        P["pie_i"] = pierna * 0.7
-        P["pie_d"] = -pierna * 0.7
+        P["brazo_i"] = 0.35 * (rL - 0.3) + 0.02 * tec * math.sin(T * 31)
+        P["antebrazo_i"] = 0.25 * (fL - 0.15) + 0.03 * tec * math.sin(T * 27 + 1)
+        P["brazo_d"] = (-0.25 * (rR - 0.2) + 0.04 * tec * math.sin(T * 23), 0.0, 0.0)
+        P["mano_d"] = -0.3 * (fR - 0.15) + 0.12 * tec * abs(math.sin(T * 17)) - 0.15 * ene * math.sin(T * 5)
+        if paso is not None:
+            ph = 2 * math.pi * paso
+            P["pie_i"] = 0.3 * math.sin(ph)
+            P["pie_d"] = 0.3 * math.sin(ph + math.pi)
+            P["raiz"] = P["raiz"] + 0.06 * math.sin(ph)
+        else:
+            P["pie_i"] = 0.03 * _ruido(T, 0.8, 6)
+            P["pie_d"] = -0.03 * _ruido(T, 0.8, 6)
     elif name == "mia":
-        P["brazos"] = (0.05 * g_i * 0.3 + 0.015 * _ruido(T, 1.0, 3), 0.0, -5 * resp - 18 * ene - 30 * (g in ("celebrar", "arriba", "encoger")))
-        P["muslo_i"] = pierna + (P.get("muslo_i", 0) if g in ("correr", "andar") else 0)
-        P["muslo_d"] = -pierna * 0.6 + (P.get("muslo_d", 0) if g in ("correr", "andar") else 0)
+        P["brazos"] = (0.02 * _ruido(T, 1.0, 3) + 0.03 * ene * math.sin(T * 5), 0.0,
+                       -5 * resp - 22 * ene - 35 * (g in ("celebrar", "arriba", "encoger")))
+        li = piernas.get("i", (0.03 * _ruido(T, 0.8, 6), 0.0, 0.0))
+        ld = piernas.get("d", (-0.03 * _ruido(T, 0.8, 6), 0.0, 0.0))
+        P["muslo_i"], P["pierna_i"] = li[0], li[1]
+        P["muslo_d"], P["pierna_d"] = ld[0], ld[1]
         P["cola"] = -cola_a * 0.8 * (0.4 + math.sin(T * cola_f * 0.6))
         P["cola2"] = -cola_a * 1.1 * math.sin(T * cola_f * 0.6 - 1.0)
-        dcab = P["cabeza"][0] - (0.035 * _ruido(T - 0.27, 0.9, sd))
-        P["coleta"] = -dcab * 4 + 0.07 * math.sin(T * 2.3) - 0.1 * abs(math.sin(T * 6)) * (g == "celebrar")
+        dcab = cab - (0.03 * _ruido(T - 0.27, 0.9, sd))
+        P["coleta"] = -dcab * 4 + 0.07 * math.sin(T * 2.3) - 0.12 * abs(math.sin(T * 6)) * (g == "celebrar" or paso is not None)
         P["oreja_i"] = 0.04 * math.sin(T * 1.9) + dcab * 2
         P["oreja_d"] = -0.05 * math.sin(T * 2.2 + 1) - dcab * 2
     return P
+
+
+def recorrido(lt, puntos, zancada=330.0):
+    """Desplazamiento por la escena. puntos = [(t, x), ...] (t en segundos de la escena).
+    Devuelve (x, paso, mirando_derecha, en_marcha): paso = distancia/zancada (para el ciclo de andar)."""
+    pts = sorted(puntos)
+    if lt <= pts[0][0]:
+        return pts[0][1], 0.0, pts[1][1] >= pts[0][1] if len(pts) > 1 else True, False
+    dist = 0.0
+    for (t0, x0), (t1, x1) in zip(pts, pts[1:]):
+        if lt < t1:
+            p = (lt - t0) / max(1e-6, t1 - t0)
+            e = p * p * (3 - 2 * p)
+            x = x0 + (x1 - x0) * e
+            dist += abs(x - x0)
+            return x, dist / zancada, x1 >= x0, abs(x1 - x0) > 1
+        dist += abs(x1 - x0)
+    return pts[-1][1], dist / zancada, pts[-1][1] >= pts[-2][1] if len(pts) > 1 else True, False
 
 
 def _mat(M):
@@ -431,11 +491,14 @@ def _dibuja_malla(ctx, name, pose, alpha=1.0, tint=None, smear=0.0, k=1.0, sgn=1
 
 def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), flip=False, bounce=0.0, phone_prop=False,
            screen_text=None, rot=0.0, sq=1.0, lean=0.0, dx=0.0, dy=0.0, head_dy=0.0, nod=0.0, smear=0.0, tint=None,
-           blush=0.0, alpha=1.0, spin=0.0, shadow=True, sway=1.0, lid=None, gesto=None, pose=None, ene=None):
+           blush=0.0, alpha=1.0, spin=0.0, shadow=True, sway=1.0, lid=None, gesto=None, pose=None, ene=None,
+           paso=None, correr=False, escucha=0.0, mira=0):
     """Dibuja a un personaje oficial (muñeco articulado) con los pies en (x, y).
 
     talk: apertura de boca 0..1, o (apertura, forma) de L.boca(...) · gesto: agitar, arriba, celebrar, caido, punos,
-    tranquilo, saludo, suplicar, correr, andar, encoger, sorber (Moe), teclear (Nana) · pose: ángulos por hueso que
+    tranquilo, saludo, senalar, suplicar, encoger, manos_cadera, sorber (Moe), teclear (Nana) · paso: fase del ciclo de
+    andar (sale de recorrido(); correr=True para correr) · escucha 0..1: reacciona a quien habla (asiente) y mira=±1 le
+    gira la cabeza hacia ese lado · pose: ángulos por hueso que
     se suman · ene: energía de la voz 0..1 (gesticula más) · s escala · sq estirar/aplastar · lean doblarse ·
     dx, dy desplazar · head_dy, nod cabeza · smear estela · blush colorete · tint (r,g,b,a) · lid párpados.
     Devuelve {"head", "top", "feet"} en coordenadas del mundo.
@@ -460,7 +523,8 @@ def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), 
         jx = 5 * s * math.sin(T * 61)
     elif mood == "feliz":
         hop -= abs(math.sin(T * 6)) * 12 * s
-    P = _pose(name, T, mood, abre, ancho, ene, gesto, lean, nod, head_dy)
+    P = _pose(name, T, mood, abre, ancho, ene, gesto, lean, nod, head_dy, paso, correr, escucha, mira)
+    hop += P.pop("_dy") * s
     for b, v in (pose or {}).items():
         base = P.get(b, 0.0)
         if isinstance(base, tuple) or isinstance(v, tuple):
@@ -516,11 +580,11 @@ def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), 
             ctx.restore()
     if meta["mouth"] and abre > 0.05:  # boca con forma de vocal: "oo" redonda, "ee" ancha
         mx, my, mw = meta["mouth"]
-        ellipse(ctx, mx, my, mw * 0.64, mw * 0.26)
+        ellipse(ctx, mx, my, mw * 0.74, mw * 0.3)
         ctx.set_source_rgb(*meta["skin"])
         ctx.fill()
-        wid = mw * (0.62 + 0.55 * ancho)
-        hgt = mw * (0.1 + 0.5 * abre) * (1.25 - 0.45 * ancho)
+        wid = mw * (0.75 + 0.6 * ancho)
+        hgt = mw * (0.14 + 0.66 * abre) * (1.25 - 0.4 * ancho)
         ctx.move_to(mx - wid / 2, my)
         ctx.curve_to(mx - wid / 2, my + hgt * 1.3, mx + wid / 2, my + hgt * 1.3, mx + wid / 2, my)
         ctx.curve_to(mx + wid / 4, my - hgt * 0.25, mx - wid / 4, my - hgt * 0.25, mx - wid / 2, my)
@@ -1186,7 +1250,7 @@ def subtitulos(ctx, L, T, y=None):
         ctx.save()
         ctx.select_font_face(FONT_SUB, cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         txts = [wd["w"] for wd in tz]
-        sp = size * 0.42
+        sp = size * 0.55
         while True:
             ctx.set_font_size(size)
             ws = [ctx.text_extents(t)[4] for t in txts]
@@ -1194,7 +1258,7 @@ def subtitulos(ctx, L, T, y=None):
             if tot <= SUB["maxw"] or size < 40:
                 break
             size *= 0.92
-            sp = size * 0.42
+            sp = size * 0.55
         yy = SUB["y"] if y is None else y
         if grito:
             dx, dy = shake(T, 6)

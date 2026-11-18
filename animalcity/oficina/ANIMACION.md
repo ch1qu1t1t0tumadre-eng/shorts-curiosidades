@@ -12,6 +12,14 @@ Motor: `pipeline/sitcom.py`, más `pipeline/efectos.py` (movimiento, partículas
   - Generales: `agitar` (pánico), `arriba`, `celebrar`, `caido`, `punos`, `tranquilo`, `saludo`, `suplicar`, `correr`, `andar`, `encoger`.
   - Propios: `sorber` (Moe sube la taza), `teclear` (Nana; sale solo con `typing=True`).
   - Sin `gesto`, sale del ánimo: panico→agitar, sorpresa→arriba, feliz→celebrar, triste→caido, enfado→punos, smug→tranquilo.
+- **Andar y correr:** `x, paso, derecha, en_marcha = recorrido(lt, [(t0, x0), (t1, x1), ...], zancada)` mueve al personaje por la escena. Pásale `paso=paso if en_marcha else None` (y `correr=True` para correr). El ciclo de piernas va con la distancia recorrida, así que los pies no resbalan.
+  - Movimiento: cadera, rodilla y pie; brazos al contrario de las piernas; rebote y cuerpo inclinado hacia delante.
+  - Estilo por personaje: Teddy y Mia andan; Nana y Moe andan como un pato, balanceándose.
+  - `flip=True` para que miren a la izquierda: Teddy, Mia y Moe miran a la derecha en su dibujo y Nana a la izquierda.
+- **Conversación:** en los planos a dos, cada uno mira al otro (con `flip`).
+  - El que escucha lleva `escucha=L.energia("el_otro", T) * 2, mira=1`: asiente, ladea la cabeza y mueve las orejas.
+  - `cam_charla(L, T, {"teddy": (x, y), "mia": (x, y)}, zoom, y)` (en `episodios/ep01/escenas.py`) desliza la cámara hacia quien habla.
+- Teddy está de pie con las dos piernas en el suelo: su segunda pierna es una copia de la recta del dibujo, un poco más oscura y detrás. Así puede andar.
 - `pose={"brazo_i": 0.3, "cabeza": (0.1, 0, -20), ...}` suma ángulos a mano (huesos en `rig.RIGS`). Brazo de la izquierda de la imagen: ángulo + = sube; brazo de la derecha: − = sube.
 - Límites de cada dibujo: Mia tiene los brazos cruzados (solo se mueven un poco), Moe sujeta la taza con las dos manos y Nana el móvil.
 
@@ -68,7 +76,7 @@ Motor: `pipeline/sitcom.py`, más `pipeline/efectos.py` (movimiento, partículas
 
 ## Pasos
 1. Escribe `work/epNN/escenas.py` (`from sitcom import *`):
-   - Un plano por línea más o menos, con un corte o una transición cada 1–2,5 s. Cada escena es `def eN(ctx, lt, dur, T, L):`, con `zoom_cam(...)` en movimiento, un decorado, los personajes con `talk=L.boca(...)`, un `gesto` que cuente lo que siente y al menos **un movimiento de cartoon o un efecto** (nada de personajes quietos).
+   - Un plano por línea más o menos, con un corte o una transición cada 1–2,5 s. **Que se muevan por las escenas:** que entren andando o corriendo, que crucen el decorado y que se vayan. Las conversaciones van en plano a dos, mirándose. Cada escena es `def eN(ctx, lt, dur, T, L):`, con `zoom_cam(...)` en movimiento, un decorado, los personajes con `talk=L.boca(...)`, un `gesto` que cuente lo que siente y al menos **un movimiento de cartoon o un efecto** (nada de personajes quietos).
    - Gancho: en el fotograma 0 ya pasa algo (alguien entra disparado, un "take", un grito con `lineas_foco`).
    - Cada frase importante lleva un gesto: anticipación antes de un salto, aplastón al caer, estela al correr, "take" en las sorpresas.
    - Zona segura: lo importante entre x 80–1000 e y 250–1550. Los subtítulos van en y≈1330 (cámbialo con `SUB_Y` si tapan algo).

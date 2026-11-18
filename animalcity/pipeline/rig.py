@@ -56,6 +56,9 @@ RIGS = {
             ("cuerpo", None, ["raiz", "pecho"], 2, "cuerpo"),
         ],
         "boca_rgb": (60, 18, 30),
+        # pierna de atrás = copia de su pierna recta (el dibujo original tiene una pierna levantada, de baile)
+        "clones": {"pierna_d": {"de": "pierna_i", "dx": 170, "dy": -12, "capa": 0.5, "luz": 0.86,
+                                "huesos": {"muslo_d": "muslo_i", "pierna_d": "pierna_i", "pie_d": "pie_i"}}},
     },
     "moe": {
         "huesos": {
@@ -104,10 +107,10 @@ RIGS = {
             "oreja_i": {"padre": "cabeza", "pivote": (200, 470), "fin": (160, 230)},
             "oreja_d": {"padre": "cabeza", "pivote": (640, 470), "fin": (690, 260)},
             "brazos": {"padre": "pecho", "pivote": (430, 1150), "fin": (430, 1350)},
-            "muslo_i": {"padre": "raiz", "pivote": (370, 1660), "fin": (360, 2000)},
-            "pierna_i": {"padre": "muslo_i", "pivote": (360, 2000), "fin": (420, 2230)},
-            "muslo_d": {"padre": "raiz", "pivote": (560, 1660), "fin": (560, 2000)},
-            "pierna_d": {"padre": "muslo_d", "pivote": (560, 2000), "fin": (560, 2230)},
+            "muslo_i": {"padre": "raiz", "pivote": (350, 1680), "fin": (360, 2020)},
+            "pierna_i": {"padre": "muslo_i", "pivote": (400, 2040), "fin": (330, 2220)},
+            "muslo_d": {"padre": "raiz", "pivote": (530, 1700), "fin": (520, 2000)},
+            "pierna_d": {"padre": "muslo_d", "pivote": (600, 2030), "fin": (610, 2220)},
             "cola": {"padre": "raiz", "pivote": (700, 1720), "fin": (1050, 1500)},
             "cola2": {"padre": "cola", "pivote": (1050, 1500), "fin": (1060, 1000)},
         },
@@ -118,8 +121,8 @@ RIGS = {
             ("cabeza", [(0, 150), (760, 150), (800, 760), (700, 900), (520, 990), (300, 980), (60, 880), (0, 760)], ["cabeza"], 6, "pegada"),
             ("brazos", [(90, 1000), (720, 1000), (740, 1470), (560, 1560), (200, 1500), (80, 1400)], ["brazos"], 4, "suelta"),
             ("cola", [(700, 920), (1304, 920), (1304, 1950), (880, 1960), (690, 1820), (690, 1650)], ["cola", "cola2"], 0, "pegada"),
-            ("pierna_i", [(230, 1610), (470, 1610), (520, 2244), (200, 2244)], ["muslo_i", "pierna_i"], 2, "pegada"),
-            ("pierna_d", [(470, 1610), (720, 1610), (700, 2244), (470, 2244)], ["muslo_d", "pierna_d"], 1, "pegada"),
+            ("pierna_i", [(200, 1630), (440, 1630), (445, 1990), (465, 2060), (445, 2244), (190, 2244), (210, 2050)], ["muslo_i", "pierna_i"], 2, "pegada"),
+            ("pierna_d", [(440, 1660), (690, 1640), (720, 1720), (715, 2244), (500, 2244), (490, 2100), (450, 2030)], ["muslo_d", "pierna_d"], 1, "pegada"),
             ("cuerpo", None, ["raiz", "pecho"], 3, "cuerpo"),
         ],
     },
@@ -235,6 +238,32 @@ def malla(nombre):
         elif tipo == "boca":  # interior de la boca debajo de la mandíbula
             tex[pz][m, :3] = rig.get("boca_rgb", (60, 18, 30))
             tex[pz][m, 3] = 255
+    # piezas clonadas: la textura de otra pieza desplazada (y sus huesos, desplazados igual)
+    clones = rig.get("clones", {})
+    zidx = {z[0]: i for i, z in enumerate(rig["zonas"])}
+    for zn, c in clones.items():
+        # fuera de todas las piezas lo que quedaba de la pieza original (p. ej. la pierna levantada)
+        poly = rig["zonas"][zidx[zn]][1]
+        borra = np.zeros((h, w), np.uint8)
+        cv2.fillPoly(borra, [np.array(poly, np.int32)], 1)
+        borra = borra.astype(bool)
+        borra[:min(p_[1] for p_ in poly) + c.get("respeta", 8), :] = False
+        for ti in range(len(tex)):
+            if ti != zidx[c["de"]]:
+                tex[ti][borra] = 0
+        src = tex[zidx[c["de"]]].copy()
+        dx, dy = c["dx"], c["dy"]
+        sh = np.zeros_like(src)
+        ys0, ys1 = max(0, dy), h + min(0, dy)
+        xs0, xs1 = max(0, dx), w + min(0, dx)
+        sh[ys0:ys1, xs0:xs1] = src[ys0 - dy:ys1 - dy, xs0 - dx:xs1 - dx]
+        sh[..., :3] = (sh[..., :3].astype(np.float32) * c.get("luz", 1.0)).astype(np.uint8)
+        tex[zidx[zn]] = sh
+        masks[zidx[zn]] = sh[..., 3] > 0
+        for bd, bs in c["huesos"].items():
+            hs = rig["huesos"][bs]
+            rig["huesos"][bd]["pivote"] = (hs["pivote"][0] + dx, hs["pivote"][1] + dy)
+            rig["huesos"][bd]["fin"] = (hs["fin"][0] + dx, hs["fin"][1] + dy)
     # distancia (px) de cada punto a cada zona: las piezas "pegadas" se mueven como su padre junto a la costura
     dist_z = [ndi.distance_transform_edt(~mm) for mm in masks]
     piezas = []
@@ -270,6 +299,9 @@ def malla(nombre):
         al = t[..., 3:4] / 255.0
         bgra = np.concatenate([t[..., 2:3] * al, t[..., 1:2] * al, t[..., 0:1] * al, t[..., 3:4]], 2).astype(np.uint8)
         piezas.append({"nombre": zn, "capa": capa, "bgra": np.ascontiguousarray(bgra), "V": V, "W": Wt, "T": T})
+    for p_ in piezas:
+        if p_["nombre"] in clones:
+            p_["capa"] = clones[p_["nombre"]].get("capa", p_["capa"])
     piezas.sort(key=lambda p: p["capa"])
     out = {"piezas": piezas, "names": names, "w": w, "h": h}
     _CACHE[nombre] = out

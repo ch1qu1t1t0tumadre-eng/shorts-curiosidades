@@ -1,92 +1,95 @@
 [
  {
   "pj": "teddy",
-  "texto": "Nana. Wi-Fi password. Now.",
-  "audio": "audio/01.mp3",
+  "texto": "[panicked] Nana. Wi-Fi password. Now.",
+  "audio": "audio/01.wav",
   "pausa": 0.0,
   "sub": "Nana! Wi-Fi password! Now!"
  },
  {
   "pj": "nana",
-  "texto": "Say please.",
-  "audio": "audio/02.mp3",
+  "texto": "[smug] Say please.",
+  "audio": "audio/02.wav",
   "pausa": 0.35
  },
  {
   "pj": "teddy",
   "texto": "PLEASE!",
-  "audio": "audio/03.mp3",
+  "audio": "audio/03.wav",
   "pausa": 0.1
  },
  {
   "pj": "nana",
   "texto": "It's TeddyStillSleepsWithANightlight. One word. Capital T.",
-  "audio": "audio/04.mp3",
+  "audio": "audio/04.wav",
   "pausa": 0.3,
-  "sub": "It's TeddyStillSleeps WithANightlight. One word. Capital T."
+  "sub": "It's TeddyStillSleeps WithANightlight. One word. Capital T.",
+  "voz": "[smug] It's Teddy Still Sleeps With A Nightlight. One word. Capital T."
  },
  {
   "pj": "moe",
-  "texto": "Oh no.",
-  "audio": "audio/05.mp3",
+  "texto": "[nervous] Oh no.",
+  "audio": "audio/05.wav",
   "pausa": 0.9
  },
  {
   "pj": "teddy",
   "texto": "[panicked] My new friend is at the door!",
-  "audio": "audio/06.mp3",
+  "audio": "audio/06.wav",
   "pausa": 0.2,
   "sub": "My new friend is at the door!"
  },
  {
   "pj": "mia",
-  "texto": "Hey! What's your Wi-Fi?",
-  "audio": "audio/07.mp3",
-  "pausa": 0.8
+  "texto": "[excited] Hey! What's your Wi-Fi?",
+  "audio": "audio/07.wav",
+  "pausa": 1.35
  },
  {
   "pj": "teddy",
-  "texto": "teddystillsleepswithanightlight",
-  "audio": "audio/08.mp3",
+  "texto": "[mumbles] teddystillsleepswithanightlight",
+  "audio": "audio/08.wav",
   "pausa": 0.6,
-  "sub": "*mumble mumble*"
+  "sub": "*mumble mumble*",
+  "voz": "[mumbles] teddy still sleeps with a nightlight"
  },
  {
   "pj": "mia",
   "texto": "Sorry?",
-  "audio": "audio/09.mp3",
+  "audio": "audio/09.wav",
   "pausa": 0.25
  },
  {
   "pj": "teddy",
   "texto": "TEDDY STILL SLEEPS WITH A NIGHTLIGHT!",
-  "audio": "audio/10.mp3",
-  "pausa": 0.2
+  "audio": "audio/10.wav",
+  "pausa": 0.2,
+  "voz": "[shouting] Teddy still sleeps with a nightlight!"
  },
  {
   "pj": "mia",
   "texto": "[flatly] Nope. Wrong password.",
-  "audio": "audio/11.mp3",
-  "pausa": 1.0,
+  "audio": "audio/11.wav",
+  "pausa": 1.5,
   "sub": "Nope. Wrong password."
  },
  {
   "pj": "nana",
-  "texto": "I changed it.",
-  "audio": "audio/12.mp3",
+  "texto": "[smug] I changed it.",
+  "audio": "audio/12.wav",
   "pausa": 0.3
  },
  {
   "pj": "mia",
   "texto": "[reading slowly] Nana... Is... The... Best. [delighted] It works!",
-  "audio": "audio/13.mp3",
-  "pausa": 0.35,
+  "audio": "audio/13.wav",
+  "pausa": 1.1,
   "sub": "Nana Is The Best... It works!"
  },
  {
   "pj": "teddy",
-  "texto": "Nana...",
-  "audio": "audio/14.mp3",
-  "pausa": 0.5
+  "texto": "[sad] Nana...",
+  "audio": "audio/14.wav",
+  "pausa": 1.1
  }
 ]
