@@ -2,20 +2,21 @@
 
 Formato: `decorado:variante · encuadre (zoom @ x,y) · personajes · elemento distintivo`
 
-## ep01
-- salon:0 noche · primer plano 2,2→2,5 @ 330,1060 · Teddy pánico con móvil · impacto "NOW."
-- salon:0 noche · primer plano 1,9→2,15 @ 900,1000 · Nana baja las gafas · —
-- rafaga:0 amarilla · 1,5→1,65 @ 540,1100 con temblor · Teddy brazos arriba · impacto "PLEASE."
-- salon:0 noche · 2,0→2,4 @ 900,1250 · Nana tecleando · —
-- móvil de Nana a pantalla completa · zoom 0,92→1 · — · contraseña escribiéndose + badge SAVED
-- salon:0 noche · 2,3→2,1 @ 420,1180 · Moe con taza · escupitajo de zumo naranja
-- salon:0 noche · 2,6→2,8 @ 330,1090 · Teddy enfadado susurrando · temblor con el timbre
-- puerta:1 · 1,15→1,3 @ 540,1000 · Mia feliz con móvil · la puerta se abre
-- salon:0 · 2,6→2,9 @ 900,1000 · Nana mirando de reojo · —
-- puerta:1 · 1,2→1,3 @ 500,1050 · Teddy (cansado) y Mia · plano a dos
-- puerta:1 · 2,2→2,35 @ 560,1090 girado 0,12 rad · Mia sospecha · —
-- rafaga:1 rosa · 1,4→1,7 @ 540,1150 con temblor · Teddy grito · impacto en dos líneas
-- puerta:1 · 1,5→1,7 @ 560,1100 · Mia con móvil · badge INCORRECT
-- salon:0 · 2,5→2,7 @ 900,1000 · Nana gafas puestas tecleando · —
-- salon:0 · 1,35→1,45 @ 760,1080 · Mia + Nana con gafas en la frente · inserto del móvil con la contraseña nueva + badge CONNECTED
-- salon:0 · 2,3→2,2 @ 330,1060 · Teddy derrotado mirando a cámara · bucle
+## ep01 (versión cartoon)
+- rincon_nana:0 · 1,55→1,85 @ 470,1170 · Teddy entra disparado con estela + Nana tecleando · polvo al frenar, salto en "Now!"
+- rincon_nana:0 · primer plano Nana 2,2→2,55 · Nana se echa atrás · destello en las gafas
+- escenario_foco morado · 1,35→1,55 con temblor · Teddy suplica (take + colorete) · corazones y destellos, luz rosa
+- rincon_nana:0 · 1,7→2,3 @ 700,1260 · Nana tecleando rápido · —
+- móvil de Nana a pantalla completa con fondo de destellos · pop · — · contraseña escribiéndose + estallido SAVED!
+- cocina_noche:0 · 1,95→2,15 sobre Moe · Moe take + espurreo de chocolate · vapor de la taza, "!" amarillo
+- pasillo:0 · 1,2→1,35 @ 540,1250 · Teddy corre de lado a lado con estela · timbre que brilla + estallido DING DONG!
+- entrada_noche:0 · 1,15→1,4 @ 540,1080 · Mia saluda con un saltito · la puerta se abre a la calle de noche (luna, farola, luciérnagas)
+- rincon_nana:0 · 2,7→2,9 sobre Nana · Nana de reojo · destello
+- entrada_noche:0 · 1,35→1,5 @ 470,1180 · Teddy colorado y encogido + Mia · plano a dos
+- entrada_noche:0 · 2,0→2,2 sobre Mia · Mia se inclina · "?" que salta
+- rafaga:1 rosa · 1,35→1,6 con temblor fuerte · Teddy grito (take gigante) · lineas_foco
+- edificio · 1,0→0,92 · — · las ventanas se encienden con vecinos, ondas del grito, el gato salta
+- entrada_noche:0 · 1,3→1,5 · Mia con párpados caídos · planta rodadora + grillos + estallido WRONG!
+- rincon_nana:0 · 2,5→2,8 sobre Nana · Nana triunfal · destellos dorados
+- rincon_nana:0 · 1,35→1,45 @ 600,1180 · Mia (salto) + Nana · inserto del móvil "NanaIsTheBest" + confeti + CONNECTED!
+- salon:0 gris · 1,55→1,75 @ 540,1230 · Teddy triste · nube de lluvia con rayo + cierre en círculo

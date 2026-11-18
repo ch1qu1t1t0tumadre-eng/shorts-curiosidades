@@ -1,12 +1,12 @@
 [
- {"id":"A","t":0.6,"texto":"NEVER ASK\nNANA","color":"#FFD23F","pos":"abajo","zoom":1.0,"cx":540,"cy":960},
- {"id":"B","t":4.9,"texto":"WI-FI WAR","color":"#FFFFFF","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"pegatina":"💀"},
+ {"id":"A","t":0.45,"texto":"NEVER ASK\nNANA","color":"#FFD23F","pos":"arriba","zoom":1.0,"cx":540,"cy":960},
+ {"id":"B","t":5.0,"texto":"WI-FI WAR","color":"#FFFFFF","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"pegatina":"📱"},
  {"id":"C","t":3.6,"texto":"SAY\nPLEASE.","color":"#B07CE8","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"borde":"#B07CE8"},
- {"id":"D","t":21.5,"texto":"HE SAID IT\nOUT LOUD","color":"#FFD23F","pos":"abajo","zoom":1.0,"cx":540,"cy":960},
+ {"id":"D","t":21.3,"texto":"HE SAID IT\nOUT LOUD!","color":"#FFD23F","pos":"arriba","zoom":1.0,"cx":540,"cy":960},
  {"id":"E","t":9.9,"texto":"THE PASSWORD","color":"#FF5A5A","pos":"abajo","zoom":1.0,"cx":540,"cy":960},
- {"id":"F","t":28.4,"texto":"GRANDMA\nWINS","color":"#7CE38B","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"borde":"#7CE38B"},
- {"id":"G","t":11.4,"texto":"OH NO.","color":"#5EB8F2","pos":"arriba","zoom":1.05,"cx":440,"cy":1100},
- {"id":"H","t":16.4,"texto":"WHAT'S YOUR\nWI-FI?","color":"#FF7A45","pos":"arriba","zoom":1.0,"cx":540,"cy":960},
- {"id":"I","t":24.9,"texto":"INCORRECT","color":"#FFFFFF","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"pegatina":"😭"},
- {"id":"J","t":0.6,"texto":"MY GRANDMA\nIS EVIL","color":"#FF5FA2","pos":"abajo","zoom":1.0,"cx":540,"cy":960,"borde":"#F2A93B"}
+ {"id":"F","t":29.9,"texto":"NANA\nWINS","color":"#7CE38B","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"borde":"#7CE38B"},
+ {"id":"G","t":11.6,"texto":"OH NO.","color":"#5EB8F2","pos":"arriba","zoom":1.0,"cx":540,"cy":960},
+ {"id":"H","t":22.7,"texto":"THE WHOLE CITY\nHEARD IT","color":"#FFD23F","pos":"arriba","zoom":1.0,"cx":540,"cy":960},
+ {"id":"I","t":31.3,"texto":"POOR\nTEDDY","color":"#5EB8F2","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"pegatina":"😭"},
+ {"id":"J","t":1.9,"texto":"GRANDMA\nALWAYS WINS","color":"#FF5FA2","pos":"arriba","zoom":1.0,"cx":540,"cy":960,"borde":"#F08A3C"}
 ]

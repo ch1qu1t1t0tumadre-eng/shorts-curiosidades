@@ -26,7 +26,7 @@ def build(workdir):
     os.makedirs(td, exist_ok=True)
     mod, tl = S._load(workdir)
     L = S.Dialogo(tl)
-    escenas = sorted(mod.ESCENAS, key=lambda e: e[0])
+    escenas = mod._ESC
     cairo = S.cairo
     paths = []
     for sp in specs:

@@ -5,7 +5,8 @@ Entrada: work/epNN/lineas.json
   [{"pj": "teddy", "texto": "Nana. Wi-Fi password. Now.", "audio": "audio/01.mp3",
     "pausa": 0.15,            # silencio ANTES de la línea (s). Negativo = se pisa con la anterior
     "rotulo": true,           # opcional: mostrar rótulo (false para gritos que ya van como texto de impacto)
-    "rotulo_texto": "..."}]   # opcional: texto del rótulo si debe ser distinto del audio (sin etiquetas [..])
+    "rotulo_texto": "...",    # opcional: texto del rótulo si debe ser distinto del audio (sin etiquetas [..])
+    "sub": "..."}]            # opcional: texto del subtítulo karaoke (palabras sencillas; por defecto el texto sin etiquetas)
 Salida: work/epNN/dialogo.wav y work/epNN/timeline.json
   {"dur": s, "env_fps": 60, "lineas": [{"pj","texto","ini","fin","env":[0..1 por fotograma]}, ...]}
 Uso: python3 dialogo.py work/epNN
@@ -62,6 +63,8 @@ def main(workdir):
                 "ini": round(ini, 3), "fin": round(fin, 3), "env": envelope(x)}
         if ln.get("rotulo") is False:
             item["rotulo"] = False
+        if ln.get("sub"):  # subtítulo (texto sencillo que se ve en pantalla)
+            item["sub"] = ln["sub"]
         out.append(item)
         t = fin
     pista = np.clip(pista, -1, 1)
