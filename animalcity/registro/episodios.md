@@ -1,0 +1,5 @@
+# Episodios emitidos
+
+| Nº | Fecha | Título | Situación | Idea de | Enlace | Sale (Madrid) | Se quedan 3 s | Vistas | Comentario fijado |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ep01 | 18/11/2026 | Never ask Nana for the Wi-Fi password | Teddy le pide a Nana la contraseña del wifi; es humillante, tiene que gritarla delante de su cita y Nana ya la ha cambiado | Piloto (lista de ideas) | https://youtube.com/shorts/I_Vxs4Z8pgM | 19/11/2026 00:30 | — | — | PENDIENTE: "What would YOUR Wi-Fi password say about you? 👀" |

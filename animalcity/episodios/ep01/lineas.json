@@ -1,0 +1,16 @@
+[
+ {"pj":"teddy","texto":"Nana. Wi-Fi password. Now.","audio":"audio/01.mp3","pausa":0.0},
+ {"pj":"nana","texto":"Say please.","audio":"audio/02.mp3","pausa":0.35},
+ {"pj":"teddy","texto":"PLEASE!","audio":"audio/03.mp3","pausa":0.1,"rotulo":false},
+ {"pj":"nana","texto":"It's TeddyStillSleepsWithANightlight. One word. Capital T.","audio":"audio/04.mp3","pausa":0.3},
+ {"pj":"moe","texto":"Oh no.","audio":"audio/05.mp3","pausa":0.9},
+ {"pj":"teddy","texto":"My date is literally at the door.","audio":"audio/06.mp3","pausa":0.2},
+ {"pj":"mia","texto":"Hey! What's your Wi-Fi?","audio":"audio/07.mp3","pausa":0.8},
+ {"pj":"teddy","texto":"teddystillsleepswithanightlight","audio":"audio/08.mp3","pausa":0.6},
+ {"pj":"mia","texto":"Sorry?","audio":"audio/09.mp3","pausa":0.25},
+ {"pj":"teddy","texto":"TEDDY STILL SLEEPS WITH A NIGHTLIGHT!","audio":"audio/10.mp3","pausa":0.2,"rotulo":false},
+ {"pj":"mia","texto":"...Incorrect.","audio":"audio/11.mp3","pausa":1.0},
+ {"pj":"nana","texto":"I changed it.","audio":"audio/12.mp3","pausa":0.3},
+ {"pj":"mia","texto":"\"MiaCanDoBetter\"... Connected!","audio":"audio/13.mp3","pausa":0.35},
+ {"pj":"teddy","texto":"Nana...","audio":"audio/14.mp3","pausa":0.5}
+]
