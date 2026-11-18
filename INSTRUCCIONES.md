@@ -67,12 +67,20 @@ El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el pe
 3. Render: `python3 pipeline/anim.py work/vNN` → `short.mp4` en 1440x2560 (2K) a 60 fps con codificación de alta calidad (tarda ~2 min por vídeo; no bajar la calidad).
 4. Escribe también `work/vNN/meta.json` en inglés: `title` (≤ 90 caracteres: pregunta o afirmación con el NOMBRE del protagonista, p. ej. "What Happened To Edison's Last Breath? 🧪 #shorts"), `description` (2 frases + hashtags en inglés: #didyouknow #facts #curiosities #shorts…) y `tags`.
 5. Cada vídeo tiene que parecer distinto: cambia fondos, colores de acento, objetos y planos de cámara entre vídeos.
+6. **Miniatura (obligatoria, 18/11/2026).** Añade al final de `escenas.py` una función `MINIATURA(ctx)` y genera `python3 pipeline/miniatura.py work/vNN/escenas.py work/vNN/miniatura.jpg` (1080x1920). Reglas:
+   - Visual sobre el tema, dibujado con las mismas piezas del vídeo (el protagonista grande, en el centro, con luz/brillo), + `thumb_vignette`.
+   - **No desvela nada**: ni la causa, ni el dato final, ni la respuesta. Es parte del gancho: plantea la pregunta o la contradicción y obliga a ver el vídeo.
+   - Texto con `thumb_text`: 2 líneas de 2–3 palabras como mucho (amarillo + blanco), arriba (y≈250–300). Fórmulas: pregunta ("WHAT'S INSIDE?"), contradicción ("LIGHTS OFF. ZERO CRASHES."), acusación ("THIS MOON IS A LIE", "IT'S NOT THE CHEF"). Nada falso ni exagerado.
+   - Un elemento de "mira aquí": `thumb_circle` rojo alrededor del detalle misterioso y/o `thumb_arrow`, o un objeto tapado con "?".
+   - Lo importante entre y 250 y 1700 (los bordes se recortan en algunas vistas). Revisa la imagen con Read antes de subirla.
+   - Ejemplos: `ejemplos/escenas_edison_bucle_en.py` (función MINIATURA) y `miniaturas/*.py` (vídeos antiguos).
 
 ## 4. Publicar los vídeos en GitHub (rama `media`)
 ```
 cd /home/claude/shorts-curiosidades
 git checkout --orphan media-tmp && git rm -rq --cached . 2>/dev/null; rm -rf media; mkdir media
 cp work/vNN/short.mp4 → media/AAAAMMDD_1.mp4 y media/AAAAMMDD_2.mp4
+cp work/vNN/miniatura.jpg → media/AAAAMMDD_1.jpg y media/AAAAMMDD_2.jpg
 git add media && git commit -m "media AAAAMMDD" && git push -f origin HEAD:media
 git rev-parse HEAD   → SHA
 git checkout -f main
@@ -101,6 +109,8 @@ const [t,d]=all(document,'#textbox'); setBox(t,'TITULO de meta.json'); await new
 all(document,'tp-yt-paper-radio-button[name=VIDEO_MADE_FOR_KIDS_NOT_MFK]')[0].click();
 all(document,'#textbox').map(e=>e.innerText)
 ```
+4b. **Miniatura** (en la pantalla de Detalles, antes de pasar de paso): copia `miniatura.jpg` a la rama `media` junto al vídeo (`media/AAAAMMDD_N.jpg`) y, con `javascript_tool`, repite la inyección del paso 2 con la URL raw del .jpg (`type:'image/jpeg'`) y pulsa `ytcp-thumbnail-uploader #select-button` (botón "Subir archivo" de la sección Miniatura). Espera ~5 s y comprueba que aparece la imagen en la sección Miniatura. Si el botón no existe o YouTube pide verificar la cuenta, sigue sin miniatura y avísalo en el resumen.
+   - Para un vídeo ya subido: `https://studio.youtube.com/video/ID/edit` → misma inyección → "Subir archivo" → esperar 5–7 s → `ytcp-button#save` (a veces hay que pulsarlo 2 veces; está bien cuando queda deshabilitado). Probado el 18/11/2026.
 5. Pulsar `#next-button` 3 veces (esperar ~1,2 s entre clics) hasta el paso Visibilidad.
 6. Programar (probado el 17/11/2026): `#next-button` 3 veces → en Visibilidad pulsar `#second-container-expand-button` ("Programar").
    - Fecha: `find` "textbox" → hay dos: la hora ("0:00") y, tras abrir el calendario con `#datepicker-trigger` (o clic en la fecha), el campo de fecha. Hacer `triple_click` en el campo de fecha (por ref), escribir p. ej. `17 nov 2026` con `type` y pulsar Return. (Escribir con JS NO funciona.)
