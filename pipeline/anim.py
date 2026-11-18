@@ -25,6 +25,27 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 EMOJI_DIR = os.path.join(HERE, "assets/package/color/svg")
 FONT = "Inter"            # instalada en el sistema
 FONT_TITLE = "Anton"      # se registra desde assets si existe
+FONT_CAPTION = "Bangers"  # subtítulo gigante estilo "curiosidades virales" (pipeline/fonts, licencia OFL)
+
+
+def _registrar_fuentes():
+    """Copia las fuentes de pipeline/fonts al directorio de fuentes del usuario para que cairo las vea."""
+    src = os.path.join(HERE, "fonts")
+    dst = os.path.expanduser("~/.local/share/fonts")
+    if not os.path.isdir(src):
+        return
+    os.makedirs(dst, exist_ok=True)
+    nuevas = False
+    for f in os.listdir(src):
+        if not os.path.exists(os.path.join(dst, f)):
+            import shutil
+            shutil.copy(os.path.join(src, f), dst)
+            nuevas = True
+    if nuevas:
+        subprocess.run(["fc-cache", "-f", dst], check=False)
+
+
+_registrar_fuentes()
 
 # ---------- paleta ----------
 NAVY = (0.07, 0.09, 0.20)
@@ -519,7 +540,7 @@ def build_chunks(words, max_words=2):
         chunks.append(cur)
     out = []
     for i, c in enumerate(chunks):
-        end = chunks[i + 1][0]["start"] if i + 1 < len(chunks) else c[-1]["end"] + 0.5
+        end = chunks[i + 1][0]["start"] if i + 1 < len(chunks) else c[-1]["end"] + 0.3
         out.append({"words": c, "start": c[0]["start"], "end": end})
     return out
 
@@ -547,6 +568,45 @@ def draw_captions(ctx, chunk, T, y=1470, size=64):
         x += wd + space
 
 
+def draw_caption_big(ctx, chunk, T, y=1060, size=150, rgb=YELLOW, edge=(0.55, 0.05, 0.05)):
+    """Estilo de los Shorts de curiosidades virales: UNA palabra gigante en el centro,
+    amarilla, con borde negro grueso y sombra roja oscura, que "salta" al aparecer.
+    La palabra va en mayúsculas; se reduce sola si no cabe en el ancho seguro."""
+    w = " ".join(x["text"] for x in chunk["words"]).upper().strip()
+    if not w:
+        return
+    ctx.select_font_face(FONT_CAPTION, cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+    ctx.set_font_size(size)
+    ext = ctx.text_extents(w)
+    if ext[4] > 880:
+        size = size * 880 / ext[4]
+        ctx.set_font_size(size)
+        ext = ctx.text_extents(w)
+    lt = T - chunk["start"]
+    k = ease_back(clamp(lt / 0.16))           # rebote de entrada
+    s = 0.55 + 0.45 * k
+    ctx.save()
+    ctx.translate(W / 2, y)
+    ctx.rotate(-0.035)                         # ligera inclinación, más dinámico
+    ctx.scale(s, s)
+    x0, y0 = -ext[4] / 2, size * 0.35
+    ctx.set_line_join(cairo.LINE_JOIN_ROUND)
+    # sombra desplazada (rojo oscuro) + contorno negro + relleno amarillo
+    for dx, dy, col, lw in ((9, 11, edge, 26), (0, 0, (0, 0, 0), 22)):
+        ctx.new_path(); ctx.move_to(x0 + dx, y0 + dy); ctx.text_path(w)
+        ctx.set_source_rgb(*col); ctx.set_line_width(lw); ctx.stroke_preserve(); ctx.fill()
+    ctx.new_path(); ctx.move_to(x0, y0); ctx.text_path(w)
+    ctx.set_source_rgb(*rgb); ctx.fill()
+    ctx.restore()
+
+
+def _captions(ctx, mod, ch, T):
+    if getattr(mod, "ESTILO_SUBTITULO", "grande") == "grande":
+        draw_caption_big(ctx, ch, T, y=getattr(mod, "Y_SUBTITULO", 1060))
+    else:
+        draw_captions(ctx, ch, T)
+
+
 # ---------- render ----------
 def render(workdir):
     spec_mod = importlib.util.spec_from_file_location("escenas", os.path.join(workdir, "escenas.py"))
@@ -556,10 +616,11 @@ def render(workdir):
     words = json.load(open(os.path.join(workdir, "words.json")))["words"]
     voz = os.path.join(workdir, "voz.mp3")
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
-                                         "-of", "csv=p=0", voz]).strip()) + 0.5
+                                         "-of", "csv=p=0", voz]).strip()) + getattr(mod, "COLA", 0.08)
+    # COLA: silencio tras la última palabra. Casi 0 para que el final enlace con el principio (bucle).
     nframes = int(dur * FPS)
     escenas = sorted(mod.ESCENAS, key=lambda e: e[0])
-    chunks = build_chunks(words, getattr(mod, "PALABRAS_POR_SUBTITULO", 2))
+    chunks = build_chunks(words, getattr(mod, "PALABRAS_POR_SUBTITULO", 1 if getattr(mod, "ESTILO_SUBTITULO", "grande") == "grande" else 2))
     # sonido: whoosh en cada cambio de escena + efectos que pida escenas.py (SFX = [(t, "pop"|"ding"|"tick"|"rise"|"whoosh"), ...])
     sys.path.insert(0, HERE)
     import sonido
@@ -600,7 +661,7 @@ def render(workdir):
             ctx.paint()
         ch = next((c for c in chunks if c["start"] <= T < c["end"]), None)
         if ch:
-            draw_captions(ctx, ch, T)
+            _captions(ctx, mod, ch, T)
         surf.flush()
         ff.stdin.write(bytes(surf.get_data()))
         if i == 0:
@@ -620,7 +681,7 @@ def preview(workdir, times):
     spec_mod.loader.exec_module(mod)
     words = json.load(open(os.path.join(workdir, "words.json")))["words"]
     escenas = sorted(mod.ESCENAS, key=lambda e: e[0])
-    chunks = build_chunks(words, getattr(mod, "PALABRAS_POR_SUBTITULO", 2))
+    chunks = build_chunks(words, getattr(mod, "PALABRAS_POR_SUBTITULO", 1 if getattr(mod, "ESTILO_SUBTITULO", "grande") == "grande" else 2))
     paths = []
     for T in times:
         k = max([j for j, e in enumerate(escenas) if e[0] <= T] or [0])
@@ -632,7 +693,7 @@ def preview(workdir, times):
         ctx.restore()
         ch = next((c for c in chunks if c["start"] <= T < c["end"]), None)
         if ch:
-            draw_captions(ctx, ch, T)
+            _captions(ctx, mod, ch, T)
         p = os.path.join(workdir, f"prev_{T:.1f}.png")
         surf.write_to_png(p)
         paths.append(p)

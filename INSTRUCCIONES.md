@@ -17,15 +17,22 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 
 **Elegir tema:** 2 temas sin repetir (`temas_usados.md`), categorías distintas y rotando. Prioriza temas con: (a) algo que el espectador ha visto o vivido, (b) una creencia común falsa o un "nadie te lo dice", (c) un consejo práctico al final. Verifica cada dato con WebSearch (fuentes fiables). Si algo no se confirma, fuera.
 
-**Estructura del guion (35–45 s, 600–750 caracteres, ~110–125 palabras):**
-1. **HOOK (0–3 s):** una frase imposible de ignorar: afirmación fuerte, contraintuitiva o "polémica" (pero 100 % verdadera), que cree tensión. + **hook visual** para la escena 1 (algo que se mueve/cambia en el primer segundo: zoom brusco, objeto que aparece, cifra gigante).
-2. **LOOP DE CURIOSIDAD (3–6 s):** abre una pregunta que solo se resuelve al final ("Stay till the end, because…").
-3. **CUERPO:** el **problema** (creencia común / error / lo que nadie explica) → la **explicación real** en golpes cortos → **consejo accionable concreto** (no genérico). Cambio de ritmo cada 3–5 s (nueva escena, zoom, cifra, giro "But here's the crazy part…"). Disparadores emocionales: sorpresa, "esto te afecta a ti", sensación de saber un secreto.
-4. **RESOLUCIÓN DEL LOOP + CTA (últimos 5 s):** resuelve la pregunta del inicio y termina con un CTA natural ligado al tema: una pregunta para comentar + "follow for…" con promesa concreta. Si se puede, que la última frase enlace con la primera (replay).
-- Frases de ≤ 10 palabras, tono conversacional y con energía, inglés americano natural. Nada de consejos genéricos ni relleno.
-- "Polémico" = encuadre contraintuitivo, nunca exagerar ni inventar. Nada de alarmismo médico, política o tragedias recientes.
+**FORMATO BUCLE (v2, 18/11/2026 — sustituye al formato con CTA).** Sale del análisis de Shorts de curiosidades con 10–22 M de visitas (ver `FORMATO_VIRAL.md`). Lo que les hace retener: no hay ni un segundo "vacío", el final empalma con el principio y el espectador lo ve 2 veces sin darse cuenta.
 
-**Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3).
+**Elegir el ángulo:** dentro del nicho, prioriza temas con **un protagonista conocido** (persona, lugar u objeto famoso que el espectador ya reconoce) + **un giro inquietante, prohibido o absurdo** ("lo robaron", "sigue ahí", "nadie lo sabe", "lo hicieron a escondidas"). Morbo y sorpresa, siempre 100 % verdadero y verificado.
+
+**Estructura del guion (38–45 s, 125–140 palabras, 680–780 caracteres):**
+1. **HOOK = primera frase (0–2 s):** empieza directamente por el **nombre del protagonista + lo increíble**, sin presentación ni "did you know", ni "stay till the end". Ej.: "Thomas Edison's last breath is sealed inside a glass tube in Michigan." Que la frase 1 pueda leerse también como **continuación** de la última frase del vídeo (bucle).
+2. **Confirmación seca (2–4 s):** 2–4 palabras que suben la apuesta: "And it's real." / "Nobody asked his family."
+3. **Historia en cadena (4–30 s):** hechos concretos en orden (año, lugar, cifra, nombre), una idea por frase, sin relleno. Cada 2–3 s aparece un dato nuevo (número, objeto, nombre). **Repite el nombre del protagonista 5–7 veces** (ancla la atención y da palabra clave a los subtítulos gigantes).
+4. **"In other words" (≈ 10–15 s):** cuenta un hecho de forma neutra y justo después lo **reformula en lenguaje brutal** y corto: "...without his family's consent. In other words, he stole it." Es el segundo gancho: el pico de energía de la voz.
+5. **Giro final (30–40 s):** el dato más raro o actual ("Today it's still sealed, on display at…").
+6. **CIERRE EN BUCLE (sin CTA):** NO hay "follow", ni pregunta, ni despedida (señalan "se acabó" → el espectador desliza). La última frase **se corta a media idea** y enlaza gramaticalmente con la primera: "...Henry Ford actually did. He saved" → (vuelve al inicio) "Thomas Edison's last breath is sealed…". El vídeo termina en la última palabra, sin silencio.
+- Frases de 5–12 palabras, tono de narrador contando un secreto, inglés americano natural. Nada de "..." para pausas: la voz no para nunca.
+- "Polémico" = encuadre contraintuitivo o morboso, nunca exagerar ni inventar. Lo que sea leyenda, dilo como leyenda ("Legend says…"). Nada de alarmismo médico, política o tragedias recientes.
+- Ejemplo completo: `ejemplos/guion_bucle_edison.md`.
+
+**Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3). En la tabla, una fila cada 2–3 s (13–18 filas), no por bloques.
 
 ## 2. Voz (ElevenLabs, conector MCP)
 - Antes de nada, `account_get_usage` y decide **cuántos vídeos hacer hoy** (regla del dueño: cuando no lleguen los créditos para 2 al día, pasar a 1 al día, nunca quedarse sin vídeo):
@@ -34,28 +41,31 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
   - Si no, si `quedan >= 750` → **1 vídeo** (a las 20:00).
   - Si `quedan < 750` → no generes nada y avisa al dueño (en español) de que faltan créditos hasta la renovación.
   - Indica en el resumen final cuántos vídeos se hicieron y por qué.
-- Puedes añadir 1–2 etiquetas de interpretación de eleven_v4 donde aporten en inglés (p. ej. `[excited]` o `[curious]` antes del dato clave), sin abusar; si alguna se lee en voz alta, quítala.
+- Etiquetas de eleven_v4: como mucho 1–2, en inglés, para el pico (`[intrigued]` al inicio, `[shocked]` o `[dramatic]` justo antes del "In other words"). Si alguna se lee en voz alta, quítala.
 - `creative_generate_speech` con model_id `eleven_v4`, voice_id `hqsADTrqjrr0sI9LFcYV` (Dean, inglés americano, cálido y claro), generations_count **1**. No reintentar llamadas: cada una cobra.
 - Esperar (sleep) y `creative_get_flow_run_status` hasta completed; descargar el mp3 con curl (`elevenlabsusercontent.com` está permitido) a `work/vNN/voz.mp3`.
-- **La voz es prioritaria.** Escribe el guion para ser escuchado: frases cortas, ritmo, una pausa ("...") antes del dato clave, y 1–2 etiquetas en inglés como `[excited]` o `[curious]`.
+- **La voz es prioritaria.** Escribe el guion para ser escuchado: frases cortas, sin pausas ("..."), con los números y nombres al final de la frase, donde la voz carga el énfasis. Termina el texto SIN punto final en la frase cortada (p. ej. `He saved`) para que la entonación quede en el aire.
 - `creative_transcribe_audio` con `eleven_scribe_v1`, el mismo flow_id y connect_from = node_id del audio (es gratis). Descargar `words_download_url` a `work/vNN/words.json`.
-- Control de calidad de la voz: compara la transcripción con el guion. Si falta o cambia alguna palabra, si se lee en voz alta una etiqueta o si la duración queda fuera de 35–45 s, regenera esa voz una vez (cuesta créditos: solo si hace falta).
+- **Acelerar al ritmo viral:** `python3 pipeline/acelerar.py work/vNN` (recorta silencios del principio y del final y lleva la voz a ~195 palabras/min, como los Shorts de 10 M; reescala `words.json`). Los Shorts analizados van a 190–215 ppm; Dean suelto va a ~165. Escucha el resultado: si suena atropellado, usa un factor menor (`… work/vNN 1.08`).
+- Control de calidad de la voz: compara la transcripción con el guion. Si falta o cambia alguna palabra, si se lee en voz alta una etiqueta o si la duración (ya acelerada) queda fuera de 36–46 s, regenera esa voz una vez (cuesta créditos: solo si hace falta).
 
 ## 3. Montaje (estilo ANIMADO 2D — es el estilo fijo del canal)
 El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el personaje propio del canal, movimientos de cámara y etiquetas de datos. Motor: `pipeline/anim.py`. Ejemplo completo a imitar: `ejemplos/escenas_torre_eiffel.py`.
 
 1. Escribe `work/vNN/escenas.py` (empieza con `from anim import *`):
-   - Una escena por frase del guion (5–8 escenas). El inicio de cada escena = segundo en que empieza esa frase en `words.json`.
+   - **Cambio de plano cada 2–3 s** (13–18 escenas por vídeo, como los Shorts de referencia; nunca más de 3,5 s con el mismo plano). El inicio de cada escena = segundo en que empieza esa palabra en `words.json`. Dentro de cada escena la cámara SIEMPRE se mueve (zoom lento hacia dentro o paneo): nada estático.
+   - **Escena 1 = el protagonista en primer plano desde el fotograma 0** (sin fundidos ni títulos) y la **última escena = la misma imagen que la escena 1**, para que el salto del bucle no se note.
    - Cada escena es `def eN(ctx, lt, dur, T):` y SIEMPRE: fija la cámara con `camera(ctx, zoom, cx, cy)` usando `keyframes(...)` para que se mueva (acercar, alejar, desplazar), dibuja un fondo (`bg_night`, `bg_sky`, `bg_dark`, `bg_blueprint`, `ground`, `sun`…) y el protagonista del tema.
    - Dibuja el objeto del tema con primitivas de cairo (como la función `tower` del ejemplo): un avión, un planeta, un corazón, un puente… Formas planas con degradados suaves, paleta azul marino/morado de fondo y colores vivos para lo importante. Los emojis de OpenMoji (`icon`) solo como objetos secundarios.
-   - El personaje del canal (`character`) aparece en al menos 2 escenas, con la expresión que pida la frase (`duda`, `sorpresa`, `feliz`, `dormido`; `helmet=True`, `wave=1.0`…). Siempre en la escena final saludando junto a la etiqueta "FOLLOW". Todas las etiquetas y textos en pantalla, en inglés americano (MPH, MILES, POUNDS, °F…).
+   - El personaje del canal (`character`) aparece en al menos 2 escenas, con la expresión que pida la frase (`duda`, `sorpresa`, `feliz`, `dormido`; `helmet=True`, `wave=1.0`…). NO pongas "FOLLOW" ni despedida al final (rompe el bucle). Todas las etiquetas y textos en pantalla, en inglés americano (MPH, MILES, POUNDS, °F…).
    - Datos en pantalla con `pill` (etiqueta con borde), `badge` (etiqueta roja), `digital_clock`, `counter`, `line_chart`, `arrow`. Que aparezcan con `pop(lt, segundo)` justo cuando la voz dice el dato.
    - Todo lo importante dentro de la zona segura: x 80–1000, y 250–1550 (abajo van los subtítulos y la interfaz de YouTube).
-   - `ESCENAS = [(0.0, e1), (t2, e2), ...]` y `PALABRAS_POR_SUBTITULO = 2`.
+   - `ESCENAS = [(0.0, e1), (t2, e2), ...]`. Subtítulos: por defecto el estilo nuevo (`ESTILO_SUBTITULO = "grande"`): **una palabra gigante** amarilla con borde negro en el centro de la pantalla (y≈1060), como los Shorts virales. No pongas `PALABRAS_POR_SUBTITULO` (por defecto 1). Deja la zona y 900–1200 libre de objetos importantes (o mueve el texto con `Y_SUBTITULO`).
+   - `COLA = 0.08` (por defecto): el vídeo acaba justo en la última palabra.
    - Sonido: el ambiente debe ser de FONDO, solo para que el espectador esté a gusto. La música ambiental suave y los "whoosh" discretos de cambio de escena se ponen solos (pipeline/sonido.py) y la voz se trata sola. Opcional y con moderación: `SFX = [(t, "pop"), (t, "ding")]` (máximo 4–5 por vídeo, solo en los datos clave).
 2. Revisa: `python3 pipeline/anim.py work/vNN preview 1 5 9 ...` (un instante de cada escena) y mira las imágenes con Read. Corrige lo que se salga, se solape o se vea vacío. Repite hasta que todas las escenas se vean bien.
 3. Render: `python3 pipeline/anim.py work/vNN` → `short.mp4` en 1440x2560 (2K) a 60 fps con codificación de alta calidad (tarda ~2 min por vídeo; no bajar la calidad).
-4. Escribe también `work/vNN/meta.json` en inglés: `title` (≤ 90 caracteres, gancho + emoji + " #shorts"), `description` (2 frases + hashtags en inglés: #didyouknow #facts #curiosities #shorts…) y `tags`.
+4. Escribe también `work/vNN/meta.json` en inglés: `title` (≤ 90 caracteres: pregunta o afirmación con el NOMBRE del protagonista, p. ej. "What Happened To Edison's Last Breath? 🧪 #shorts"), `description` (2 frases + hashtags en inglés: #didyouknow #facts #curiosities #shorts…) y `tags`.
 5. Cada vídeo tiene que parecer distinto: cambia fondos, colores de acento, objetos y planos de cámara entre vídeos.
 
 ## 4. Publicar los vídeos en GitHub (rama `media`)
