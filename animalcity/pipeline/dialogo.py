@@ -44,6 +44,24 @@ def envelope(x):
     return [round(float(v), 3) for v in rms]
 
 
+def centroide(x):
+    """Brillo del sonido por fotograma (0 = vocal cerrada tipo "oo", 1 = "ee"/"s"): da la forma de la boca."""
+    hop = SR // FPS
+    n = max(1, len(x) // hop)
+    out = []
+    freqs = np.fft.rfftfreq(2048, 1 / SR)
+    for i in range(n):
+        seg = x[i * hop:i * hop + 2048]
+        if len(seg) < 256:
+            out.append(0.5)
+            continue
+        sp = np.abs(np.fft.rfft(seg * np.hanning(len(seg)), 2048))
+        c = float((sp * freqs).sum() / (sp.sum() + 1e-9))
+        out.append(min(1.0, max(0.0, (c - 900) / 2600)))
+    out = np.convolve(np.array(out), np.ones(5) / 5, mode="same")
+    return [round(float(v), 3) for v in out]
+
+
 def main(workdir):
     lineas = json.load(open(os.path.join(workdir, "lineas.json")))
     pista = np.zeros(int(SR * 0.25), dtype=np.float32)  # 0,25 s de aire al principio, no más
@@ -60,7 +78,7 @@ def main(workdir):
         pista[i0:i0 + len(x)] += x
         fin = ini + len(x) / SR
         item = {"pj": ln["pj"], "texto": re.sub(r"\[[^\]]*\]\s*", "", ln.get("rotulo_texto") or ln["texto"]).strip(),
-                "ini": round(ini, 3), "fin": round(fin, 3), "env": envelope(x)}
+                "ini": round(ini, 3), "fin": round(fin, 3), "env": envelope(x), "cen": centroide(x)}
         if ln.get("rotulo") is False:
             item["rotulo"] = False
         if ln.get("sub"):  # subtítulo (texto sencillo que se ve en pantalla)

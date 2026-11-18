@@ -3,7 +3,8 @@ from sitcom import *
 # EP01 · "Never ask Nana for the Wi-Fi password" (versión cartoon para todos los públicos)
 # Ambientes: rincón de Nana con chimenea · escenario con foco · móvil a pantalla completa · cocina de noche ·
 # pasillo con timbre · puerta abierta a la calle de noche · ráfaga · edificio de noche · salón gris con nube de lluvia.
-# Personajes: dibujos oficiales (assets/personajes) animados con squash & stretch, estelas, saltos y "takes".
+# Personajes: dibujos oficiales (assets/personajes) como muñecos articulados (pipeline/rig.py): brazos, piernas, cola,
+# orejas y boca se mueven por separado; además squash & stretch, estelas, saltos y "takes".
 # Los tiempos van por líneas del diálogo ("L6" = empieza la línea 6), así se recolocan solos si cambia el audio.
 
 PASS = "TeddyStillSleepsWithANightlight"
@@ -18,8 +19,9 @@ def e1(ctx, lt, dur, T, L):  # GANCHO: Teddy entra disparado en el rincón de Na
     rincon_nana(ctx, T)
     nana(ctx, *NANA, T, "smug", 0.0, typing=True)
     lineas_velocidad(ctx, 0, 900, 900, 600, 1, T, 12, WHITE, 0.8 * clamp(1 - (lt - 0.1) / 0.25))
-    teddy(ctx, 330, 1610, 1.0, T, "panico", L.talk("teddy", T), arms="movil", dx=dx, dy=jy, sq=sq * jsq,
-          smear=vel, lean=0.08 * clamp(1 - lt / 0.6))
+    teddy(ctx, 330, 1610, 1.0, T, "panico", L.boca("teddy", T), arms="movil", dx=dx, dy=jy, sq=sq * jsq,
+          smear=vel, lean=0.08 * clamp(1 - lt / 0.6), gesto="correr" if lt < 0.3 else "agitar",
+          ene=L.energia("teddy", T))
     polvo(ctx, 330, 1610, (lt - 0.18) / 0.5)
     ctx.restore()
     ambiente(ctx, "calida")
@@ -32,7 +34,7 @@ def e2(ctx, lt, dur, T, L):  # Nana, despacito: "Say please."
     ctx.save()
     zoom_cam(ctx, lt, [(0, (2.2, hx + 30, hy + 120)), (dur, (2.55, hx + 20, hy + 100))])
     rincon_nana(ctx, T)
-    o = nana(ctx, *NANA, T, "smug", L.talk("nana", T), lean=-0.03 * smooth(lt / 0.6))
+    o = nana(ctx, *NANA, T, "smug", L.boca("nana", T), lean=-0.03 * smooth(lt / 0.6))
     ctx.restore()
     # brillo en las gafas
     p = clamp((lt - 0.35) / 0.5)
@@ -49,8 +51,8 @@ def e3(ctx, lt, dur, T, L):  # "PLEASE!" en el escenario con foco, suplicando
     zoom_cam(ctx, lt, [(0, (1.35, 540 + sx, 1150 + sy)), (dur, (1.55, 540 + sx, 1130 + sy))])
     escenario_foco(ctx, T, hexc("#3A1550"))
     destellos(ctx, 150, 500, 780, 900, T, 16, hexc("#FFE6F2"), 1, 3, 30)
-    teddy(ctx, 540, 1640, 1.1, T, "triste", L.talk("teddy", T), arms="arriba", bounce=False, dy=dy, sq=sq,
-          blush=0.7, head_dy=-40, lean=0.03 * math.sin(T * 9))
+    teddy(ctx, 540, 1640, 1.1, T, "triste", L.boca("teddy", T), bounce=False, dy=dy, sq=sq,
+          blush=0.7, head_dy=-40, lean=0.03 * math.sin(T * 9), gesto="suplicar", rot=0)
     ctx.restore()
     corazones(ctx, 540, 620, T, 5, 1.2, hexc("#FF7AB6"))
     ambiente(ctx, "rosa", 0.8)
@@ -62,7 +64,7 @@ def e4(ctx, lt, dur, T, L):  # Nana teclea rapidísimo... y la contraseña apare
         ctx.save()
         zoom_cam(ctx, lt, [(0, (1.7, 700, 1260)), (1.6, (2.3, 640, 1300))])
         rincon_nana(ctx, T)
-        nana(ctx, *NANA, T, "smug", L.talk("nana", T), typing=True, nod=0.01 * math.sin(T * 40))
+        nana(ctx, *NANA, T, "smug", L.boca("nana", T), typing=True, nod=0.01 * math.sin(T * 40))
         ctx.restore()
         ambiente(ctx, "calida")
         return
@@ -104,7 +106,8 @@ def e5(ctx, lt, dur, T, L):  # Moe en la cocina: escupe el chocolate y "Oh no."
     cocina_noche(ctx, T)
     if lt < t_esc:  # vapor de la taza
         vapor(ctx, 600, 1280, T, 0.6)
-    moe(ctx, 540, 1600, 1.15, T, "sorpresa" if lt < 0.9 else "panico", L.talk("moe", T), dy=dy, sq=sq)
+    moe(ctx, 540, 1600, 1.15, T, "sorpresa" if lt < 0.9 else "panico", L.boca("moe", T), dy=dy, sq=sq,
+        gesto="sorber" if lt < t_esc - 0.02 else None)
     for i in range(22):  # espurreo de chocolate
         p = clamp((lt - t_esc) / 0.7)
         if 0 < p < 1:
@@ -131,8 +134,9 @@ def e6(ctx, lt, dur, T, L):  # Pasillo: Teddy corre de un lado a otro con el pá
     ctx.save()
     zoom_cam(ctx, lt, [(0, (1.2, 540, 1250)), (dur, (1.35, 540, 1200))])
     pasillo(ctx, T, timbre=clamp((lt - t_bell) / 0.1) if lt > t_bell else 0.0)
-    teddy(ctx, 540, 1740, 1.0, T, "panico", L.talk("teddy", T), flip=fl, dx=cx, smear=vel * 3 if run else 0,
-          dy=dy, sq=sq, bounce=run)
+    teddy(ctx, 540, 1740, 1.0, T, "panico" if run else "sorpresa", L.boca("teddy", T), flip=fl, dx=cx,
+          smear=vel * 3 if run else 0, dy=dy, sq=sq, bounce=False, gesto="correr" if run else "arriba",
+          ene=L.energia("teddy", T))
     if run:
         polvo(ctx, 540 + cx, 1740, (lt * 1.6) % 1, 0.8, int(lt * 3))
     ctx.restore()
@@ -147,7 +151,7 @@ def e7(ctx, lt, dur, T, L):  # La puerta se abre: Mia, de noche, con el móvil
     zoom_cam(ctx, lt, [(0, (1.15, 540, 1080)), (dur, (1.4, 560, 1120))])
     entrada_noche(ctx, T, abierta=e_out(lt / 0.45))
     jy, jsq = salto(lt, 0.55, 0.3, 70)
-    mia(ctx, 580, 1495, 0.92, T, "feliz", L.talk("mia", T), arms="movil", dy=jy, sq=jsq)
+    mia(ctx, 580, 1495, 0.92, T, "feliz", L.boca("mia", T), arms="movil", dy=jy, sq=jsq)
     ctx.restore()
     ambiente(ctx, "noche", 0.25)
 
@@ -167,8 +171,8 @@ def e8(ctx, lt, dur, T, L):  # Teddy mira a Nana (ella ni se inmuta)... y lo dic
     zoom_cam(ctx, lt, [(0.55, (1.35, 470, 1180)), (dur, (1.5, 440, 1190))])
     entrada_noche(ctx, T, abierta=1.0)
     mia(ctx, 720, 1495, 0.88, T, "normal", 0, arms="movil")
-    teddy(ctx, 250, 1720, 1.05, T, "panico", L.talk("teddy", T), arms="abajo", bounce=False, blush=1.0,
-          sq=0.93, head_dy=25, lean=-0.03)
+    teddy(ctx, 250, 1720, 1.05, T, "panico", L.boca("teddy", T), arms="abajo", bounce=False, blush=1.0,
+          sq=0.93, head_dy=25, lean=-0.03, gesto="encoger")
     ctx.restore()
     ambiente(ctx, "noche", 0.2)
 
@@ -178,7 +182,7 @@ def e9(ctx, lt, dur, T, L):  # "Sorry?" — Mia se inclina para oír
     ctx.save()
     zoom_cam(ctx, lt, [(0, (2.0, hx, hy + 200)), (dur, (2.2, hx - 20, hy + 180))])
     entrada_noche(ctx, T, abierta=1.0)
-    o = mia(ctx, 600, 1495, 0.95, T, "sospecha", L.talk("mia", T), arms="movil", lean=-0.09 * e_back(clamp(lt / 0.3)))
+    o = mia(ctx, 600, 1495, 0.95, T, "sospecha", L.boca("mia", T), arms="movil", lean=-0.09 * e_back(clamp(lt / 0.3)))
     ctx.restore()
     emote(ctx, "?", W * 0.68, H * 0.24, clamp((lt - 0.05) / 0.3), WHITE, 190, T)
     ambiente(ctx, "noche", 0.2)
@@ -192,7 +196,8 @@ def e10(ctx, lt, dur, T, L):  # EL GRITO... que se oye en todo el edificio
         ctx.save()
         zoom_cam(ctx, lt, [(0, (1.35, 540 + sx, 1130 + sy)), (corte, (1.6, 540 + sx, 1090 + sy))])
         rafaga(ctx, T, var=1)
-        teddy(ctx, 540, 1640, 1.2, T, "panico", L.talk("teddy", T), arms="arriba", bounce=False, dy=dy, sq=sq, head_dy=-50)
+        teddy(ctx, 540, 1640, 1.2, T, "panico", L.boca("teddy", T), bounce=False, dy=dy, sq=sq, head_dy=-50,
+              gesto="arriba", rot=0, pose={"brazo_i": 0.15 * math.sin(T * 17), "brazo_d": -0.15 * math.sin(T * 17 + 1)})
         ctx.restore()
         lineas_foco(ctx, W / 2, H * 0.4, T, 0.5)
         return
@@ -209,7 +214,7 @@ def e11(ctx, lt, dur, T, L):  # Silencio incómodo: grillos, planta rodadora... 
     ctx.save()
     zoom_cam(ctx, lt, [(0, (1.3, 560, 1150)), (dur, (1.5, 580, 1120))])
     entrada_noche(ctx, T, abierta=1.0)
-    mia(ctx, 600, 1495, 0.95, T, "sospecha", L.talk("mia", T), arms="movil", lid=0.35)
+    mia(ctx, 600, 1495, 0.95, T, "sospecha", L.boca("mia", T), arms="movil", lid=0.35)
     rodador(ctx, -250 + lt * 900, 1660, 90, T)
     ctx.restore()
     t_wrong = L.lines[10]["fin"] - (T - lt) - 0.3
@@ -224,7 +229,7 @@ def e12(ctx, lt, dur, T, L):  # Nana, sin levantar la vista: "I changed it."
     ctx.save()
     zoom_cam(ctx, lt, [(0, (2.5, hx + 20, hy + 110)), (dur, (2.8, hx + 20, hy + 90))])
     rincon_nana(ctx, T, var=0)
-    nana(ctx, *NANA, T, "smug", L.talk("nana", T), typing=True, lean=-0.04)
+    nana(ctx, *NANA, T, "smug", L.boca("nana", T), typing=True, lean=-0.04)
     ctx.restore()
     p = clamp((lt - 0.65) / 0.5)
     destello(ctx, W * 0.42, H * 0.37, 80 * math.sin(math.pi * p), WHITE, math.sin(math.pi * p))
@@ -240,7 +245,7 @@ def e13(ctx, lt, dur, T, L):  # Mia lee el móvil de Nana: "Nana Is The Best"...
     rincon_nana(ctx, T, var=0)
     jy, jsq = salto(lt, t_ok + 0.05, 0.38, 150)
     nana(ctx, *NANA, T, "feliz" if fiesta else "smug", 0.0, screen_text="NanaIsTheBest")
-    mia(ctx, 400, 1585, 0.95, T, "feliz", L.talk("mia", T), arms="cruzados", dy=jy, sq=jsq)
+    mia(ctx, 400, 1585, 0.95, T, "feliz", L.boca("mia", T), arms="cruzados", dy=jy, sq=jsq)
     ctx.restore()
     k = pop(lt, 0.3, 0.3)
     if k > 0 and not fiesta:  # inserto del móvil
@@ -269,8 +274,8 @@ def e14(ctx, lt, dur, T, L):  # Teddy solo, en gris, con su nube de lluvia: "Nan
     ctx.save()
     zoom_cam(ctx, lt, [(0, (1.55, 540, 1230)), (dur, (1.75, 540, 1180))])
     salon(ctx, T, var=0)
-    o = teddy(ctx, 540, 1620, 1.0, T, "triste", L.talk("teddy", T), arms="abajo", bounce=False, sq=0.9, head_dy=40,
-              lean=0.04)
+    o = teddy(ctx, 540, 1620, 1.0, T, "triste", L.boca("teddy", T), arms="abajo", bounce=False, sq=0.9, head_dy=40,
+              lean=0.04, gesto="caido")
     nube_lluvia(ctx, o["top"][0], o["top"][1] - 190, 1.0, T, 1.0, trueno=True)
     ctx.restore()
     ambiente(ctx, "gris")

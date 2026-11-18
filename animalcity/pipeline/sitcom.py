@@ -181,28 +181,29 @@ def tablet(ctx, x, y, s=1.0, rot=0.0, screen_text=None):
     ctx.restore()
 
 
-# ---------------------------------------------------------------- personajes (marionetas)
-# Los personajes son los DIBUJOS OFICIALES del reparto (variante 2 del lineup "Sitcom – Personajes",
-# referencias/reparto_v2.png), recortados por pipeline/recortar_reparto.py en assets/personajes/*.png.
-# No se redibujan: se animan encima como en los dibujos animados. El dibujo se trocea en franjas
-# horizontales y cada franja se desplaza/estira, así el personaje se dobla, se estira y se aplasta
-# (squash & stretch), cabecea al hablar y se balancea, sin perder el trazo original.
+# ---------------------------------------------------------------- personajes (muñecos articulados)
+# Los personajes son los DIBUJOS OFICIALES del reparto (variante 2, referencias/reparto_v2.png), recortados en
+# assets/personajes/*.png. No se redibujan: pipeline/rig.py los separa en piezas con esqueleto (hombros, codos,
+# muñecas, caderas, rodillas, cuello, mandíbula, cola, orejas, coleta) y aquí se animan con movimiento natural:
+# respiración, balanceo del peso, la cabeza sigue al cuerpo con un poco de retraso, la cola y las orejas tienen
+# inercia, los brazos gesticulan al ritmo de la voz y la boca cambia de forma según la vocal.
+import rig as _rig
+import skia as _skia
+
 _PUP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "personajes")
 _PUP_WORLD = 0.29  # unidades del lienzo (1080x1920) por píxel del recorte (x4)
-# Puntos en píxeles del recorte: ojos (x, y, radio), boca (x, y, ancho), mano, pantalla, cabeza, cuello (y), mejillas.
 PUP = {
-    "teddy": {"eyes": [(836, 340, 78), (1012, 300, 78)], "mouth": (976, 520, 150), "cover": False,
-              "hand": (1704, 948), "head": (930, 330), "neck": 720, "cheeks": [(790, 470), (1100, 430)]},
-    "moe": {"eyes": [(496, 476, 60), (708, 476, 60)], "mouth": (612, 632, 250), "cover": True,
-            "hand": (612, 900), "head": (600, 470), "neck": 700, "cheeks": [(450, 590), (760, 590)]},
-    "nana": {"eyes": [(228, 508, 46), (484, 516, 46)], "mouth": (412, 676, 120), "cover": True,
-             "hand": (130, 990), "screen": (128, 990, -0.38), "head": (360, 520), "neck": 840,
-             "cheeks": [(250, 610), (500, 620)]},
-    "mia": {"eyes": [(192, 708, 52), (440, 716, 52)], "mouth": (380, 824, 190), "cover": True,
-            "hand": (560, 1440), "head": (330, 700), "neck": 950, "cheeks": [(200, 810), (470, 820)]},
+    "teddy": {"eyes": [(836, 340, 78), (1012, 300, 78)], "mouth": None, "hand": ("mano_d", (1704, 900)),
+              "head": (930, 330), "cheeks": [(790, 470), (1100, 430)]},
+    "moe": {"eyes": [(496, 476, 60), (708, 476, 60)], "mouth": (612, 632, 250), "hand": ("brazos", (612, 900)),
+            "head": (600, 470), "cheeks": [(450, 590), (760, 590)]},
+    "nana": {"eyes": [(228, 508, 46), (484, 516, 46)], "mouth": (412, 676, 120), "hand": ("antebrazo_i", (130, 990)),
+             "screen": (128, 990, -0.38), "head": (360, 520), "cheeks": [(250, 610), (500, 620)]},
+    "mia": {"eyes": [(192, 708, 52), (440, 716, 52)], "mouth": (380, 824, 190), "hand": ("brazos", (560, 1380)),
+            "head": (330, 700), "cheeks": [(200, 810), (470, 820)]},
 }
 _pup_cache = {}
-_STRIPS = 34
+_skimg = {}
 
 
 def _pup(name):
@@ -220,141 +221,277 @@ def _pup(name):
         meta["top"] = ((tcols[0] + tcols[-1]) / 2, top)
 
         def sample(px, py):
-            px, py = int(px), int(py)
-            b, g, r, a = data[py, px]
+            b, g, r, a = data[int(py), int(px)]
             return (r / 255, g / 255, b / 255)
         ex, ey, er = meta["eyes"][0]
         meta["lid"] = sample(ex, ey - er * 1.35)
-        mx, my, mw = meta["mouth"]
-        meta["skin"] = sample(mx - mw * 0.75, my - mw * 0.05)
-        # versión a media resolución para planos generales (más rápida y más suave al reducir)
-        half = cairo.ImageSurface(cairo.FORMAT_ARGB32, w // 2 + 1, h // 2 + 1)
-        c2 = cairo.Context(half)
-        c2.scale(0.5, 0.5)
-        c2.set_source_surface(surf, 0, 0)
-        c2.get_source().set_filter(cairo.FILTER_BEST)
-        c2.paint()
-        _pup_cache[name] = (surf, half, w, h, foot_x, bottom, meta)
+        if meta["mouth"]:
+            mx, my, mw = meta["mouth"]
+            meta["skin"] = sample(mx - mw * 0.75, my - mw * 0.05)
+        _pup_cache[name] = (surf, None, w, h, foot_x, bottom, meta)
     return _pup_cache[name]
 
 
-def _sstep(a, b, v):
-    p = clamp((v - a) / (b - a))
-    return p * p * (3 - 2 * p)
+def _img_pieza(p):
+    k = id(p["bgra"])
+    if k not in _skimg:
+        _skimg[k] = _skia.Image.fromarray(p["bgra"], colorType=_skia.kBGRA_8888_ColorType,
+                                          alphaType=_skia.kPremul_AlphaType).withDefaultMipmaps()
+    return _skimg[k]
+
+
+def _ruido(T, f, seed):
+    """Movimiento suave y orgánico (suma de senos de frecuencias que no se repiten)."""
+    return (math.sin(T * f + seed) * 0.6 + math.sin(T * f * 1.71 + seed * 2.3) * 0.3
+            + math.sin(T * f * 2.93 + seed * 0.7) * 0.1)
+
+
+# Gestos: cada uno devuelve ángulos (radianes) por hueso. Convención: "sube" el brazo izquierdo de la imagen con
+# ángulo positivo y el derecho con negativo; las piernas igual.
+def _pose(name, T, mood, abre, ancho, ene, gesto, lean, nod, head_dy):
+    sd = len(name) * 1.37
+    P = {}
+    # respiración y peso
+    resp = math.sin(T * 2.4 + sd)
+    P["raiz"] = lean + 0.018 * _ruido(T, 0.9, sd)
+    P["pecho"] = (-0.4 * lean + 0.012 * _ruido(T, 1.1, sd + 1), 0.0, -3.0 * resp)
+    # la cabeza sigue al cuerpo con retraso + asiente al hablar
+    cab = 0.035 * _ruido(T - 0.15, 0.9, sd) + nod + ene * 0.05 * math.sin(T * 7.3 + sd) + abre * 0.03
+    P["cabeza"] = (cab, 0.0, head_dy - 6 * ene * abs(math.sin(T * 6.1 + sd)))
+    # brazos: en reposo se mecen; al hablar gesticulan con la energía de la voz
+    g_i = 0.05 * _ruido(T, 1.3, sd + 2) + ene * (0.18 + 0.16 * math.sin(T * 4.7 + sd))
+    g_d = 0.05 * _ruido(T, 1.2, sd + 3) + ene * (0.14 + 0.18 * math.sin(T * 5.3 + sd + 1.5))
+    f_i = 0.06 * _ruido(T - 0.08, 1.6, sd + 4) + ene * 0.22 * math.sin(T * 6.2 + sd)
+    f_d = 0.06 * _ruido(T - 0.08, 1.5, sd + 5) + ene * 0.22 * math.sin(T * 5.8 + sd + 2)
+    pierna = 0.03 * _ruido(T, 0.8, sd + 6)
+    cola_a, cola_f = 0.18, 3.0
+    g = gesto
+    if g is None:
+        g = {"panico": "agitar", "sorpresa": "arriba", "feliz": "celebrar", "triste": "caido", "cansado": "caido",
+             "enfado": "punos", "smug": "tranquilo"}.get(mood)
+    if g == "agitar":
+        g_i += 0.35 + 0.45 * math.sin(T * 13 + sd)
+        g_d += 0.35 + 0.45 * math.sin(T * 13 + sd + 2.2)
+        f_i += 0.5 * math.sin(T * 15 + sd + 1)
+        f_d += 0.5 * math.sin(T * 15 + sd + 3)
+        P["cabeza"] = (P["cabeza"][0] + 0.06 * math.sin(T * 11), 0.0, P["cabeza"][2])
+        pierna += 0.12 * math.sin(T * 12)
+        cola_a, cola_f = 0.35, 12
+    elif g == "arriba":
+        g_i += 0.85
+        g_d += 0.85
+        f_i += 0.5
+        f_d += 0.5
+    elif g == "celebrar":
+        k = 0.5 + 0.5 * math.sin(T * 8)
+        g_i += 0.7 + 0.3 * k
+        g_d += 0.7 + 0.3 * k
+        f_i += 0.4 * k
+        f_d += 0.4 * k
+        cola_a, cola_f = 0.4, 11
+    elif g == "caido":
+        g_i -= 0.35
+        g_d -= 0.35
+        f_i -= 0.15
+        f_d -= 0.15
+        P["cabeza"] = (P["cabeza"][0] + 0.1, 0.0, P["cabeza"][2] + 25)
+        cola_a, cola_f = 0.05, 1.2
+    elif g == "punos":
+        g_i += 0.1 + 0.12 * math.sin(T * 22)
+        g_d += 0.1 + 0.12 * math.sin(T * 22 + 1)
+        f_i += 0.45
+        f_d += 0.45
+    elif g == "tranquilo":
+        P["cabeza"] = (P["cabeza"][0] - 0.05, 0.0, P["cabeza"][2])
+    elif g == "saludo":
+        g_d += 0.9
+        f_d += 0.25 + 0.45 * math.sin(T * 10)
+    elif g == "suplicar":
+        g_i += 0.15 + 0.06 * math.sin(T * 9)
+        g_d += 0.15 + 0.06 * math.sin(T * 9 + 0.4)
+        f_i += 0.8
+        f_d += 0.8
+        P["cabeza"] = (P["cabeza"][0] + 0.08, 0.0, P["cabeza"][2])
+    elif g in ("correr", "andar"):
+        w = 14 if g == "correr" else 7
+        a = 0.55 if g == "correr" else 0.3
+        ph = T * w
+        P["muslo_i"] = a * math.sin(ph)
+        P["pierna_i"] = -a * 1.2 * max(0, math.sin(ph + 1.2))
+        P["muslo_d"] = -a * math.sin(ph)
+        P["pierna_d"] = a * 1.2 * max(0, math.sin(ph + 1.2 + math.pi))
+        P["pie_i"] = 0.4 * a * math.sin(ph + 0.5)
+        P["pie_d"] = -0.4 * a * math.sin(ph + 0.5)
+        g_i += a * 0.9 * math.sin(ph + math.pi) + 0.2
+        g_d += a * 0.9 * math.sin(ph) + 0.2
+        f_i += 0.5
+        f_d += 0.5
+        P["raiz"] = P["raiz"] + 0.06
+        cola_a, cola_f = 0.3, w
+    elif g == "encoger":
+        g_i += 0.25
+        g_d += 0.25
+        f_i += 0.6
+        f_d += 0.6
+        P["cabeza"] = (P["cabeza"][0], 0.0, P["cabeza"][2] + 20)
+    # aplicar a cada personaje según su esqueleto
+    if name == "teddy":
+        P["brazo_i"], P["antebrazo_i"], P["mano_i"] = g_i, f_i, 0.3 * f_i
+        P["brazo_d"], P["antebrazo_d"], P["mano_d"] = -g_d, -f_d, -0.3 * f_d
+        P["mandibula"] = -0.04 + abre * (0.22 + 0.1 * (1 - ancho))
+        P.setdefault("muslo_i", pierna)
+        P.setdefault("muslo_d", 0.06 * _ruido(T, 1.4, 3) - pierna)
+        P.setdefault("pierna_d", 0.08 * _ruido(T, 1.7, 4))
+        P["cola"] = cola_a * math.sin(T * cola_f)
+        P["cola2"] = cola_a * 1.3 * math.sin(T * cola_f - 0.9)
+        dcab = P["cabeza"][0] - (0.035 * _ruido(T - 0.27, 0.9, sd))
+        P["oreja_i"] = -dcab * 4 + 0.05 * math.sin(T * 3.1)
+        P["oreja_d"] = dcab * 5 + 0.08 * math.sin(T * 2.7 + 1) + abre * 0.06
+    elif name == "moe":
+        sip = 1.0 if g == "sorber" else 0.0
+        P["brazos"] = (0.03 * _ruido(T, 1.2, 2) - g_i * 0.05, 0.0, -6 * resp - 25 * ene - 120 * sip + 20 * (g == "caido"))
+        P["pie_i"] = 0.05 * _ruido(T, 1.3, 1) + (0.25 * math.sin(T * 12) if g in ("agitar", "correr", "andar") else 0)
+        P["pie_d"] = 0.05 * _ruido(T, 1.1, 2) - (0.25 * math.sin(T * 12) if g in ("agitar", "correr", "andar") else 0)
+        P["cabeza"] = (P["cabeza"][0] * 0.5, 0.0, P["cabeza"][2] * 0.5)
+    elif name == "nana":
+        tec = 1.0 if g == "teclear" else 0.0
+        P["brazo_i"] = 0.4 * g_i - 0.05 + 0.02 * tec * math.sin(T * 31)
+        P["antebrazo_i"] = 0.25 * f_i + 0.03 * tec * math.sin(T * 27 + 1)
+        P["brazo_d"] = (-0.25 * g_d + 0.04 * tec * math.sin(T * 23), 0.0, 0.0)
+        P["mano_d"] = -0.3 * f_d + 0.12 * tec * abs(math.sin(T * 17))
+        P["pie_i"] = pierna * 0.7
+        P["pie_d"] = -pierna * 0.7
+    elif name == "mia":
+        P["brazos"] = (0.05 * g_i * 0.3 + 0.015 * _ruido(T, 1.0, 3), 0.0, -5 * resp - 18 * ene - 30 * (g in ("celebrar", "arriba", "encoger")))
+        P["muslo_i"] = pierna + (P.get("muslo_i", 0) if g in ("correr", "andar") else 0)
+        P["muslo_d"] = -pierna * 0.6 + (P.get("muslo_d", 0) if g in ("correr", "andar") else 0)
+        P["cola"] = -cola_a * 0.8 * (0.4 + math.sin(T * cola_f * 0.6))
+        P["cola2"] = -cola_a * 1.1 * math.sin(T * cola_f * 0.6 - 1.0)
+        dcab = P["cabeza"][0] - (0.035 * _ruido(T - 0.27, 0.9, sd))
+        P["coleta"] = -dcab * 4 + 0.07 * math.sin(T * 2.3) - 0.1 * abs(math.sin(T * 6)) * (g == "celebrar")
+        P["oreja_i"] = 0.04 * math.sin(T * 1.9) + dcab * 2
+        P["oreja_d"] = -0.05 * math.sin(T * 2.2 + 1) - dcab * 2
+    return P
+
+
+def _mat(M):
+    return cairo.Matrix(M[0, 0], M[1, 0], M[0, 1], M[1, 1], M[0, 2], M[1, 2])
+
+
+def _dibuja_malla(ctx, name, pose, alpha=1.0, tint=None, smear=0.0, k=1.0, sgn=1):
+    """Deforma las piezas del personaje y las pinta con skia en coordenadas de pantalla."""
+    piezas, M = _rig.deformar(name, pose)
+    m = ctx.get_matrix()
+    xx, yx, xy, yy, x0, y0 = m.xx, m.yx, m.xy, m.yy, m.x0, m.y0
+    devs = []
+    for p, P in piezas:
+        dxs = xx * P[:, 0] + xy * P[:, 1] + x0
+        dys = yx * P[:, 0] + yy * P[:, 1] + y0
+        devs.append((p, dxs, dys))
+    allx = np.concatenate([d[1] for d in devs])
+    ally = np.concatenate([d[2] for d in devs])
+    ctx.save()
+    ctx.identity_matrix()
+    cx0, cy0, cx1, cy1 = ctx.clip_extents()
+    ctx.restore()
+    bx0, by0 = max(cx0, math.floor(allx.min()) - 2), max(cy0, math.floor(ally.min()) - 2)
+    bx1, by1 = min(cx1, math.ceil(allx.max()) + 2), min(cy1, math.ceil(ally.max()) + 2)
+    if bx1 - bx0 < 2 or by1 - by0 < 2:
+        return M
+    bw, bh = int(bx1 - bx0), int(by1 - by0)
+    sk = _skia.Surface(bw, bh)
+    cv = sk.getCanvas()
+    cv.clear(_skia.ColorTRANSPARENT)
+    samp = _skia.SamplingOptions(_skia.FilterMode.kLinear, _skia.MipmapMode.kLinear)
+    for p, dxs, dys in devs:
+        pts = [_skia.Point(float(a - bx0), float(b - by0)) for a, b in zip(dxs, dys)]
+        uv = [_skia.Point(float(a), float(b)) for a, b in p["V"]]
+        v = _skia.Vertices(_skia.Vertices.kTriangles_VertexMode, pts, uv, None, p["T"].ravel().tolist())
+        paint = _skia.Paint(Shader=_img_pieza(p).makeShader(_skia.TileMode.kDecal, _skia.TileMode.kDecal, samp),
+                            AntiAlias=True)
+        cv.drawVertices(v, paint)
+    arr = np.ascontiguousarray(sk.toarray())
+    cs = cairo.ImageSurface.create_for_data(memoryview(arr.reshape(-1)), cairo.FORMAT_ARGB32, bw, bh, bw * 4)
+    ctx.save()
+    ctx.identity_matrix()
+    if abs(smear) > 1:  # estela
+        for i in range(1, 5):
+            off = -smear * i * 0.55 * (math.hypot(xx, yx) / max(1e-6, abs(k))) * k
+            ctx.set_source_surface(cs, bx0 + off, by0)
+            ctx.paint_with_alpha(alpha * 0.22 * (1 - i / 5))
+    ctx.set_source_surface(cs, bx0, by0)
+    ctx.paint_with_alpha(alpha) if alpha < 0.999 else ctx.paint()
+    if tint:
+        ctx.set_source_rgba(*tint)
+        ctx.mask_surface(cs, bx0, by0)
+    ctx.restore()
+    cs.finish()
+    return M
 
 
 def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), flip=False, bounce=0.0, phone_prop=False,
            screen_text=None, rot=0.0, sq=1.0, lean=0.0, dx=0.0, dy=0.0, head_dy=0.0, nod=0.0, smear=0.0, tint=None,
-           blush=0.0, alpha=1.0, spin=0.0, shadow=True, sway=1.0, lid=None):
-    """Dibuja a un personaje oficial con los pies en (x, y).
+           blush=0.0, alpha=1.0, spin=0.0, shadow=True, sway=1.0, lid=None, gesto=None, pose=None, ene=None):
+    """Dibuja a un personaje oficial (muñeco articulado) con los pies en (x, y).
 
-    s escala · sq estirar(>1)/aplastar(<1) · lean doblarse (+ derecha) · dx, dy desplazamiento (dy<0 arriba)
-    head_dy subir la cabeza (px del recorte, <0 arriba) · nod cabeceo lateral · smear velocidad horizontal
-    (deja estela) · tint (r, g, b, a) colorea el dibujo · blush 0..1 colorete · spin giro · lid 0..1 párpados.
-    Devuelve {"head": (x, y), "top": (x, y), "feet": (x, y)} en coordenadas del mundo para colgar efectos.
+    talk: apertura de boca 0..1, o (apertura, forma) de L.boca(...) · gesto: agitar, arriba, celebrar, caido, punos,
+    tranquilo, saludo, suplicar, correr, andar, encoger, sorber (Moe), teclear (Nana) · pose: ángulos por hueso que
+    se suman · ene: energía de la voz 0..1 (gesticula más) · s escala · sq estirar/aplastar · lean doblarse ·
+    dx, dy desplazar · head_dy, nod cabeza · smear estela · blush colorete · tint (r,g,b,a) · lid párpados.
+    Devuelve {"head", "top", "feet"} en coordenadas del mundo.
     """
-    surf, half, w, h, fx, fb, meta = _pup(name)
+    surf, _h, w, h, fx, fb, meta = _pup(name)
     k = _PUP_WORLD * s
-    seed = len(name) * 1.7
-    tl = clamp(talk)
-    # --- movimiento automático: respiración, balanceo, hablar, ánimo
-    sq_t = sq * (1 + 0.014 * math.sin(T * 2.6 + seed))
-    lean_t = lean + sway * 0.016 * math.sin(T * 1.7 + seed)
-    hd = head_dy - tl * 34 * (0.6 + 0.4 * math.sin(T * 17 + seed))
-    nod_t = nod + tl * 0.012 * math.sin(T * 9 + seed)
-    jx, jy = 0.0, 0.0
+    if isinstance(talk, (tuple, list)):
+        abre, ancho = float(talk[0]), float(talk[1])
+    else:
+        abre, ancho = clamp(float(talk)), 0.5
+    if ene is None:
+        ene = clamp(abre * 1.3)
     hop = -abs(math.sin(T * 7)) * 18 * s * bounce
+    jx = 0.0
+    sq_t = sq
     if mood == "panico":
         jx = 4 * s * math.sin(T * 47)
-        lean_t += 0.02 * math.sin(T * 31)
     elif mood == "sorpresa":
         hop -= 14 * s * abs(math.sin(T * 10))
         sq_t *= 1.04
     elif mood == "enfado":
         jx = 5 * s * math.sin(T * 61)
-        hd -= 10
     elif mood == "feliz":
         hop -= abs(math.sin(T * 6)) * 12 * s
-        lean_t += 0.025 * math.sin(T * 6)
-    elif mood == "smug":
-        lean_t -= 0.02
-        hd -= 8
-    elif mood in ("cansado", "triste"):
-        sq_t *= 0.95
-        lean_t += 0.03
-        hd += 30
-    hd = max(-90, min(90, hd))
-    neck = meta["neck"]
-
-    def headw(v):  # 1 en la cabeza, 0 en el cuerpo
-        return 1 - _sstep(neck - 90, neck + 70, v)
-
-    def wdx(v):
-        return lean_t * ((1 - v / fb) ** 2) * fb + nod_t * fb * headw(v)
-
-    def wy(v):
-        return v + hd * headw(v)
-
-    def wp(px, py):
-        return px + wdx(py), wy(py)
-
+    P = _pose(name, T, mood, abre, ancho, ene, gesto, lean, nod, head_dy)
+    for b, v in (pose or {}).items():
+        base = P.get(b, 0.0)
+        if isinstance(base, tuple) or isinstance(v, tuple):
+            bb = base if isinstance(base, tuple) else (base, 0.0, 0.0)
+            vv = v if isinstance(v, tuple) else (v, 0.0, 0.0)
+            P[b] = (bb[0] + vv[0], bb[1] + vv[1], bb[2] + vv[2])
+        else:
+            P[b] = base + v
     ctx.save()
     ctx.translate(x + dx, y)
     if shadow:
         lift = clamp(-(dy + hop) / 300)
         soft_shadow(ctx, 0, 0, w * k * 0.38 * (1 - 0.4 * lift), 22 * s * (1 - 0.4 * lift), 0.28 * (1 - 0.5 * lift) * alpha)
-    ctx.translate(jx, dy + hop + jy)
+    ctx.translate(jx, dy + hop)
     ctx.rotate(rot + spin)
     sgn = -1 if flip else 1
     ctx.scale(k * sgn / (sq_t ** 0.6), k * sq_t)
     ctx.translate(-fx, -fb)
-    # nivel de detalle según el tamaño en pantalla
-    m = ctx.get_matrix()
-    dev = math.sqrt(abs(m.xx * m.yy - m.xy * m.yx))
-    src, sc = (half, 2.0) if dev < 0.45 else (surf, 1.0)
-    # estela (smear) para movimientos rápidos
-    if abs(smear) > 1:
-        for i in range(1, 5):
-            ctx.save()
-            ctx.translate(-smear * i * 0.55 / k * sgn, 0)
-            ctx.scale(sc, sc)
-            ctx.set_source_surface(src, 0, 0)
-            ctx.paint_with_alpha(alpha * 0.22 * (1 - i / 5))
-            ctx.restore()
-    # el dibujo, en franjas deformadas
-    n = _STRIPS
-    for i in range(n):
-        y0, y1 = fb * i / n, fb * (i + 1) / n
-        Y0, Y1 = wy(y0), wy(y1)
-        d0, d1 = wdx(y0), wdx(y1)
-        shear = (d1 - d0) / (y1 - y0)
-        syy = (Y1 - Y0) / (y1 - y0)
-        ctx.save()
-        ctx.transform(cairo.Matrix(1, 0, shear, syy, d0 - shear * y0, Y0 - syy * y0))
-        ctx.rectangle(-4, y0 - 0.7, w + 8, (y1 - y0) + 1.4)
-        ctx.clip()
-        ctx.scale(sc, sc)
-        ctx.set_source_surface(src, 0, 0)
-        ctx.get_source().set_filter(cairo.FILTER_GOOD)
-        if alpha >= 0.999:
-            ctx.paint()
-        else:
-            ctx.paint_with_alpha(alpha)
-        if tint:
-            ctx.set_source_rgba(*tint)
-            ctx.mask_surface(src, 0, 0)
-        ctx.restore()
-    # --- colorete
+    M = _dibuja_malla(ctx, name, P, alpha, tint, smear, k, sgn)
+    Mh = M["cabeza"]
+    # --- colorete, párpados y boca (pegados a la cabeza)
+    ctx.save()
+    ctx.transform(_mat(Mh))
     if blush > 0.01:
         for cx, cy in meta["cheeks"]:
-            px, py = wp(cx, cy)
-            g = cairo.RadialGradient(px, py, 0, px, py, 70)
+            g = cairo.RadialGradient(cx, cy, 0, cx, cy, 70)
             g.add_color_stop_rgba(0, 1, 0.35, 0.5, 0.75 * blush)
             g.add_color_stop_rgba(1, 1, 0.35, 0.5, 0)
             ctx.set_source(g)
-            ellipse(ctx, px, py, 80, 50)
+            ellipse(ctx, cx, cy, 80, 50)
             ctx.fill()
-    # --- párpados (parpadeo; medio cerrados con sospecha / cansado)
     ph = (T + len(name) * 0.71) % 3.8
     lv = 1.0 if ph < 0.11 else 0.0
     if mood in ("sospecha", "cansado") and name in ("teddy", "moe"):
@@ -365,7 +502,6 @@ def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), 
         lv = max(lv, lid)
     if lv > 0:
         for ex, ey, er in meta["eyes"]:
-            ex, ey = wp(ex, ey)
             ctx.save()
             ellipse(ctx, ex, ey, er * 1.12, er * 1.12)
             ctx.clip()
@@ -378,36 +514,47 @@ def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), 
             ctx.set_line_width(er * 0.16)
             ctx.stroke()
             ctx.restore()
-    # --- boca que habla
-    mx, my, mw = meta["mouth"]
-    mx, my = wp(mx, my)
-    if tl > 0.06:
-        if meta["cover"]:
-            ellipse(ctx, mx, my, mw * 0.62, mw * 0.24)
-            ctx.set_source_rgb(*meta["skin"])
-            ctx.fill()
-        hgt = mw * (0.12 + 0.42 * tl)
-        ctx.move_to(mx - mw / 2, my)
-        ctx.curve_to(mx - mw / 2, my + hgt * 1.35, mx + mw / 2, my + hgt * 1.35, mx + mw / 2, my)
-        ctx.curve_to(mx + mw / 4, my - hgt * 0.2, mx - mw / 4, my - hgt * 0.2, mx - mw / 2, my)
+    if meta["mouth"] and abre > 0.05:  # boca con forma de vocal: "oo" redonda, "ee" ancha
+        mx, my, mw = meta["mouth"]
+        ellipse(ctx, mx, my, mw * 0.64, mw * 0.26)
+        ctx.set_source_rgb(*meta["skin"])
+        ctx.fill()
+        wid = mw * (0.62 + 0.55 * ancho)
+        hgt = mw * (0.1 + 0.5 * abre) * (1.25 - 0.45 * ancho)
+        ctx.move_to(mx - wid / 2, my)
+        ctx.curve_to(mx - wid / 2, my + hgt * 1.3, mx + wid / 2, my + hgt * 1.3, mx + wid / 2, my)
+        ctx.curve_to(mx + wid / 4, my - hgt * 0.25, mx - wid / 4, my - hgt * 0.25, mx - wid / 2, my)
         ctx.close_path()
-        ctx.set_source_rgb(0.33, 0.07, 0.12)
+        ctx.set_source_rgb(0.3, 0.06, 0.11)
         ctx.fill_preserve()
         ctx.set_source_rgb(*INK)
         ctx.set_line_width(mw * 0.06)
         ctx.stroke()
-        ellipse(ctx, mx, my + hgt * 0.9, mw * 0.2, hgt * 0.3)
+        if abre > 0.35:  # dientes de arriba
+            ctx.save()
+            ctx.move_to(mx - wid / 2, my)
+            ctx.curve_to(mx - wid / 2, my + hgt * 1.3, mx + wid / 2, my + hgt * 1.3, mx + wid / 2, my)
+            ctx.close_path()
+            ctx.clip()
+            ctx.rectangle(mx - wid / 2, my - 2, wid, hgt * 0.28)
+            ctx.set_source_rgb(0.97, 0.96, 0.92)
+            ctx.fill()
+            ctx.restore()
+        ellipse(ctx, mx, my + hgt * 0.92, wid * 0.22, hgt * 0.3)
         ctx.set_source_rgb(0.93, 0.45, 0.52)
         ctx.fill()
+    ctx.restore()
     # --- móvil en la mano (Teddy / Mia) y texto en la pantalla del móvil de Nana
+    hb, (hx_, hy_) = meta["hand"]
     if phone_prop and name != "nana":
-        hx, hy = meta["hand"]
-        hx, hy = wp(hx, hy - (0 if name == "mia" else 120))
-        phone(ctx, hx, hy, 3.2, 0.12, glow=0.5 + 0.5 * math.sin(T * 5))
+        ctx.save()
+        ctx.transform(_mat(M[hb]))
+        phone(ctx, hx_, hy_ - (0 if name == "mia" else 70), 3.2, 0.12, glow=0.5 + 0.5 * math.sin(T * 5))
+        ctx.restore()
     if screen_text and "screen" in meta:
         sx, sy, sr = meta["screen"]
-        sx, sy = wp(sx, sy)
         ctx.save()
+        ctx.transform(_mat(M[hb]))
         ctx.translate(sx, sy)
         ctx.rotate(sr)
         sz = 60
@@ -415,10 +562,12 @@ def puppet(ctx, name, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), 
             sz -= 2
         text(ctx, screen_text, 0, 0, sz, INK, shadow=False)
         ctx.restore()
-    # posiciones útiles en el mundo
     pts = {}
-    for key, (px, py) in (("head", meta["head"]), ("top", meta["top"]), ("feet", (fx, fb))):
-        pts[key] = ctx.user_to_device(*wp(px, py))
+    for key, (px, py), bone in (("head", meta["head"], "cabeza"), ("top", meta["top"], "cabeza"), ("feet", (fx, fb), "raiz")):
+        Mb = M[bone]
+        qx = Mb[0, 0] * px + Mb[0, 1] * py + Mb[0, 2]
+        qy = Mb[1, 0] * px + Mb[1, 1] * py + Mb[1, 2]
+        pts[key] = ctx.user_to_device(qx, qy)
     ctx.restore()
     out = {kk: ctx.device_to_user(*v) for kk, v in pts.items()}
     hx, hy = out["head"]
@@ -479,8 +628,10 @@ def moe(ctx, x, y, s=1.0, T=0.0, mood="normal", talk=0.0, look=(0, 0), arms="taz
 
 def nana(ctx, x, y, s=1.0, T=0.0, mood="smug", talk=0.0, look=(0, 0), gafas=None, prop="movil", screen_text=None, typing=False,
          flip=False, **kw):
+    if typing:
+        kw.setdefault("gesto", "teclear")
     return puppet(ctx, "nana", x, y, s, T, mood, talk, look, flip, 0.0, screen_text=screen_text,
-                  rot=kw.pop("rot", 0.012 * math.sin(T * 30) if typing else 0.0), **kw)
+                  rot=kw.pop("rot", 0.0), **kw)
 
 
 def mia(ctx, x, y, s=1.0, T=0.0, mood="smug", talk=0.0, look=(0, 0), arms="cruzados", prop=None, bounce=False, flip=False,
@@ -758,6 +909,25 @@ class Dialogo:
                 return ln
         return None
 
+    def boca(self, pj, T):
+        """(apertura 0..1, forma 0 = "oo" redonda .. 1 = "ee" ancha) de la boca de ese personaje en el instante T."""
+        for ln in self.lines:
+            if ln["pj"] == pj and ln["ini"] <= T < ln["fin"]:
+                i = int((T - ln["ini"]) * self.fps)
+                env = ln.get("env") or []
+                cen = ln.get("cen") or []
+                if 0 <= i < len(env):
+                    a = clamp(env[i] * 1.25)
+                    if a < 0.1:
+                        a = 0.0
+                    return (a, cen[i] if i < len(cen) else 0.5)
+        return (0.0, 0.5)
+
+    def energia(self, pj, T, ventana=0.35):
+        """Energía media de la voz en la última fracción de segundo (para los gestos)."""
+        n = 6
+        return sum(self.talk(pj, T - ventana * j / n) for j in range(n)) / n
+
     def speaking(self, pj, T):
         ln = self.line(T)
         return bool(ln and ln["pj"] == pj and T < ln["fin"])
@@ -1016,7 +1186,7 @@ def subtitulos(ctx, L, T, y=None):
         ctx.save()
         ctx.select_font_face(FONT_SUB, cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         txts = [wd["w"] for wd in tz]
-        sp = size * 0.34
+        sp = size * 0.42
         while True:
             ctx.set_font_size(size)
             ws = [ctx.text_extents(t)[4] for t in txts]
@@ -1024,7 +1194,7 @@ def subtitulos(ctx, L, T, y=None):
             if tot <= SUB["maxw"] or size < 40:
                 break
             size *= 0.92
-            sp = size * 0.34
+            sp = size * 0.42
         yy = SUB["y"] if y is None else y
         if grito:
             dx, dy = shake(T, 6)

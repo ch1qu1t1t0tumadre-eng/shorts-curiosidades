@@ -5,10 +5,19 @@ Estilo: **dibujos animados de tele clásicos**. Todo se mueve, rebota y se exage
 Motor: `pipeline/sitcom.py`, más `pipeline/efectos.py` (movimiento, partículas, luces) y `pipeline/escenarios.py` (decorados). Ejemplo completo: `episodios/ep01/escenas.py`.
 
 ## Qué hay en la caja de herramientas
-**Personajes** `teddy / moe / nana / mia(ctx, x, y, s, T, mood, talk, ...)`, con los pies en (x, y). Devuelven `{"head", "top", "feet"}` (mundo) para colgar efectos. Argumentos extra:
+**Personajes: muñecos articulados.** `pipeline/rig.py` separa cada dibujo oficial en piezas con esqueleto: hombros, codos, muñecas, caderas, rodillas, cuello, mandíbula (Teddy), cola (Teddy, Mia), orejas y coleta. Debajo de las piezas que tapan el cuerpo se rellena solo, y las costuras no se abren. No hay que tocar nada para usarlo.
+- Movimiento natural automático: respiran, cambian el peso, la cabeza sigue al cuerpo con retraso y asiente al hablar, la cola y las orejas tienen inercia, y los brazos gesticulan con la energía de la voz.
+- **Boca articulada:** pasa `talk=L.boca("pj", T)` (no `L.talk`). La boca se abre con el volumen y cambia de forma según la vocal ("oo" redonda, "ee" ancha, con dientes cuando se abre mucho). Teddy abre la mandíbula de verdad. Para que gesticule más, pasa `ene=L.energia("pj", T)`.
+- `gesto=`:
+  - Generales: `agitar` (pánico), `arriba`, `celebrar`, `caido`, `punos`, `tranquilo`, `saludo`, `suplicar`, `correr`, `andar`, `encoger`.
+  - Propios: `sorber` (Moe sube la taza), `teclear` (Nana; sale solo con `typing=True`).
+  - Sin `gesto`, sale del ánimo: panico→agitar, sorpresa→arriba, feliz→celebrar, triste→caido, enfado→punos, smug→tranquilo.
+- `pose={"brazo_i": 0.3, "cabeza": (0.1, 0, -20), ...}` suma ángulos a mano (huesos en `rig.RIGS`). Brazo de la izquierda de la imagen: ángulo + = sube; brazo de la derecha: − = sube.
+- Límites de cada dibujo: Mia tiene los brazos cruzados (solo se mueven un poco), Moe sujeta la taza con las dos manos y Nana el móvil.
+
+`teddy / moe / nana / mia(ctx, x, y, s, T, mood, talk, ...)`, con los pies en (x, y). Devuelven `{"head", "top", "feet"}` (mundo) para colgar efectos. Argumentos extra:
 - `sq` estira (>1) o aplasta (<1) · `lean` se doblan (+ derecha) · `dx`, `dy` desplazan (dy<0 = arriba) · `head_dy` sube o baja la cabeza · `nod` cabeceo.
 - `smear` (velocidad) deja estela · `blush` colorete · `tint=(r,g,b,a)` colorea · `lid` párpados · `flip` mira al otro lado · `spin` gira · `alpha`.
-- Solos ya respiran, se balancean, parpadean, cabecean y abren la boca con la voz (`talk=L.talk("pj", T)`).
 - Ánimo (`mood`): `panico` (tiembla + gotas de sudor que saltan), `enfado` (vibra + vapor + vena), `sorpresa` (salta + líneas), `feliz` (bota), `smug` (se echa atrás), `triste`/`cansado` (se encoge), `sospecha`.
 - `cabeza("nana", x, y, s)` da dónde queda la cabeza, para apuntar la cámara.
 
@@ -59,7 +68,7 @@ Motor: `pipeline/sitcom.py`, más `pipeline/efectos.py` (movimiento, partículas
 
 ## Pasos
 1. Escribe `work/epNN/escenas.py` (`from sitcom import *`):
-   - Un plano por línea más o menos, con un corte o una transición cada 1–2,5 s. Cada escena es `def eN(ctx, lt, dur, T, L):`, con `zoom_cam(...)` en movimiento, un decorado, los personajes con `talk=L.talk(...)` y al menos **un movimiento de cartoon o un efecto** (nada de personajes quietos).
+   - Un plano por línea más o menos, con un corte o una transición cada 1–2,5 s. Cada escena es `def eN(ctx, lt, dur, T, L):`, con `zoom_cam(...)` en movimiento, un decorado, los personajes con `talk=L.boca(...)`, un `gesto` que cuente lo que siente y al menos **un movimiento de cartoon o un efecto** (nada de personajes quietos).
    - Gancho: en el fotograma 0 ya pasa algo (alguien entra disparado, un "take", un grito con `lineas_foco`).
    - Cada frase importante lleva un gesto: anticipación antes de un salto, aplastón al caer, estela al correr, "take" en las sorpresas.
    - Zona segura: lo importante entre x 80–1000 e y 250–1550. Los subtítulos van en y≈1330 (cámbialo con `SUB_Y` si tapan algo).
