@@ -28,11 +28,8 @@ Herramientas `db_get`, `db_write`, `db_list` del conector de artifacts (búscala
 ## Avisos al dueño
 Para cualquier alerta importante (Short a 10× o más, mala retención, falta de créditos, error que para la producción): crea el documento en `alertas/`, apúntalo en el `registro/` correspondiente y avisa con `PushNotification` (una línea de menos de 200 caracteres) y con `SendUserMessage`.
 
-## Créditos de ElevenLabs (cuenta compartida con el canal "Wait, What.")
-Un episodio cuesta unos 550 créditos (el piloto gastó 521). Antes de grabar, llama a `account_get_usage`:
-`quedan = character_limit - character_count`; `dias = días hasta next_character_count_reset_unix` (redondeando hacia arriba, mínimo 1).
-- Si `quedan - 600 >= (dias - 1) * 700` → se hace el episodio. Así siempre quedan créditos para que el canal de curiosidades saque al menos 1 vídeo al día.
-- Si no, hoy no hay episodio: `equipo/voz` pasa a `en pausa`, crea una alerta `creditos` y avisa al dueño. Recomiéndale el plan Creator (22 $/mes, 121.000 créditos).
+## Voces
+Las voces son propias y se generan en local (`pipeline/voces.py`, ver VOZ.md): no gastan créditos y no hace falta ElevenLabs. Ya no hay regla de créditos: se produce un episodio cada día.
 
 ## Ordenador del dueño
 Tendencias, Studio y Retención usan el navegador integrado del PC del dueño (`mcp__remote-devices__Claude_Browser__*`; carga antes la skill `built-in-browser`). Si el PC no responde, termina lo que se pueda hacer en la nube, deja la mesa en `alerta` con el motivo y avisa.
