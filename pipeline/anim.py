@@ -641,7 +641,10 @@ def ficha(ctx, nombre, sub, x, y, appear=1.0, emoji="⭐", accent=YELLOW, w=840)
     ctx.set_line_join(cairo.LINE_JOIN_ROUND)
     ctx.set_source_rgb(0, 0, 0); ctx.set_line_width(12); ctx.stroke_preserve()
     ctx.set_source_rgb(*accent); ctx.fill()
-    text(ctx, sub, tx, 52, 34, (0.85, 0.87, 0.95), align="left", shadow=False)
+    sfs = 34
+    while sfs > 20 and text_width(ctx, sub, sfs) > maxw:
+        sfs -= 1
+    text(ctx, sub, tx, 52, sfs, (0.85, 0.87, 0.95), align="left", shadow=False)
     ctx.restore()
 
 

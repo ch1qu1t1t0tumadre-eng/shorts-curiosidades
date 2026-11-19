@@ -128,3 +128,8 @@ Si el ordenador no responde (navegador integrado offline): guardar igualmente lo
 
 ## Coste aproximado
 Voz con eleven_v4: ~680 créditos por vídeo (35–45 s) → 2/día ≈ 41.000/mes. Plan Starter: 30.000 → da para ~44 vídeos/mes. Plan Creator (121.000) daría de sobra.
+
+## Vídeos preparados por adelantado
+Si `agenda.md` marca un hueco de hoy como **PREPARADO**, el vídeo ya está hecho: descárgalo de la rama `media-lote` (`media/vNN.mp4` + `media/vNN.jpg`), súbelo con el título/descripción de la tabla del lote, ponle la miniatura y prográmalo. No generes voz ni animación para ese hueco. Si un hueco dice "falta PROGRAMAR", el vídeo ya está subido en privado: abre `studio.youtube.com/video/ID/edit` → Visibilidad → Programar a esa hora.
+- Si YouTube pide "Verificación única obligatoria" al subir una miniatura, pulsa Cancelar, sigue sin miniatura y avisa al dueño (el límite diario de miniaturas se quita verificando el canal con el teléfono; eso solo lo puede hacer él).
+- Si el panel del navegador está oculto (`document.visibilityState === 'hidden'`), la fecha y la hora de programación no se pueden elegir: avisa al dueño para que deje visible la app de Claude.

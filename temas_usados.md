@@ -10,3 +10,14 @@ Formato: fecha | id | categoría | tema
 - 2026-11-18 | v06 | ASTRONOMÍA (EN) | The Moon illusion: la Luna del horizonte no es más grande (test del meñique) — programado 20:00 youtube.com/shorts/7KQSDqq4Xj8
 - 2026-11-18 | v10 | HISTORIA (EN) | Edison's last breath en un tubo de ensayo (Henry Ford Museum) — vídeo de EJEMPLO del formato bucle — programado 19/11 17:00 youtube.com/shorts/Es08eytBIDY
 - 2026-11-19 | v11 | ESPACIO / HISTORIA (EN) | Buzz Aldrin y el rotulador que rearmó el interruptor ENG ARM del Apollo 11 (subastado en Sotheby's 15/07/2026 por 857.600 $) — programado 19/11 20:00 youtube.com/shorts/HZmvfD_43bo
+- 2026-11-19 | lote | HISTORIA (EN) | Galileo's middle finger (Museo Galileo) — youtube.com/shorts/0HJhRVsogcA
+- 2026-11-19 | lote | HISTORIA (EN) | Alfred Nobel read his own obituary (1888)
+- 2026-11-19 | lote | HISTORIA (EN) | Charlie Chaplin's coffin stolen (1978)
+- 2026-11-19 | lote | HISTORIA (EN) | Abraham Lincoln in the Wrestling Hall of Fame
+- 2026-11-19 | lote | HISTORIA (EN) | Teddy Roosevelt shot, gave the speech (1912)
+- 2026-11-19 | lote | CIENCIA (EN) | Marie Curie's notebooks still radioactive
+- 2026-11-19 | lote | INVENTOS (EN) | Pringles can inventor buried in one (Fredric Baur)
+- 2026-11-19 | lote | ASTRONOMÍA (EN) | Mark Twain and Halley's Comet
+- 2026-11-19 | lote | INGENIERÍA (EN) | Gustave Eiffel's secret apartment (Edison visit)
+- 2026-11-19 | lote | HISTORIA (EN) | Lincoln created the Secret Service the day he was shot
+- 2026-11-19 | lote | HISTORIA (EN) | Napoleon was not short (French inches + Gillray)
