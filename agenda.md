@@ -8,9 +8,9 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-19 | 17:00 | What Happened To Edison's Last Breath? 🧪 | youtube.com/shorts/Es08eytBIDY |
 | 2026-11-19 | 20:00 | How Did Buzz Aldrin Get Off The Moon With A Pen? 🖊️🚀 | youtube.com/shorts/HZmvfD_43bo |
 | 2026-11-19 | 23:00 | Why Is Galileo's Finger In A Museum? 🔭 #shorts | SUBIDO en privado (youtube.com/shorts/0HJhRVsogcA, con miniatura) — falta PROGRAMAR · lote/v11 |
-| 2026-11-20 | 17:00 | Alfred Nobel Read His Own Obituary 📰 #shorts | PREPARADO · lote/v12 |
-| 2026-11-20 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | PREPARADO · lote/v13 |
-| 2026-11-20 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | PREPARADO · lote/v14 |
+| 2026-11-20 | 17:00 | Why Was The Hope Diamond Sent By Regular Mail? 💎 | youtube.com/shorts/BVG5gL9Vef0 |
+| 2026-11-20 | 20:00 | The Man Who Invented The Pringles Can Is Buried In One 🥫 | youtube.com/shorts/EgKd_K8CsI0 |
+| 2026-11-20 | 23:00 | Paul The Octopus Was Never Wrong, So Fans Wanted Him Fried 🐙 | youtube.com/shorts/F2u44Xemej8 |
 | 2026-11-21 | 17:00 | Teddy Roosevelt Got Shot… Then Gave A Speech 🐻 #shorts | PREPARADO · lote/v15 |
 | 2026-11-21 | 20:00 | Marie Curie's Notebooks Are Still Radioactive ☢️ #shorts | PREPARADO · lote/v16 |
 | 2026-11-21 | 23:00 | The Pringles Can Inventor's Last Wish 🥫 #shorts | PREPARADO · lote/v17 |

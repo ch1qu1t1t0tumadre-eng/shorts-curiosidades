@@ -21,3 +21,6 @@ Formato: fecha | id | categoría | tema
 - 2026-11-19 | lote | INGENIERÍA (EN) | Gustave Eiffel's secret apartment (Edison visit)
 - 2026-11-19 | lote | HISTORIA (EN) | Lincoln created the Secret Service the day he was shot
 - 2026-11-19 | lote | HISTORIA (EN) | Napoleon was not short (French inches + Gillray)
+- 2026-11-20 | v12 | HISTORIA (EN) | Diamante Hope enviado por correo certificado en 1958 (2,44 $, cartero James Todd) — programado 20/11 17:00 youtube.com/shorts/BVG5gL9Vef0
+- 2026-11-20 | v13 | COMIDA (EN) | Fredric Baur, inventor del bote de Pringles, enterrado en uno — programado 20/11 20:00 youtube.com/shorts/EgKd_K8CsI0
+- 2026-11-20 | v14 | ANIMALES (EN) | Pulpo Paul, Mundial 2010: 8/8, amenazas y protección de España — programado 20/11 23:00 youtube.com/shorts/F2u44Xemej8
