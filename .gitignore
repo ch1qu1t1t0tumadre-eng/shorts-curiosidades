@@ -1,3 +1,5 @@
 work/
 pipeline/assets/
 pipeline/modelos
+__pycache__/
+*.pyc
