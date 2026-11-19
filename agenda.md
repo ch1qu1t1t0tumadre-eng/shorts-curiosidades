@@ -6,5 +6,5 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | Fecha | Hora | Vídeo | Enlace |
 |---|---|---|---|
 | 2026-11-19 | 17:00 | What Happened To Edison's Last Breath? 🧪 | youtube.com/shorts/Es08eytBIDY |
-| 2026-11-19 | 20:00 | (libre → lo hace la tarea diaria de hoy) | |
+| 2026-11-19 | 20:00 | How Did Buzz Aldrin Get Off The Moon With A Pen? 🖊️🚀 | youtube.com/shorts/HZmvfD_43bo |
 | 2026-11-19 | 23:00 | RESERVADO: lo prepara la sesión de producción por adelantado | |
