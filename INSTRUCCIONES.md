@@ -133,3 +133,11 @@ Voz con eleven_v4: ~680 créditos por vídeo (35–45 s) → 2/día ≈ 41.000/m
 Si `agenda.md` marca un hueco de hoy como **PREPARADO**, el vídeo ya está hecho: descárgalo de la rama `media-lote` (`media/vNN.mp4` + `media/vNN.jpg`), súbelo con el título/descripción de la tabla del lote, ponle la miniatura y prográmalo. No generes voz ni animación para ese hueco. Si un hueco dice "falta PROGRAMAR", el vídeo ya está subido en privado: abre `studio.youtube.com/video/ID/edit` → Visibilidad → Programar a esa hora.
 - Si YouTube pide "Verificación única obligatoria" al subir una miniatura, pulsa Cancelar, sigue sin miniatura y avisa al dueño (el límite diario de miniaturas se quita verificando el canal con el teléfono; eso solo lo puede hacer él).
 - Si el panel del navegador está oculto (`document.visibilityState === 'hidden'`), la fecha y la hora de programación no se pueden elegir: avisa al dueño para que deje visible la app de Claude.
+
+## Ritmo: 3 al día mientras se pueda, luego bajar (orden del dueño, 19/11)
+- Objetivo: 3 vídeos al día (17:00, 20:00, 23:00).
+- Antes de generar voz, mira los créditos de ElevenLabs (`account_get_usage`). Cada vídeo gasta ~800.
+- Calcula cuántos días quedan hasta que se renueven los créditos y cuántos vídeos/día caben: `créditos_libres / (días_restantes × 800)`, dejando 1.500 de reserva.
+  - Si caben 3 → 3 al día. Si caben 2 → baja a 2 (20:00 y 23:00). Si cabe 1 → 1 (20:00). Si no cabe ninguno → no generes; sube solo lo PREPARADO y avisa al dueño.
+- Los vídeos PREPARADOS de `agenda.md` no gastan créditos: súbelos siempre.
+- Cuando bajes el ritmo, apúntalo en `agenda.md` (línea "Ritmo actual: N/día desde FECHA, motivo") para que el dueño lo vea.
