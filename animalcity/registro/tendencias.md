@@ -2,6 +2,20 @@
 
 Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 con ×N y alarmas (≥ 10×).
 
+## Ronda 19/11/2026 · 20:37 (Madrid)
+- Revisados: 362 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "thanksgiving animation funny" y "animation skit siblings", y los canales de referencia); 139 de los últimos 14 días, 63 tras quitar derechos de autor e infantiles, y unos 30 animados y aptos con mediana de canal. Descartados por derechos o por no ser animados: Dandy's World, Dog Man, gacha/"fix your posture", Sonic, Mario, Simpsons, Family Guy, Angry Birds, Roblox/Batman (Mkcartoon, ×21,8), Zofi's Diary (×97, imagen real), DR4Y (×21, imagen real), Kenny Booger dentista (estilo South Park), recopilaciones de fallos reales.
+- **Subtema caliente: videojuegos** (otra vez): pedir el turno de la consola y el "five more minutes". Suma 5,2 millones a ×7,3 y ×3,8 en los últimos 7 días. **Sube fuerte Acción de Gracias en familia** (alarma ×106; la fiesta es el 26/11). Para nosotros, sin marcas: Teddy pide cinco minutitos más con la consola y Nana se la queda; o la cena de Acción de Gracias en el piso.
+- Top 5 por multiplicador:
+  1. ×106 · [Ten Days to Thanksgiving](https://www.youtube.com/shorts/otV6k-ERs_Y) · Imako · 21 mil · familia/Acción de Gracias (canal pequeño, mediana 203)
+  2. ×54 · [The Grandma Who Would Not Stop Knitting](https://www.youtube.com/shorts/PpOm4_2WF_U) · LostClips6868 · 703 mil · abuela (65 s, tono de cuento)
+  3. ×21,9 · [That ONE Roommate With the Alarm… 😡⏰](https://www.youtube.com/shorts/Kuv-ZPLTMZk) · Alexard Duck Facts · 24 mil · compañeros de piso (esta mañana ×6,9)
+  4. ×12,5 · [You can't do good in this world no more 🤦](https://www.youtube.com/shorts/gOJpKjX27ps) · StickMood · 38 mil · buena acción que sale mal
+  5. ×12,1 · [These roommates fought for a year about one shelf](https://www.youtube.com/shorts/vlRA25j0u_8) · Rocco App · 1,3 mil · compañeros de piso (anuncio de una app; solo vale la situación)
+  - Siguen: ×9,1 [Surprised cat](https://www.youtube.com/shorts/_nsT60C4k_E) (Avenu, 843 mil, mascotas) · ×9 [She Should Have Never Said That!](https://www.youtube.com/shorts/cfLx25InjIU) (Living Doodle, 2 M) · ×7,3 [It My Turn?](https://www.youtube.com/shorts/qEtrYon-l6o) (Nutshell, 5,2 M, videojuegos) · ×4,5 [She swears she WON'T get mad](https://www.youtube.com/shorts/-N_GbqlhClo) (Toon Moments, pareja) · ×3,8 [When Dad says just 5 more minutes](https://www.youtube.com/shorts/Vy5OUlYqxpc) (Kenny Booger, videojuegos).
+- **Alarmas (≥ 10×):** otV6k-ERs_Y (×106: la familia suelta las preguntas de cada año en la cena; nuestra versión: Nana acribilla a Teddy a preguntas en Acción de Gracias), PpOm4_2WF_U (×54: abuela imparable que sigue tejiendo; Nana teje tan tranquila mientras el piso se viene abajo), Kuv-ZPLTMZk (×21,9: la alarma del compañero de piso; el despertador pospuesto de Teddy y Moe al límite), gOJpKjX27ps (×12,5: una buena acción que sale fatal; Teddy ayuda y acaba pagando él) y vlRA25j0u_8 (×12,1: pelea de compañeros de piso por cómo se limpia una balda). Avisado a Félix en el panel.
+- Canales nuevos a vigilar: Imako (mediana 203), LostClips6868 (13 mil), StickMood (3 mil, animación keniana tipo Backbench), Toon Moments Animation (2,6 mil), Kenny Booger (3,2 mil). Los handles @LivingDoodle, @UTAnimations y @RicoAnimations llevan a otros canales: usar el ID del canal que da la ficha del vídeo. @Glopsicle, @PunchlinePending, @NagisaCanz, @BackbenchAnimations y @SketchlyDaily no devolvieron Shorts por handle.
+- Nota técnica: la búsqueda sin filtro ya no trae la estantería de Shorts; usar `&sp=EgIQCQ%3D%3D` (filtro "Shorts") y sacar los IDs de `reelWatchEndpoint` y `/shorts/<id>`. Los `fetch` grandes fallan a rachas ("Failed to fetch"): alternar `credentials:'include'` y `'omit'`, pedir la ficha por `/shorts/<id>` (si no trae vistas, sacarlas de la página de Shorts del canal) y guardar el avance en `sessionStorage` porque reabrir la pestaña borra las variables.
+
 ## Ronda 19/11/2026 · 8:37 (Madrid, ejecutada a las 11:52)
 - Revisados: 260 Shorts candidatos (10 búsquedas fijas + "animation skit family dinner" y "funny animation brother sister", y los canales de referencia); 114 de los últimos 14 días, 31 animados, aptos y originales. Descartados por derechos: Barboskins ("skipped the dinner", ×363), Talking Tom, American Dad, Simpsons, Family Guy, Mario, Dandy's World, Dog Man, Baldi, Elmo, Angry Birds, y recortes de pelis (OtakuKart).
 - **Subtema caliente: videojuegos** (la espera del juego nuevo y la pelea por el turno de la consola). Suma 6,4 millones de vistas a ×6,4–6,9 en los últimos 7 días. Para nosotros, sin marcas: Teddy espera su turno con la consola y Nana se la queda ("Teddy vs. technology").
@@ -39,3 +53,8 @@ Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 co
 - w_tpjHF3GtU (18/11/2026, ×26)
 - l6DyXh-0hio (19/11/2026, ×1637)
 - 3T5_MQFJpaU (19/11/2026, ×11,5)
+- otV6k-ERs_Y (19/11/2026 noche, ×106)
+- PpOm4_2WF_U (19/11/2026 noche, ×54)
+- Kuv-ZPLTMZk (19/11/2026 noche, ×21,9)
+- gOJpKjX27ps (19/11/2026 noche, ×12,5)
+- vlRA25j0u_8 (19/11/2026 noche, ×12,1)
