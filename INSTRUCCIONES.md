@@ -1,7 +1,7 @@
 # Rutina diaria: 2 Shorts de curiosidades
 
 Canal: curiosidades de todo tipo. **TODO EN INGLÉS AMERICANO** (guion, voz, textos en pantalla, subtítulos, título, descripción y hashtags), pensado para público de EE. UU. Categorías (ir rotando, que no se repita la misma dos días seguidos): animales, historia, cuerpo humano, ingeniería, **aviación**, **astronomía y espacio**, ciencia, geografía, tecnología, comida, océanos, mente y psicología…
-Cada día se crean **2 Shorts** y se suben a YouTube Studio en **privado y programados** a las **17:00 y 20:00 (Europe/Madrid)**. El dueño los revisa antes y borra o edita los que no le gusten.
+Cada día se publican **3 Shorts** (desde el 19/11/2026), subidos a YouTube Studio en **privado y programados** a las **17:00, 20:00 y 23:00 (Europe/Madrid)** (= 11:00, 14:00 y 17:00 en Nueva York). Muchos días ya habrá vídeos preparados por adelantado: mira `agenda.md` y haz solo los huecos libres de HOY. El dueño los revisa antes y borra o edita los que no le gusten.
 (Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de 600–750 caracteres → ~680 créditos/vídeo. Con 2 vídeos/día el plan Starter NO llega a todo el mes: el freno de créditos para la tarea cuando se acaban.)
 
 ## 0. Preparar
@@ -36,11 +36,9 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 **Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3). En la tabla, una fila cada 2–3 s (13–18 filas), no por bloques.
 
 ## 2. Voz (ElevenLabs, conector MCP)
-- Antes de nada, `account_get_usage` y decide **cuántos vídeos hacer hoy** (regla del dueño: cuando no lleguen los créditos para 2 al día, pasar a 1 al día, nunca quedarse sin vídeo):
-  - `quedan = character_limit - character_count`; `dias = días que faltan hasta next_character_count_reset_unix` (redondeando hacia arriba, mínimo 1).
-  - Si `quedan - 1400 >= (dias - 1) * 700` → **2 vídeos** (17:00 y 20:00).
-  - Si no, si `quedan >= 750` → **1 vídeo** (a las 20:00).
-  - Si `quedan < 750` → no generes nada y avisa al dueño (en español) de que faltan créditos hasta la renovación.
+- Antes de nada, mira `agenda.md`: los huecos de hoy (17:00, 20:00, 23:00) que ya tengan vídeo programado NO se hacen. Si los 3 están ocupados, no generes nada: solo comprueba en Studio que siguen programados y avisa al dueño.
+- Luego `account_get_usage`: `quedan = character_limit - character_count`. Haz un vídeo por cada hueco libre mientras queden **≥ 750 créditos** antes de generar cada voz (prioridad de huecos: 20:00, 23:00, 17:00). Si `quedan < 750`, no generes nada y avisa al dueño (en español) de que faltan créditos hasta la renovación (o de que puede subir al plan Creator).
+- Cada vídeo que hagas, apúntalo en `agenda.md` (fecha, hora, título, enlace) y haz commit + push.
   - Indica en el resumen final cuántos vídeos se hicieron y por qué.
 - Etiquetas de eleven_v4: como mucho 1–2, en inglés, para el pico (`[intrigued]` al inicio, `[shocked]` o `[dramatic]` justo antes del "In other words"). Si alguna se lee en voz alta, quítala.
 - `creative_generate_speech` con model_id `eleven_v4`, voice_id `hqsADTrqjrr0sI9LFcYV` (Dean, inglés americano, cálido y claro), generations_count **1**. No reintentar llamadas: cada una cobra.
@@ -92,7 +90,7 @@ URL de cada vídeo: `https://raw.githubusercontent.com/ch1qu1t1t0tumadre-eng/sho
 
 ## 5. Subir a YouTube Studio (navegador integrado, `mcp__remote-devices__Claude_Browser__*`)
 Canal: https://studio.youtube.com/channel/UC-xRUl9MD0FkZ94w83yAFKQ — la sesión ya está iniciada y los sitios permitidos.
-Para cada vídeo (el 1 a las 17:00, el 2 a las 20:00):
+Para cada vídeo, en el hueco que le toque según `agenda.md` (17:00, 20:00 o 23:00):
 1. `navigate` a `https://studio.youtube.com/channel/UC-xRUl9MD0FkZ94w83yAFKQ/videos/upload?d=ud`
 2. `javascript_tool` (inyecta el archivo interceptando el selector de archivos):
 ```js
