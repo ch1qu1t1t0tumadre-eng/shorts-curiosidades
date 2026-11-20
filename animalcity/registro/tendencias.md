@@ -2,6 +2,20 @@
 
 Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 con ×N y alarmas (≥ 10×).
 
+## Ronda 20/11/2026 · 20:37 (Madrid, ejecutada a las 23:32)
+- Revisados: 367 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "thanksgiving dinner animation skit" y "animation skit mom and kid", y los canales de referencia); 153 de los últimos 14 días, 62 animados y aptos con mediana de canal. Descartados por derechos o por no ser animados: Dandy's World, Dog Man, Mario (Mario Friendly, FatraFino, Fluent Bite), Simpsons (incl. AniMochi "The New Area Code" ×109, recap de Simpsons), Elmo, Angry Birds, Ted, Avatar, Sprunki, Digital Circus, gacha/"fix your posture", Eddsworld/Roblox, monólogos con imagen real (Don't Tell Comedy) y recopilaciones de series. La ronda de las 8:37 de hoy no quedó registrada.
+- **Subtema caliente: manía imparable** (un personaje que no para de hacer una cosa absurda y todos se desesperan hasta la revelación final). Suma 14,7 millones de vistas en 5 Shorts de LostClips6868 a ×3,9–×402 en los últimos 7 días. **Sigue subiendo Acción de Gracias** (pavo ×31; la fiesta es el 26/11). Para nosotros: Teddy con una manía que no suelta (el kazoo, la galleta detrás del sofá) y Nana gana al final.
+- Top 5 por multiplicador:
+  1. ×402 · [The Prisoner Who Fed the Wall](https://www.youtube.com/shorts/J_qUwuh3_hw) · LostClips6868 · 12,5 M · manía imparable (66 s, cuento narrado; mediana 31 mil)
+  2. ×90 · [Relationships after GTA 6 drops](https://www.youtube.com/shorts/UV9LQaqd5Hk) · EA toons · 48 mil · videojuegos (mediana 536; sin marcas para nosotros)
+  3. ×31 · [When the turkey sees what's for Thanksgiving dinner](https://www.youtube.com/shorts/L-Itx-b9iCk) · BublooTales · 1 mil · Acción de Gracias (canal diminuto, mediana 33)
+  4. ×30,5 · [The Grandma Who Would Not Stop Knitting](https://www.youtube.com/shorts/PpOm4_2WF_U) · LostClips6868 · 944 mil · abuela/manía imparable (ya avisado)
+  5. ×29,7 · [Why He Played One Polka 1,500 Times](https://www.youtube.com/shorts/B2vUOyUQ-5c) · LostClips6868 · 921 mil · manía imparable
+  - Siguen: ×25,7 [You're grounded](https://www.youtube.com/shorts/A4wnkzi-uoo) (Punchline Pending, 719 mil, colegio) · ×24,3 [That ONE Roommate With the Alarm](https://www.youtube.com/shorts/Kuv-ZPLTMZk) (27 mil, compañeros de piso) · ×20 [What If You Could Speak Every Language?](https://www.youtube.com/shorts/orxD4hKyRPI) (Sketchly Daily, 34 mil) · ×8,6 [Mom said no. Grandma says yes.](https://www.youtube.com/shorts/kWb03KEuA4w) (Unsaid Films, abuela/familia) · ×7,5 [When Dad says just 5 more minutes](https://www.youtube.com/shorts/Vy5OUlYqxpc) (Kenny Booger, 72 mil, videojuegos).
+- **Alarmas (≥ 10×):** J_qUwuh3_hw (×402: la manía misteriosa que se revela al final; nuestra versión: Moe deja una galleta detrás del sofá cada noche y Teddy investiga), UV9LQaqd5Hk (×90: sale el juego nuevo y uno desaparece del mundo; Teddy se esfuma y Nana acaba jugando mejor), L-Itx-b9iCk (×31: el pavo invitado descubre el menú; Nana saca ensalada), B2vUOyUQ-5c (×29,7: la misma canción sin parar; Teddy y su kazoo) y orxD4hKyRPI (×20: «¿y si entendieras todos los idiomas?»; Teddy entiende a la tostadora). Avisado a Félix en el panel.
+- Canales nuevos a vigilar: EA toons (mediana 536), BublooTales (33), Unsaid Films (1,1 mil, stickman de familia), RefCantDraw (1,2 M, skits de madre e hijo), Chuklebox (3,6 mil, colegio), Hurley Animations (1,7 mil). Por handle no devolvieron Shorts: @AvenuAnimations, @BalloonToons, @Glopsicle, @BackbenchAnimations, @NagisaCanz, @PunchlinePending, @StickMood, @ToonMomentsAnimation, @Imako; con el ID del canal sí (Glopsicle `UCPS8bELUiIFqbyiK3odhFuw`, Backbench `UCGVK4d6lIFglA7GolQwNiaw`, Punchline `UCl_8SpccfHV_YUDYVkvZ37g`, Avenu `UC4b7LRyeMlfVm596Ww0Hf6w`, Balloon Toons `UC5TaF7HJmTsN396b9Aq_VCg`, Toon Moments `UC3pAzG9oWARoS7oNmLPbSYA`; algunos fallan a rachas).
+- Nota técnica: las fichas por `/watch` van rápidas en lotes de 10 en paralelo (~25 s para 280); las páginas de Shorts del canal devuelven las vistas en español ("13 mil visualizaciones", coma decimal).
+
 ## Ronda 19/11/2026 · 20:37 (Madrid)
 - Revisados: 362 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "thanksgiving animation funny" y "animation skit siblings", y los canales de referencia); 139 de los últimos 14 días, 63 tras quitar derechos de autor e infantiles, y unos 30 animados y aptos con mediana de canal. Descartados por derechos o por no ser animados: Dandy's World, Dog Man, gacha/"fix your posture", Sonic, Mario, Simpsons, Family Guy, Angry Birds, Roblox/Batman (Mkcartoon, ×21,8), Zofi's Diary (×97, imagen real), DR4Y (×21, imagen real), Kenny Booger dentista (estilo South Park), recopilaciones de fallos reales.
 - **Subtema caliente: videojuegos** (otra vez): pedir el turno de la consola y el "five more minutes". Suma 5,2 millones a ×7,3 y ×3,8 en los últimos 7 días. **Sube fuerte Acción de Gracias en familia** (alarma ×106; la fiesta es el 26/11). Para nosotros, sin marcas: Teddy pide cinco minutitos más con la consola y Nana se la queda; o la cena de Acción de Gracias en el piso.
@@ -58,3 +72,8 @@ Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 co
 - Kuv-ZPLTMZk (19/11/2026 noche, ×21,9)
 - gOJpKjX27ps (19/11/2026 noche, ×12,5)
 - vlRA25j0u_8 (19/11/2026 noche, ×12,1)
+- J_qUwuh3_hw (20/11/2026 noche, ×402)
+- UV9LQaqd5Hk (20/11/2026 noche, ×90)
+- L-Itx-b9iCk (20/11/2026 noche, ×31)
+- B2vUOyUQ-5c (20/11/2026 noche, ×29,7)
+- orxD4hKyRPI (20/11/2026 noche, ×20)
