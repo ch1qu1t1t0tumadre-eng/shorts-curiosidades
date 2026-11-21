@@ -2,6 +2,20 @@
 
 Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 con ×N y alarmas (≥ 10×).
 
+## Ronda 21/11/2026 · 8:37 (Madrid, ejecutada a las 15:56)
+- Revisados: 402 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "thanksgiving animation skit" y "black friday animation funny", y los canales de referencia y vigilados); 185 de los últimos 14 días, 47 animados y aptos con mediana de canal. Descartados por derechos o por no ser animados: Simpsons (Bart Kuts ×62, ItsWolfMan ×25, s.simpms, D'oh TV…), Family Guy, Mahoyo/anime (×40), DDLC (×32), Gumball rotoscopiado (rog art ×14,5), Avatar, Talking Angela, Dandy's World, Digital Circus, Mario, Roblox/Splatoon y gacha/"fix your posture". Spruce&Friends (×12) no cuenta como alarma: 36 vistas sobre una mediana de 3 es ruido.
+- **Subtema caliente: manía imparable** (segunda ronda seguida). Suma 16,4 millones de vistas en 8 Shorts a ×5,4–×986 de los últimos 7 días, casi todos de LostClips6868 (dar de comer a la pared, untarse miel, lavar la camisa sin parar). Segundo: **videojuegos** por la salida de GTA 6 (2,6 M, ×17,7 de media). **Suben Black Friday** (×58,5; es el 27/11) y Acción de Gracias (StickUnity ×9,5). Para nosotros: Teddy con una manía que no suelta y Nana gana al final; o Teddy «ahorrando» en el Black Friday.
+- Top 5 por multiplicador:
+  1. ×986 · [The Prisoner Who Fed the Wall](https://www.youtube.com/shorts/J_qUwuh3_hw) · LostClips6868 · 13,8 M · manía imparable (ya avisado; la mediana del canal ha bajado a 14 mil)
+  2. ×350 · [A Day in the Life of Two College Roommates](https://www.youtube.com/shorts/SYiWmMgwWUI) · Ghibli_Life · 170 mil · compañeros de piso (3 min, estilo Ghibli con IA, sin chiste: solo vale el tema)
+  3. ×315 · [The MONKEY Caught the WRONG Criminal!](https://www.youtube.com/shorts/7Zisk97crmE) · BabyBop TV · 9,1 mil · animales detectives (canal diminuto, mediana 29)
+  4. ×87,5 · [Relationships after GTA 6 drops](https://www.youtube.com/shorts/UV9LQaqd5Hk) · EA toons · 49 mil · videojuegos (ya avisado)
+  5. ×73,5 · [The Grandma Who Would Not Stop Knitting](https://www.youtube.com/shorts/PpOm4_2WF_U) · LostClips6868 · 1,0 M · abuela/manía imparable (ya avisado)
+  - Siguen: ×68,2 [Why He Played One Polka 1,500 Times](https://www.youtube.com/shorts/B2vUOyUQ-5c) · ×58,5 [I Saved $200 on Black Friday](https://www.youtube.com/shorts/RdYEsOs52hQ) (Stick Briefly, 1,5 mil) · ×29 [When you get your haircut from a new barber](https://www.youtube.com/shorts/vpLNHnVm7fk) (EA toons, 16 mil) · ×26,4 [You're grounded](https://www.youtube.com/shorts/A4wnkzi-uoo) · ×26,2 [What If You Could Speak Every Language?](https://www.youtube.com/shorts/orxD4hKyRPI) · ×24,8 [That ONE Roommate With the Alarm](https://www.youtube.com/shorts/Kuv-ZPLTMZk) · ×16,9 [Surprised cat](https://www.youtube.com/shorts/_nsT60C4k_E) (Avenu, 1,6 M) · ×15,8 [The Prisoner Who Fed the Flies](https://www.youtube.com/shorts/33En9ZFi2mw) · ×13,9 [The Cart Corral Bouncer](https://www.youtube.com/shorts/Fg_X53LhwDk) · ×10,9 [Me When GTA 6 Drops](https://www.youtube.com/shorts/hWOQUuJSaOQ) (UT Animations, 2,5 M) · ×10,6 [He Proposed At His Sister's Wedding](https://www.youtube.com/shorts/5jzpGv_nFUI).
+- **Alarmas (≥ 10×), 9 nuevas:** SYiWmMgwWUI (×350: un día en el piso de dos compañeras; nuestra versión en 20 s con Nana desbaratando la rutina), 7Zisk97crmE (×315: el detective pilla al culpable equivocado; Moe investiga las galletas y es Nana), RdYEsOs52hQ (×58,5: «solo voy a mirar» en el Black Friday; Teddy «ahorra» y Nana lo devuelve todo), vpLNHnVm7fk (×29: el corte de pelo desastroso; Moe le corta el flequillo a Teddy), _nsT60C4k_E (×16,9: cara de sorpresa exagerada sin diálogo; la reacción de Moe en bucle), 33En9ZFi2mw (×15,8: otra manía con revelación final), Fg_X53LhwDk (×13,9: portero de discoteca en el aparcamiento de carritos; Nana portera del sofá), hWOQUuJSaOQ (×10,9: la euforia por el juego nuevo; sin marcas) y 5jzpGv_nFUI (×10,6: robar el protagonismo en la boda; solo la estructura). Avisado a Félix en el panel.
+- Canales nuevos a vigilar: Ghibli_Life (mediana 487), BabyBop TV (29), Stick Briefly (25), Zero Noise Studios (1,6 mil), UT Animations (228 mil), AI Production Studio (4,4 mil), StickUnity (108). @RefCantDraw y @UnsaidFilms no devolvieron Shorts por handle.
+- Nota técnica: las búsquedas fallan con "Failed to fetch" si se lanzan más de 2–3 a la vez; en serie con 2 s de pausa van todas. Recargar la pestaña borra las variables: guardar en `sessionStorage`. Las vistas del canal llegan como "2,4 millones de visualizaciones".
+
 ## Ronda 20/11/2026 · 20:37 (Madrid, ejecutada a las 23:32)
 - Revisados: 367 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "thanksgiving dinner animation skit" y "animation skit mom and kid", y los canales de referencia); 153 de los últimos 14 días, 62 animados y aptos con mediana de canal. Descartados por derechos o por no ser animados: Dandy's World, Dog Man, Mario (Mario Friendly, FatraFino, Fluent Bite), Simpsons (incl. AniMochi "The New Area Code" ×109, recap de Simpsons), Elmo, Angry Birds, Ted, Avatar, Sprunki, Digital Circus, gacha/"fix your posture", Eddsworld/Roblox, monólogos con imagen real (Don't Tell Comedy) y recopilaciones de series. La ronda de las 8:37 de hoy no quedó registrada.
 - **Subtema caliente: manía imparable** (un personaje que no para de hacer una cosa absurda y todos se desesperan hasta la revelación final). Suma 14,7 millones de vistas en 5 Shorts de LostClips6868 a ×3,9–×402 en los últimos 7 días. **Sigue subiendo Acción de Gracias** (pavo ×31; la fiesta es el 26/11). Para nosotros: Teddy con una manía que no suelta (el kazoo, la galleta detrás del sofá) y Nana gana al final.
@@ -77,3 +91,12 @@ Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 co
 - L-Itx-b9iCk (20/11/2026 noche, ×31)
 - B2vUOyUQ-5c (20/11/2026 noche, ×29,7)
 - orxD4hKyRPI (20/11/2026 noche, ×20)
+- SYiWmMgwWUI (21/11/2026 mañana, ×350)
+- 7Zisk97crmE (21/11/2026 mañana, ×315)
+- RdYEsOs52hQ (21/11/2026 mañana, ×58,5)
+- vpLNHnVm7fk (21/11/2026 mañana, ×29)
+- _nsT60C4k_E (21/11/2026 mañana, ×16,9)
+- 33En9ZFi2mw (21/11/2026 mañana, ×15,8)
+- Fg_X53LhwDk (21/11/2026 mañana, ×13,9)
+- hWOQUuJSaOQ (21/11/2026 mañana, ×10,9)
+- 5jzpGv_nFUI (21/11/2026 mañana, ×10,6)
