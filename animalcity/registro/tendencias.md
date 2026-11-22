@@ -2,6 +2,20 @@
 
 Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 con ×N y alarmas (≥ 10×).
 
+## Ronda 22/11/2026 · 8:37 (Madrid, ejecutada a las 13:09)
+- Revisados: 559 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "black friday animation funny" y "thanksgiving animation skit", y los Shorts recientes de 31 canales de referencia y vigilados); 331 de los últimos 14 días, 254 animados y aptos con mediana de canal. Descartados por derechos o por no ser animados: Simpsons (muchísimos recaps), Ted/Family Guy, Mario, Sonic, Elmo, Dandy's World, Deltarune, Digital Circus, Hazbin/Helluva, Talking Angela, TF2, Sprunki, gacha/"fix your posture", anime (Mahoyo, Roommates by Mistake), rotoscopia (rog art), Marvel de Living Doodle (Venom, Magneto), canciones y dibujos infantiles (BabyBop bebé, GiggleSprout) y datos curiosos sin chiste (Alexard: Poon Lim, Wojtek…). Ghibli_Life «Working Girl» (×43,8) fuera: vida cotidiana sin chiste. Clay Chaos «Uno Reverse» (×34,9) no cuenta como alarma: 942 vistas sobre 27 es ruido (umbral: ≥ 1.000 vistas).
+- **Subtema caliente: manía imparable** (tercera ronda seguida). Suma 16,3 millones de vistas en 6 Shorts a ×3 o más de los últimos 7 días: LostClips6868 (pared ×493, moscas, camisa, velas) y la nueva serie de malas costumbres de **Imako** («Ice Chewer» ×2174, 522 mil; «Package Opener» ×11,4: "manda esto a quien lo hace"). Segundo: **videojuegos** (2,8 M; GTA 6 y los "cinco minutitos"). Tercero: **familia** (2 M: «Dad jokes» de StickMood ×368, la abuela consentidora y «Pretending to sleep» de Unsaid Films). **Explota Acción de Gracias**: el pavo que ve el horno y sale corriendo va a ×3681 (BublooTales, 10 s, sin diálogo) y hay 6 Shorts de pavos a ×8–×33. Black Friday se apaga (22 mil vistas en total). Para nosotros: Teddy con una manía que saca de quicio a Moe y Nana gana; o el pavo invitado que huye de la cena del piso.
+- Top 5 por multiplicador:
+  1. ×3681 · [This turkey saw the oven preheating and said NOPE](https://www.youtube.com/shorts/LUr12uhgtD4) · BublooTales · 173 mil · Acción de Gracias (canal diminuto, mediana 47)
+  2. ×2174 · [Ice Chewer](https://www.youtube.com/shorts/_4CmfHVsqaI) · Imako · 522 mil · manía imparable (mediana 240)
+  3. ×541 · [The MONKEY Caught the WRONG Criminal!](https://www.youtube.com/shorts/7Zisk97crmE) · BabyBop TV · 23 mil · animales policía (ya avisado)
+  4. ×493 · [The Prisoner Who Fed the Wall](https://www.youtube.com/shorts/J_qUwuh3_hw) · LostClips6868 · 15,3 M · manía imparable (ya avisado; mediana del canal 31 mil)
+  5. ×368 · [Some Dad jokes for your perusal](https://www.youtube.com/shorts/QkC_5dZ2gw8) · StickMood · 1,8 M · familia (padre)
+  - Siguen: ×354 [A Day in the Life of Two College Roommates](https://www.youtube.com/shorts/SYiWmMgwWUI) (ya avisado) · ×236 [The DOG Stole the POLICE CAR?!](https://www.youtube.com/shorts/vKDH5-9tGn8) (BabyBop) · ×112 [Tuesday Night Hockey](https://www.youtube.com/shorts/xBazR1PE7V0) (Imako) · ×103 [Ten Days to Thanksgiving](https://www.youtube.com/shorts/otV6k-ERs_Y) · ×86,8 [Relationships after GTA 6 drops](https://www.youtube.com/shorts/UV9LQaqd5Hk) · ×58,7 [Even he is scared of Cockroaches](https://www.youtube.com/shorts/ycpiQDyNNwM) (EA toons) · ×57,8 [I Saved $200 on Black Friday](https://www.youtube.com/shorts/RdYEsOs52hQ).
+- **Alarmas (≥ 10×), 28 nuevas** (muchas salen ahora porque esta ronda se revisaron los Shorts recientes de todos los canales vigilados): LUr12uhgtD4 (×3681: el pavo huye del horno; nuestra versión: el pavo invitado se escapa de la cena del piso), _4CmfHVsqaI (×2174: el que mastica hielo sin parar; la manía de Teddy), QkC_5dZ2gw8 (×368: chistes malos de padre en cadena; Teddy con chistes malos y Nana remata mejor), vKDH5-9tGn8 (×236: el perro policía se lleva el coche patrulla), xBazR1PE7V0 (×112: el equipo de hockey sin dientes), ycpiQDyNNwM (×58,7: el duro que huye de una cucaracha; Moe y un bichito), AUjstBEZxq4 (×56,2: POV de vivir en EE. UU.; tema adulto), 1X3TG1D3sSo (×53,3: boda en la comisaría, BabyBop), 569TolqLBKA (×52,9: «Big Mistake», karma inmediato; solo la estructura), JquxJBC7Uy4 (×52,7: el autocorrector en el peor momento; Teddy vs. el móvil), jgADTsBUq80 (×47,2: el niño se hace el dormido y mamá le juega mal a propósito), 2cisoJc0SLQ (×40,4: impuestos), A42DaAVNZEs (×33: temporada de pareja; no apto), LC5hwVbyPY4 (×32,8: pavo que se escapa en moto), IaSpgBEPzyQ (×27,7: sorpresa del pavo con el horno), FOKgh0rzkxs (×26,7: el policía se vuelve perro), kWb03KEuA4w (×25,7: mamá dice que no y la abuela que sí; encaja con Nana), 65XhxlBWSxI (×23,6: viajar al pasado para parar la gravedad), Q3qbyKafiJM (×19,1: a las 3 de la mañana se llama a mamá), hJmP_NyoHZM (×18,8: el niño usa los argumentos de mamá), YFUita4YUwI (×15,3: el colega del gimnasio sin día de descanso), em9BW1duMDc (×15: impuestos de ricos), GZZeE8QHnPk (×14,9: quiere la corona y acaba con moco verde), cfLx25InjIU (×12,1: la frase que no debió decir; Living Doodle hace parodias de superhéroes, comprobar), JxGTSfSnemc (×11,9: pierde el móvil y él lo empeora), FSiozLAHd_k (×11,6: «Something not right!», Avenu), yUmfis96Iew (×11,4: abrir paquetes con los dientes) y Vy5OUlYqxpc (×10,1: cinco minutitos más con la consola). Avisado a Félix en el panel.
+- Canales nuevos a vigilar: Imako (mediana 240, serie "Send this to the person who…"), BublooTales (47), CreativeAIstudio (887), Hurley Animations (1,7 mil), Stickman Science (201), HISTORY BONK! (1,3 mil), Kw Lu (28 mil), cutekawa (6,7 mil), Yink toons (145). @RefCantDraw sigue sin devolver Shorts por handle; @RicoAnimations lleva a otro canal (mediana 72).
+- Nota técnica: a partir de ~400 fichas `/watch?v=` empezó a fallar siempre con "Failed to fetch" (también tras recargar); `/shorts/<id>` sí responde y trae título, canal y fecha, pero no `viewCount`: las vistas salen de la página de Shorts del canal. Lanzar las fichas en segundo plano (bucle async guardando en `sessionStorage`) y consultar el avance cada 30–40 s para no pasar el límite de 45 s.
+
 ## Ronda 21/11/2026 · 8:37 (Madrid, ejecutada a las 15:56)
 - Revisados: 402 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "thanksgiving animation skit" y "black friday animation funny", y los canales de referencia y vigilados); 185 de los últimos 14 días, 47 animados y aptos con mediana de canal. Descartados por derechos o por no ser animados: Simpsons (Bart Kuts ×62, ItsWolfMan ×25, s.simpms, D'oh TV…), Family Guy, Mahoyo/anime (×40), DDLC (×32), Gumball rotoscopiado (rog art ×14,5), Avatar, Talking Angela, Dandy's World, Digital Circus, Mario, Roblox/Splatoon y gacha/"fix your posture". Spruce&Friends (×12) no cuenta como alarma: 36 vistas sobre una mediana de 3 es ruido.
 - **Subtema caliente: manía imparable** (segunda ronda seguida). Suma 16,4 millones de vistas en 8 Shorts a ×5,4–×986 de los últimos 7 días, casi todos de LostClips6868 (dar de comer a la pared, untarse miel, lavar la camisa sin parar). Segundo: **videojuegos** por la salida de GTA 6 (2,6 M, ×17,7 de media). **Suben Black Friday** (×58,5; es el 27/11) y Acción de Gracias (StickUnity ×9,5). Para nosotros: Teddy con una manía que no suelta y Nana gana al final; o Teddy «ahorrando» en el Black Friday.
@@ -100,3 +114,31 @@ Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 co
 - Fg_X53LhwDk (21/11/2026 mañana, ×13,9)
 - hWOQUuJSaOQ (21/11/2026 mañana, ×10,9)
 - 5jzpGv_nFUI (21/11/2026 mañana, ×10,6)
+- LUr12uhgtD4 (22/11/2026 mañana, ×3681)
+- _4CmfHVsqaI (22/11/2026 mañana, ×2174)
+- QkC_5dZ2gw8 (22/11/2026 mañana, ×368)
+- vKDH5-9tGn8 (22/11/2026 mañana, ×236)
+- xBazR1PE7V0 (22/11/2026 mañana, ×112)
+- ycpiQDyNNwM (22/11/2026 mañana, ×58,7)
+- AUjstBEZxq4 (22/11/2026 mañana, ×56,2)
+- 1X3TG1D3sSo (22/11/2026 mañana, ×53,3)
+- 569TolqLBKA (22/11/2026 mañana, ×52,9)
+- JquxJBC7Uy4 (22/11/2026 mañana, ×52,7)
+- jgADTsBUq80 (22/11/2026 mañana, ×47,2)
+- 2cisoJc0SLQ (22/11/2026 mañana, ×40,4)
+- A42DaAVNZEs (22/11/2026 mañana, ×33)
+- LC5hwVbyPY4 (22/11/2026 mañana, ×32,8)
+- IaSpgBEPzyQ (22/11/2026 mañana, ×27,7)
+- FOKgh0rzkxs (22/11/2026 mañana, ×26,7)
+- kWb03KEuA4w (22/11/2026 mañana, ×25,7)
+- 65XhxlBWSxI (22/11/2026 mañana, ×23,6)
+- Q3qbyKafiJM (22/11/2026 mañana, ×19,1)
+- hJmP_NyoHZM (22/11/2026 mañana, ×18,8)
+- YFUita4YUwI (22/11/2026 mañana, ×15,3)
+- em9BW1duMDc (22/11/2026 mañana, ×15)
+- GZZeE8QHnPk (22/11/2026 mañana, ×14,9)
+- cfLx25InjIU (22/11/2026 mañana, ×12,1)
+- JxGTSfSnemc (22/11/2026 mañana, ×11,9)
+- FSiozLAHd_k (22/11/2026 mañana, ×11,6)
+- yUmfis96Iew (22/11/2026 mañana, ×11,4)
+- Vy5OUlYqxpc (22/11/2026 mañana, ×10,1)
