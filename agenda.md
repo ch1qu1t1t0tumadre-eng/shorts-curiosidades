@@ -21,6 +21,7 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-22 | 23:00 | Napoleon Was NOT Short 📏 #shorts | youtube.com/shorts/uFIhQeGuseE |
 | 2026-11-23 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | PREPARADO · lote/v20 |
 | 2026-11-23 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | PREPARADO · lote/v13 |
+| 2026-11-23 | 23:00 | Isaac Newton Stuck A Needle In His Own Eye 👁️ #shorts | youtube.com/shorts/jxouYkMgwFA (v22, con miniatura · rama media-v22) |
 | 2026-11-24 | 17:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | PREPARADO · lote/v14 |
 
 **Aviso 19/11 (20:10):** YouTube ha alcanzado el *límite diario de subidas* y pide la *verificación única* (también para miniaturas). Hasta que el dueño verifique el canal con el teléfono, sube como mucho los 3 vídeos de cada día.

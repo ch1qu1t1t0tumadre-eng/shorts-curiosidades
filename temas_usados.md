@@ -24,3 +24,4 @@ Formato: fecha | id | categoría | tema
 - 2026-11-20 | v12 | HISTORIA (EN) | Diamante Hope enviado por correo certificado en 1958 (2,44 $, cartero James Todd) — programado 20/11 17:00 youtube.com/shorts/BVG5gL9Vef0
 - 2026-11-20 | v13 | COMIDA (EN) | Fredric Baur, inventor del bote de Pringles, enterrado en uno — programado 20/11 20:00 youtube.com/shorts/EgKd_K8CsI0
 - 2026-11-20 | v14 | ANIMALES (EN) | Pulpo Paul, Mundial 2010: 8/8, amenazas y protección de España — programado 20/11 23:00 youtube.com/shorts/F2u44Xemej8
+- 2026-11-22 | v22 | HISTORIA / CIENCIA (EN) | Isaac Newton y el bodkin en el ojo (ca. 1669, MS Add. 3975 p. 15, Cambridge) + mirar el sol en un espejo — programado 23/11 23:00 youtube.com/shorts/jxouYkMgwFA
