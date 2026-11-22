@@ -15,8 +15,8 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-21 | 20:00 | Marie Curie's Notebooks Are Still Radioactive ☢️ #shorts | youtube.com/shorts/cUoYHOtgQNc (sin miniatura) |
 | 2026-11-21 | 23:00 | Alfred Nobel Read His Own Obituary 📰 #shorts | youtube.com/shorts/hCkl3ZL47g4 (sin miniatura) |
 | 2026-11-22 | 17:00 | Mark Twain Predicted The Year He Would Die ☄️ #shorts | youtube.com/shorts/mxR551BW_Jo (sin miniatura) |
-| 2026-11-22 | 20:00 | The Secret Apartment At The Top Of The Eiffel Tower 🗼 #shorts | PREPARADO · lote/v19 |
-| 2026-11-22 | 23:00 | Napoleon Was NOT Short 📏 #shorts | PREPARADO · lote/v21 |
+| 2026-11-22 | 20:00 | The Secret Apartment At The Top Of The Eiffel Tower 🗼 #shorts | youtube.com/shorts/p3Pi9WbI8mQ |
+| 2026-11-22 | 23:00 | Napoleon Was NOT Short 📏 #shorts | youtube.com/shorts/uFIhQeGuseE |
 | 2026-11-23 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | PREPARADO · lote/v20 |
 | 2026-11-23 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | PREPARADO · lote/v13 |
 | 2026-11-24 | 17:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | PREPARADO · lote/v14 |
