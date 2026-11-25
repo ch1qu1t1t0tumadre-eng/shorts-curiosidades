@@ -30,8 +30,9 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-26 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | youtube.com/shorts/lkiQvLvHIOs (lote/v20, con miniatura) |
 | 2026-11-26 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | youtube.com/shorts/24oAEf1RlmQ (lote/v13, sin miniatura: límite diario → poner media-lote/media/v13.jpg) |
 | 2026-11-26 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | youtube.com/shorts/uBkty7dI6W4 (lote/v14, sin miniatura: límite diario → poner media-lote/media/v14.jpg) |
+| 2026-11-27 (jue, hueco 01:00 → 28/11 01:00) | 01:00 | The Leaning Tower Of Pisa Was Saved By A War ⚔️ #shorts | youtube.com/shorts/972RBMjUwZw (v26, PRIMER Short del FORMATO v3 · miniatura PENDIENTE por límite diario: media-prueba/media/v26.jpg) |
 
-**Tarea del 26/11:** los 3 huecos del 26/11 ya están programados (no hagas vídeos nuevos). Solo pon la miniatura a v13 (24oAEf1RlmQ) y v14 (uBkty7dI6W4) con el paso 4b «vídeo ya subido» (el 25/11 YouTube pidió la verificación única al llegar al límite diario de miniaturas).
+**Tarea del 26/11:** los 3 huecos del 26/11 ya están programados (no hagas vídeos nuevos). Solo pon la miniatura a v13 (24oAEf1RlmQ), v14 (uBkty7dI6W4) y v26 (972RBMjUwZw, media-prueba/media/v26.jpg) con el paso 4b «vídeo ya subido» (el 25/11 YouTube pidió la verificación única al llegar al límite diario de miniaturas).
 
 **Aviso 19/11 (20:10):** YouTube ha alcanzado el *límite diario de subidas* y pide la *verificación única* (también para miniaturas). Hasta que el dueño verifique el canal con el teléfono, sube como mucho los 3 vídeos de cada día.
 
@@ -65,3 +66,6 @@ Se suben igual que los del lote (privado + programado, con miniatura). No genera
 | v23 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | Princeton, 1955. A pathologist, an autopsy and two jars that ended up in Kansas. #didyouknow #history #einstein #science #curiosities #shorts |
 | v24 | Tycho Brahe Wore A Metal Nose 👃 #shorts | Rostock, 1566. A sword duel between cousins, and a nose nobody ever forgot. #didyouknow #history #tychobrahe #astronomy #curiosities #shorts |
 | v25 | Nikola Tesla Fell In Love With A Pigeon 🕊️ #shorts | The genius who lit up the world loved one bird more than anything. #didyouknow #history #nikolatesla #science #curiosities #shorts |
+
+
+**Formato v3 desde el 26/11/2026 (aprobado por el dueño):** todos los Shorts nuevos siguen el FORMATO v3 «EXPLICACIÓN» de INSTRUCCIONES.md (modelo: v26 Pisa). El 27/11 ya tiene ocupado el hueco de la 01:00 (Pisa): ese día solo faltan 20:00 y 23:00.
