@@ -12,7 +12,7 @@ Guarda el original como voz_original.mp3 / words_original.json (si ya existen, p
 """
 import json, os, re, shutil, subprocess, sys
 
-PAUSA_MIN, PAUSA_QUEDA, PPM_OBJ = 0.12, 0.08, 195
+PAUSA_MIN, PAUSA_QUEDA, PPM_OBJ = 0.12, 0.08, 215  # formato v3 (25/11/2026): ~215 ppm
 
 d = sys.argv[1]
 vo, wo = os.path.join(d, "voz_original.mp3"), os.path.join(d, "words_original.json")
@@ -56,7 +56,7 @@ def mapa(t):
 
 habla = sum(b - a for a, b in keep)
 ppm = len(ws) / habla * 60
-f = float(sys.argv[2]) if len(sys.argv) > 2 else min(max(PPM_OBJ / ppm, 1.0), 1.20)
+f = float(sys.argv[2]) if len(sys.argv) > 2 else min(max(PPM_OBJ / ppm, 1.0), 1.25)
 sel = "+".join(f"between(t,{a:.3f},{b:.3f})" for a, b in keep)
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", vo, "-af",
                 f"aselect='{sel}',asetpts=N/SR/TB,atempo={f:.4f}", "-c:a", "libmp3lame", "-q:a", "2",
