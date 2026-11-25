@@ -26,6 +26,9 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-25 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | lote/v20 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v20.jpg) y apuntar el enlace |
 | 2026-11-25 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | lote/v13 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v13.jpg) y apuntar el enlace |
 | 2026-11-25 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | lote/v14 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v14.jpg) y apuntar el enlace |
+| 2026-11-26 | 17:00 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | PREPARADO · ciencia/v23 (rama media-ciencia) |
+| 2026-11-26 | 20:00 | Nikola Tesla Fell In Love With A Pigeon 🕊️ #shorts | PREPARADO · ciencia/v25 (rama media-ciencia) |
+| 2026-11-26 | 23:00 | Tycho Brahe Wore A Metal Nose 👃 #shorts | PREPARADO · ciencia/v24 (rama media-ciencia) |
 
 **Tarea del 26/11:** antes de hacer los vídeos del día, busca en Studio (…/videos/short) los 3 del 25/11 que el dueño subió desde el móvil, apunta aquí su enlace y ponles la miniatura (paso 4b, vídeo ya subido). Si alguno no está en Studio, avisa al dueño.
 
@@ -49,3 +52,15 @@ URL raw: `https://raw.githubusercontent.com/ch1qu1t1t0tumadre-eng/shorts-curiosi
 | v19 | The Secret Apartment At The Top Of The Eiffel Tower 🗼 #shorts | Paris, 1889. Only one guest ever got the invitation. #didyouknow #history #eiffeltower #paris #curiosities #shorts |
 | v21 | Napoleon Was NOT Short 📏 #shorts | The most famous fact about Napoleon is a 200-year-old lie. #didyouknow #history #napoleon #myths #curiosities #shorts |
 | v20 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | April 14, 1865. One signature, one theater, and one huge twist. #didyouknow #history #abrahamlincoln #secretservice #curiosities #shorts |
+
+
+## Vídeos PREPARADOS de ciencia (25/11, petición del dueño: grandes científicos)
+Archivos en la rama **`media-ciencia`**: `media/vNN.mp4` y `media/vNN.jpg`.
+URL raw: `https://raw.githubusercontent.com/ch1qu1t1t0tumadre-eng/shorts-curiosidades/media-ciencia/media/vNN.mp4`
+Se suben igual que los del lote (privado + programado, con miniatura). No generan voz: ya están hechos.
+
+| Ciencia | Título | Descripción |
+|---|---|---|
+| v23 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | Princeton, 1955. A pathologist, an autopsy and two jars that ended up in Kansas. #didyouknow #history #einstein #science #curiosities #shorts |
+| v24 | Tycho Brahe Wore A Metal Nose 👃 #shorts | Rostock, 1566. A sword duel between cousins, and a nose nobody ever forgot. #didyouknow #history #tychobrahe #astronomy #curiosities #shorts |
+| v25 | Nikola Tesla Fell In Love With A Pigeon 🕊️ #shorts | The genius who lit up the world loved one bird more than anything. #didyouknow #history #nikolatesla #science #curiosities #shorts |
