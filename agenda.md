@@ -3,7 +3,7 @@
 3 Shorts al día: 17:00, 20:00 y 23:00 (Madrid). La tarea diaria (11:41) solo hace los huecos de HOY que sigan libres aquí.
 Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí en cuanto están en Studio.
 
-**Ritmo actual: 0 vídeos nuevos/día desde el 22/11/2026, motivo: quedan 739 créditos de ElevenLabs (cuenta compartida con Behind the HUD; renovación el 17/12). Solo se suben los PREPARADOS (v20, v13, v14).**
+**Ritmo actual: 3 vídeos nuevos/día desde el 25/11/2026 (plan Creator de ElevenLabs, 121.125 créditos/mes, compartido con Behind the HUD, que hace 2/día; renovación el 24 de cada mes).**
 
 | Fecha | Hora | Vídeo | Enlace |
 |---|---|---|---|

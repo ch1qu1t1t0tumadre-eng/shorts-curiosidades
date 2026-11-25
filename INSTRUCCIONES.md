@@ -37,7 +37,7 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 
 ## 2. Voz (ElevenLabs, conector MCP)
 - Antes de nada, mira `agenda.md`: los huecos de hoy (17:00, 20:00, 23:00) que ya tengan vídeo programado NO se hacen. Si los 3 están ocupados, no generes nada: solo comprueba en Studio que siguen programados y avisa al dueño.
-- Luego `account_get_usage`: `quedan = character_limit - character_count`. Haz un vídeo por cada hueco libre mientras queden **≥ 750 créditos** antes de generar cada voz (prioridad de huecos: 20:00, 23:00, 17:00). Si `quedan < 750`, no generes nada y avisa al dueño (en español) de que faltan créditos hasta la renovación (o de que puede subir al plan Creator).
+- Luego `account_get_usage`: `quedan = character_limit - character_count`. Aplica la regla de créditos de abajo ("Créditos y ritmo"): hasta 3 vídeos al día. Prioridad de huecos: 20:00, 23:00, 17:00. Si no cabe ninguno, no generes nada y avisa al dueño (en español) de cuándo se renuevan los créditos.
 - Cada vídeo que hagas, apúntalo en `agenda.md` (fecha, hora, título, enlace) y haz commit + push.
   - Indica en el resumen final cuántos vídeos se hicieron y por qué.
 - Etiquetas de eleven_v4: como mucho 1–2, en inglés, para el pico (`[intrigued]` al inicio, `[shocked]` o `[dramatic]` justo antes del "In other words"). Si alguna se lee en voz alta, quítala.
@@ -136,8 +136,8 @@ Si `agenda.md` marca un hueco de hoy como **PREPARADO**, el vídeo ya está hech
 
 ## Ritmo: 3 al día mientras se pueda, luego bajar (orden del dueño, 19/11)
 - Objetivo: 3 vídeos al día (17:00, 20:00, 23:00).
-- Antes de generar voz, mira los créditos de ElevenLabs (`account_get_usage`). Cada vídeo gasta ~800.
-- Cada día haz tantos vídeos como quepan, hasta 3: `min(3, (créditos_libres − 1.500) // 800)`, menos los huecos ya PREPARADOS.
+- Antes de generar voz, mira los créditos de ElevenLabs (`account_get_usage`). Cada vídeo gasta ~800. **Plan Creator (121.125/mes, renovación el día 24) compartido con Behind the HUD**, que hace 2 vídeos al día (decisión del dueño, 25/11/2026: Wait, What. 3/día + Behind the HUD 2/día).
+- Cada día haz tantos vídeos como quepan, hasta 3: `min(3, (créditos_libres − 3.000) // 850)`, menos los huecos ya PREPARADOS (los 3.000 de reserva protegen los 2 vídeos diarios de Behind the HUD).
   - Si caben 3 → 3. Si solo caben 2 → 2 (20:00 y 23:00). Si cabe 1 → 1 (20:00). Si no cabe ninguno → no generes; sube solo lo PREPARADO y avisa al dueño de que los créditos se renuevan el día X.
 - Los vídeos PREPARADOS de `agenda.md` no gastan créditos: súbelos siempre.
 - Cuando bajes el ritmo, apúntalo en `agenda.md` (línea "Ritmo actual: N/día desde FECHA, motivo") para que el dueño lo vea.
