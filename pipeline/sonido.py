@@ -67,7 +67,52 @@ def rise(d=1.0):
     return 0.35 * s * (t / d) ** 2
 
 
-SFX = {"whoosh": whoosh, "pop": pop, "ding": ding, "tick": tick, "rise": rise}
+def thud(f0=70):
+    """Golpe grave (algo pesado cae o se hunde)."""
+    n = int(SR * 0.5)
+    t = np.arange(n) / SR
+    f = f0 * (1 + 1.5 * np.exp(-t * 25))
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    rng = np.random.default_rng(3)
+    return 0.8 * np.sin(ph) * _env(n, 0.002, 0.12) + 0.15 * rng.standard_normal(n) * _env(n, 0.001, 0.02)
+
+
+def crack():
+    """Crujido (piedra o madera que cede)."""
+    n = int(SR * 0.35)
+    rng = np.random.default_rng(5)
+    x = rng.standard_normal(n)
+    clicks = (rng.random(n) < 0.004) * rng.standard_normal(n) * 6
+    return 0.35 * (x * _env(n, 0.001, 0.05) + np.convolve(clicks, np.ones(20) / 20, mode="same"))
+
+
+def bell(f0=440):
+    """Campana de torre (grave, larga)."""
+    n = int(SR * 1.6)
+    t = np.arange(n) / SR
+    s = sum(a * np.sin(2 * np.pi * f0 * m * t) for a, m in ((1, 1), (0.6, 2.0), (0.4, 2.4), (0.25, 3.0), (0.15, 4.2)))
+    return 0.35 * s * _env(n, 0.003, 0.6)
+
+
+def squish():
+    """Esponja que se aprieta (agua)."""
+    n = int(SR * 0.45)
+    rng = np.random.default_rng(9)
+    x = np.convolve(rng.standard_normal(n), np.ones(30) / 30, mode="same")
+    t = np.linspace(0, 1, n)
+    return 2.2 * x * np.sin(np.pi * t) ** 2
+
+
+def drum():
+    """Tambor de guerra."""
+    n = int(SR * 0.4)
+    t = np.arange(n) / SR
+    rng = np.random.default_rng(2)
+    return 0.7 * np.sin(2 * np.pi * 95 * t) * _env(n, 0.002, 0.09) + 0.25 * rng.standard_normal(n) * _env(n, 0.001, 0.03)
+
+
+SFX = {"whoosh": whoosh, "pop": pop, "ding": ding, "tick": tick, "rise": rise,
+       "thud": thud, "crack": crack, "bell": bell, "squish": squish, "drum": drum}
 
 
 def musica(d, seed=0, bpm=70):
@@ -109,7 +154,7 @@ def musica(d, seed=0, bpm=70):
     return 0.6 * out / (np.abs(out).max() + 1e-9)
 
 
-def mezcla(d, eventos, path, seed=0):
+def mezcla(d, eventos, path, seed=0, fx_gain=0.14, mus_gain=0.22):
     """Pista de efectos + música (sin voz). eventos = [(t, nombre), ...]."""
     n = int(SR * d)
     fx = np.zeros(n)
@@ -121,7 +166,7 @@ def mezcla(d, eventos, path, seed=0):
         m = min(len(s), n - i)
         fx[i:i + m] += s[:m]
     mus = musica(d, seed)
-    out = 0.14 * fx + 0.22 * mus  # música de ambiente; efectos muy discretos
+    out = fx_gain * fx + mus_gain * mus  # por defecto: música de ambiente y efectos discretos
     out = np.clip(out, -1, 1)
     with wave.open(path, "wb") as w:
         w.setnchannels(1)

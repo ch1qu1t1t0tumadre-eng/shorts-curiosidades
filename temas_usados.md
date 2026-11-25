@@ -28,3 +28,5 @@ Formato: fecha | id | categoría | tema
 - 2026-11-25 | v23 | CIENCIA / HISTORIA (EN) | Einstein's brain: Thomas Harvey, 1955, 240 piezas, ojos al oftalmólogo, caja de sidra en Wichita, encontrado en 1978 — PREPARADO (26/11 17:00)
 - 2026-11-25 | v24 | ASTRONOMÍA / HISTORIA (EN) | Tycho Brahe's metal nose: duelo con Manderup Parsberg (Rostock, 1566); exhumación 2010 en Praga → latón, no plata — PREPARADO (26/11 23:00)
 - 2026-11-25 | v25 | CIENCIA / HISTORIA (EN) | Nikola Tesla y la paloma blanca ("as a man loves a woman", murió en 1922, hoteles y palomas) — PREPARADO (26/11 20:00)
+
+- 2026-11-25 | v26 | INGENIERÍA / HISTORIA (EN) | PRUEBA estilo Mr omi: la Torre de Pisa salvada por una guerra (pausa de ~100 años, suelo como esponja, torre curvada) — sin programar (rama media-prueba)

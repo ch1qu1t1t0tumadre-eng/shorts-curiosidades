@@ -734,9 +734,12 @@ def render(workdir):
     # sonido: whoosh en cada cambio de escena + efectos que pida escenas.py (SFX = [(t, "pop"|"ding"|"tick"|"rise"|"whoosh"), ...])
     sys.path.insert(0, HERE)
     import sonido
-    eventos = [(e[0] - 0.12, "whoosh") for e in escenas[1:]] + [x for x in getattr(mod, "SFX", []) if x[1] in ("pop", "ding")]
+    eventos = [(e[0] - 0.12, "whoosh") for e in escenas[1:]] + [x for x in getattr(mod, "SFX", []) if x[1] in sonido.SFX]
+    if not getattr(mod, "WHOOSH", True):
+        eventos = [x for x in eventos if x[1] != "whoosh" or x in getattr(mod, "SFX", [])]
     fx_path = os.path.join(workdir, "fx.wav")
-    sonido.mezcla(dur, eventos, fx_path, seed=abs(hash(os.path.basename(os.path.abspath(workdir)))) % 1000)
+    sonido.mezcla(dur, eventos, fx_path, seed=abs(hash(os.path.basename(os.path.abspath(workdir)))) % 1000,
+                  fx_gain=getattr(mod, "FX_GAIN", 0.14), mus_gain=getattr(mod, "MUSICA_GAIN", 0.22))
 
     surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, OUT_W, OUT_H)
     out = os.path.join(workdir, "short.tmp.mp4")
@@ -766,7 +769,7 @@ def render(workdir):
         fn(ctx, T - t0 if i else max(T - t0, 0.6), t1 - t0, T)
         ctx.restore()
         # transición: destello corto al cambiar de escena
-        if k > 0 and T - t0 < 0.12:
+        if k > 0 and T - t0 < 0.12 and getattr(mod, "FLASH", True):
             ctx.set_source_rgba(1, 1, 1, 0.18 * (1 - (T - t0) / 0.12))
             ctx.paint()
         ch = next((c for c in chunks if c["start"] <= T < c["end"]), None)
