@@ -1,7 +1,7 @@
 # Rutina diaria: 2 Shorts de curiosidades
 
 Canal: curiosidades de todo tipo. **TODO EN INGLÉS AMERICANO** (guion, voz, textos en pantalla, subtítulos, título, descripción y hashtags), pensado para público de EE. UU. Categorías (ir rotando, que no se repita la misma dos días seguidos): animales, historia, cuerpo humano, ingeniería, **aviación**, **astronomía y espacio**, ciencia, geografía, tecnología, comida, océanos, mente y psicología…
-Cada día se publican **3 Shorts** (desde el 19/11/2026), subidos a YouTube Studio en **privado y programados** a las **17:00, 20:00 y 23:00 (Europe/Madrid)** (= 11:00, 14:00 y 17:00 en Nueva York). Muchos días ya habrá vídeos preparados por adelantado: mira `agenda.md` y haz solo los huecos libres de HOY. El dueño los revisa antes y borra o edita los que no le gusten.
+**Ritmo (orden del dueño, 25/11/2026): de lunes a viernes 3 Shorts (17:00, 20:00 y 23:00) y sábado y domingo 2 Shorts (17:00 y 20:00), hora Europe/Madrid** (= 11:00, 14:00 y 17:00 en Nueva York). Se suben a YouTube Studio en **privado y programados**. Muchos días ya habrá vídeos preparados por adelantado: mira `agenda.md` y haz solo los huecos libres de HOY. El dueño los revisa antes y borra o edita los que no le gusten.
 (Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de 600–750 caracteres → ~680 créditos/vídeo. Con 2 vídeos/día el plan Starter NO llega a todo el mes: el freno de créditos para la tarea cuando se acaban.)
 
 ## 0. Preparar
@@ -36,8 +36,8 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 **Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3). En la tabla, una fila cada 2–3 s (13–18 filas), no por bloques.
 
 ## 2. Voz (ElevenLabs, conector MCP)
-- Antes de nada, mira `agenda.md`: los huecos de hoy (17:00, 20:00, 23:00) que ya tengan vídeo programado NO se hacen. Si los 3 están ocupados, no generes nada: solo comprueba en Studio que siguen programados y avisa al dueño.
-- Luego `account_get_usage`: `quedan = character_limit - character_count`. Aplica la regla de créditos de abajo ("Créditos y ritmo"): hasta 3 vídeos al día. Prioridad de huecos: 20:00, 23:00, 17:00. Si no cabe ninguno, no generes nada y avisa al dueño (en español) de cuándo se renuevan los créditos.
+- Antes de nada, mira `agenda.md`: los huecos de hoy (L–V: 17:00, 20:00, 23:00 · S–D: 17:00, 20:00) que ya tengan vídeo programado NO se hacen. Si todos están ocupados, no generes nada: solo comprueba en Studio que siguen programados y avisa al dueño.
+- Luego `account_get_usage`: `quedan = character_limit - character_count`. Aplica la regla de créditos de abajo ("Créditos y ritmo"): hasta 3 vídeos al día de lunes a viernes y 2 el fin de semana. Prioridad de huecos: 20:00, 23:00, 17:00 (fin de semana: 20:00, 17:00). Si no cabe ninguno, no generes nada y avisa al dueño (en español) de cuándo se renuevan los créditos.
 - Cada vídeo que hagas, apúntalo en `agenda.md` (fecha, hora, título, enlace) y haz commit + push.
   - Indica en el resumen final cuántos vídeos se hicieron y por qué.
 - Etiquetas de eleven_v4: como mucho 1–2, en inglés, para el pico (`[intrigued]` al inicio, `[shocked]` o `[dramatic]` justo antes del "In other words"). Si alguna se lee en voz alta, quítala.
@@ -74,6 +74,19 @@ El vídeo es una animación vectorial tipo "explainer": escenas dibujadas, el pe
    - Un elemento de "mira aquí": `thumb_circle` rojo alrededor del detalle misterioso y/o `thumb_arrow`, o un objeto tapado con "?".
    - Lo importante entre y 250 y 1700 (los bordes se recortan en algunas vistas). Revisa la imagen con Read antes de subirla.
    - Ejemplos: `ejemplos/escenas_edison_bucle_en.py` (función MINIATURA) y `miniaturas/*.py` (vídeos antiguos).
+
+### 3b. CLARIDAD VISUAL (orden del dueño, 25/11/2026) — el espectador lo entiende todo sin pensar
+Regla de oro: **si quitas el sonido, la historia se sigue igual solo con las imágenes.** Cada plano enseña literalmente lo que dice la voz en ese momento.
+- **Una idea por plano.** Máximo 3 elementos en pantalla: el protagonista del plano (grande, en el centro), 1 etiqueta y, si hace falta, 1 flecha. Nada decorativo que compita.
+- **Mostrar, no decir.** Si la voz dice "cut it into 240 pieces", se ve el objeto partiéndose y el contador llegando a 240. Si dice "moved to Wichita", se ve el coche llegando al cartel. Nada de planos genéricos (estrellas, fondos vacíos) mientras la voz cuenta algo concreto.
+- **Toda silueta lleva nombre.** Cada persona que aparece tiene su ficha o una etiqueta corta encima (`pill`): "HARVEY", "COUSIN", "REPORTER". Nunca una silueta sin identificar.
+- **Números, fechas y lugares, siempre en pantalla** en el momento exacto en que se dicen: fecha → calendario; lugar → mapa con pin y nombre; cifra → `counter` grande; dinero → billete/etiqueta con $.
+- **Comparaciones con cosas conocidas** cuando hay tamaños o cantidades: al lado de una persona, de un móvil, de un autobús…
+- **Antes → después** para los giros: dos estados lado a lado o una transformación animada (plata → ✗ → latón), con flecha entre ellos.
+- **Texto en pantalla de 1–3 palabras**, en mayúsculas, grande (≥ 50 px) y con contraste fuerte; dentro de la zona segura y sin tapar el subtítulo gigante (y 900–1200).
+- **"In other words"**: el plano siguiente enseña la frase brutal de forma literal (sello "STOLEN" sobre el objeto, etc.).
+- **Colores con significado** y fijos en todo el vídeo: rojo = peligro/prohibido/mentira, verde = verdad/confirmado, amarillo = dato clave.
+- **Revisión obligatoria antes de renderizar ("prueba del mudo")**: mira la hoja de previews en orden y escribe para ti la historia que cuentan las imágenes. Si algún plano no se entiende sin la voz, rehazlo.
 
 ## 4. Publicar los vídeos en GitHub (rama `media`)
 ```
@@ -135,9 +148,9 @@ Si `agenda.md` marca un hueco de hoy como **PREPARADO**, el vídeo ya está hech
 - Si el panel del navegador está oculto (`document.visibilityState === 'hidden'`), la fecha y la hora de programación no se pueden elegir: avisa al dueño para que deje visible la app de Claude.
 
 ## Ritmo: 3 al día mientras se pueda, luego bajar (orden del dueño, 19/11)
-- Objetivo: 3 vídeos al día (17:00, 20:00, 23:00).
+- Objetivo: L–V 3 vídeos (17:00, 20:00, 23:00); S–D 2 vídeos (17:00, 20:00).
 - Antes de generar voz, mira los créditos de ElevenLabs (`account_get_usage`). Cada vídeo gasta ~800. **Plan Creator (121.125/mes, renovación el día 24) compartido con Behind the HUD**, que hace 2 vídeos al día (decisión del dueño, 25/11/2026: Wait, What. 3/día + Behind the HUD 2/día).
-- Cada día haz tantos vídeos como quepan, hasta 3: `min(3, (créditos_libres − 3.000) // 850)`, menos los huecos ya PREPARADOS (los 3.000 de reserva protegen los 2 vídeos diarios de Behind the HUD).
+- Cada día haz tantos vídeos como quepan, hasta el máximo del día (3 entre semana, 2 en fin de semana): `min(MAX_DIA, (créditos_libres − 3.000) // 850)`, menos los huecos ya PREPARADOS (los 3.000 de reserva protegen los 2 vídeos diarios de Behind the HUD).
   - Si caben 3 → 3. Si solo caben 2 → 2 (20:00 y 23:00). Si cabe 1 → 1 (20:00). Si no cabe ninguno → no generes; sube solo lo PREPARADO y avisa al dueño de que los créditos se renuevan el día X.
 - Los vídeos PREPARADOS de `agenda.md` no gastan créditos: súbelos siempre.
 - Cuando bajes el ritmo, apúntalo en `agenda.md` (línea "Ritmo actual: N/día desde FECHA, motivo") para que el dueño lo vea.

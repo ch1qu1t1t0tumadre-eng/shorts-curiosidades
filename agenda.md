@@ -3,7 +3,7 @@
 3 Shorts al día: 17:00, 20:00 y 23:00 (Madrid). La tarea diaria (11:41) solo hace los huecos de HOY que sigan libres aquí.
 Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí en cuanto están en Studio.
 
-**Ritmo actual: 3 vídeos nuevos/día desde el 25/11/2026 (plan Creator de ElevenLabs, 121.125 créditos/mes, compartido con Behind the HUD, que hace 2/día; renovación el 24 de cada mes).**
+**Ritmo actual (desde el 25/11/2026, orden del dueño): de lunes a viernes 3 Shorts (17:00, 20:00, 23:00); sábado y domingo 2 Shorts (17:00, 20:00). Plan Creator de ElevenLabs (121.125 créditos/mes, compartido con Behind the HUD; renovación el 24).**
 
 | Fecha | Hora | Vídeo | Enlace |
 |---|---|---|---|
@@ -24,9 +24,9 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-23 | 23:00 | Isaac Newton Stuck A Needle In His Own Eye 👁️ #shorts | youtube.com/shorts/jxouYkMgwFA (v22, con miniatura · rama media-v22) |
 | 2026-11-24 | 17:00 | (no se subió: PC apagado; pasa al 25/11 23:00) | — |
 | 2026-11-25 | 17:00 | (no se subió: el lote pasa al 26/11) | — |
-| 2026-11-25 | 20:00 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | youtube.com/shorts/-28MdcGWz2Q (ciencia/v23, con miniatura) |
+| 2026-11-25 | 19:30 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | youtube.com/shorts/-28MdcGWz2Q (ciencia/v23, con miniatura) |
 | 2026-11-25 | 21:30 | Nikola Tesla Fell In Love With A Pigeon 🕊️ #shorts | youtube.com/shorts/mZ5vv8LvDL4 (ciencia/v25, con miniatura) |
-| 2026-11-25 | 23:00 | Tycho Brahe Wore A Metal Nose 👃 #shorts | youtube.com/shorts/141QbZheovg (ciencia/v24, con miniatura) |
+| 2026-11-25 | 22:30 | Tycho Brahe Wore A Metal Nose 👃 #shorts | youtube.com/shorts/141QbZheovg (ciencia/v24, con miniatura) |
 | 2026-11-26 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | youtube.com/shorts/lkiQvLvHIOs (lote/v20, con miniatura) |
 | 2026-11-26 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | youtube.com/shorts/24oAEf1RlmQ (lote/v13, sin miniatura: límite diario → poner media-lote/media/v13.jpg) |
 | 2026-11-26 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | youtube.com/shorts/uBkty7dI6W4 (lote/v14, sin miniatura: límite diario → poner media-lote/media/v14.jpg) |
