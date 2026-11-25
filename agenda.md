@@ -23,14 +23,15 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-23 | 20:00 | (no se subió: PC apagado; pasa al 25/11 20:00) | — |
 | 2026-11-23 | 23:00 | Isaac Newton Stuck A Needle In His Own Eye 👁️ #shorts | youtube.com/shorts/jxouYkMgwFA (v22, con miniatura · rama media-v22) |
 | 2026-11-24 | 17:00 | (no se subió: PC apagado; pasa al 25/11 23:00) | — |
-| 2026-11-25 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | lote/v20 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v20.jpg) y apuntar el enlace |
-| 2026-11-25 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | lote/v13 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v13.jpg) y apuntar el enlace |
-| 2026-11-25 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | lote/v14 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v14.jpg) y apuntar el enlace |
-| 2026-11-26 | 17:00 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | PREPARADO · ciencia/v23 (rama media-ciencia) |
-| 2026-11-26 | 20:00 | Nikola Tesla Fell In Love With A Pigeon 🕊️ #shorts | PREPARADO · ciencia/v25 (rama media-ciencia) |
-| 2026-11-26 | 23:00 | Tycho Brahe Wore A Metal Nose 👃 #shorts | PREPARADO · ciencia/v24 (rama media-ciencia) |
+| 2026-11-25 | 17:00 | (no se subió: el lote pasa al 26/11) | — |
+| 2026-11-25 | 20:00 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | youtube.com/shorts/-28MdcGWz2Q (ciencia/v23, con miniatura) |
+| 2026-11-25 | 21:30 | Nikola Tesla Fell In Love With A Pigeon 🕊️ #shorts | youtube.com/shorts/mZ5vv8LvDL4 (ciencia/v25, con miniatura) |
+| 2026-11-25 | 23:00 | Tycho Brahe Wore A Metal Nose 👃 #shorts | youtube.com/shorts/141QbZheovg (ciencia/v24, con miniatura) |
+| 2026-11-26 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | youtube.com/shorts/lkiQvLvHIOs (lote/v20, con miniatura) |
+| 2026-11-26 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | youtube.com/shorts/24oAEf1RlmQ (lote/v13, sin miniatura: límite diario → poner media-lote/media/v13.jpg) |
+| 2026-11-26 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | youtube.com/shorts/uBkty7dI6W4 (lote/v14, sin miniatura: límite diario → poner media-lote/media/v14.jpg) |
 
-**Tarea del 26/11:** antes de hacer los vídeos del día, busca en Studio (…/videos/short) los 3 del 25/11 que el dueño subió desde el móvil, apunta aquí su enlace y ponles la miniatura (paso 4b, vídeo ya subido). Si alguno no está en Studio, avisa al dueño.
+**Tarea del 26/11:** los 3 huecos del 26/11 ya están programados (no hagas vídeos nuevos). Solo pon la miniatura a v13 (24oAEf1RlmQ) y v14 (uBkty7dI6W4) con el paso 4b «vídeo ya subido» (el 25/11 YouTube pidió la verificación única al llegar al límite diario de miniaturas).
 
 **Aviso 19/11 (20:10):** YouTube ha alcanzado el *límite diario de subidas* y pide la *verificación única* (también para miniaturas). Hasta que el dueño verifique el canal con el teléfono, sube como mucho los 3 vídeos de cada día.
 
