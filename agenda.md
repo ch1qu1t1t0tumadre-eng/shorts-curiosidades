@@ -19,10 +19,15 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-22 | 17:00 | Mark Twain Predicted The Year He Would Die ☄️ #shorts | youtube.com/shorts/mxR551BW_Jo (sin miniatura) |
 | 2026-11-22 | 20:00 | The Secret Apartment At The Top Of The Eiffel Tower 🗼 #shorts | youtube.com/shorts/p3Pi9WbI8mQ |
 | 2026-11-22 | 23:00 | Napoleon Was NOT Short 📏 #shorts | youtube.com/shorts/uFIhQeGuseE |
-| 2026-11-23 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | PREPARADO · lote/v20 |
-| 2026-11-23 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | PREPARADO · lote/v13 |
+| 2026-11-23 | 17:00 | (no se subió: PC apagado; pasa al 25/11 17:00) | — |
+| 2026-11-23 | 20:00 | (no se subió: PC apagado; pasa al 25/11 20:00) | — |
 | 2026-11-23 | 23:00 | Isaac Newton Stuck A Needle In His Own Eye 👁️ #shorts | youtube.com/shorts/jxouYkMgwFA (v22, con miniatura · rama media-v22) |
-| 2026-11-24 | 17:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | PREPARADO · lote/v14 |
+| 2026-11-24 | 17:00 | (no se subió: PC apagado; pasa al 25/11 23:00) | — |
+| 2026-11-25 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | lote/v20 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v20.jpg) y apuntar el enlace |
+| 2026-11-25 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | lote/v13 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v13.jpg) y apuntar el enlace |
+| 2026-11-25 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | lote/v14 · el dueño lo sube DESDE EL MÓVIL (sin miniatura) → falta poner MINIATURA (media-lote/media/v14.jpg) y apuntar el enlace |
+
+**Tarea del 26/11:** antes de hacer los vídeos del día, busca en Studio (…/videos/short) los 3 del 25/11 que el dueño subió desde el móvil, apunta aquí su enlace y ponles la miniatura (paso 4b, vídeo ya subido). Si alguno no está en Studio, avisa al dueño.
 
 **Aviso 19/11 (20:10):** YouTube ha alcanzado el *límite diario de subidas* y pide la *verificación única* (también para miniaturas). Hasta que el dueño verifique el canal con el teléfono, sube como mucho los 3 vídeos de cada día.
 
