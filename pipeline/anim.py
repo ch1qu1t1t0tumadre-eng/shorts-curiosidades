@@ -600,9 +600,23 @@ def draw_caption_big(ctx, chunk, T, y=1060, size=150, rgb=YELLOW, edge=(0.55, 0.
     ctx.restore()
 
 
+def caption_y(mod, T):
+    """Altura del subtítulo gigante en el instante T. Por orden de prioridad:
+    1) atributo cap_y de la función de la escena activa (p. ej. e9.cap_y = 1430),
+    2) Y_SUBTITULO del módulo: número fijo o función T -> y,
+    3) 1060 (centro, estilo antiguo).
+    Regla (25/11/2026): el subtítulo NUNCA tapa lo esencial: va en una franja libre (cielo o suelo vacío)."""
+    esc = sorted(getattr(mod, "ESCENAS", []), key=lambda e: e[0])
+    k = max([j for j, e in enumerate(esc) if e[0] <= T] or [0]) if esc else None
+    if k is not None and hasattr(esc[k][1], "cap_y"):
+        return esc[k][1].cap_y
+    y = getattr(mod, "Y_SUBTITULO", 1060)
+    return y(T) if callable(y) else y
+
+
 def _captions(ctx, mod, ch, T):
     if getattr(mod, "ESTILO_SUBTITULO", "grande") == "grande":
-        draw_caption_big(ctx, ch, T, y=getattr(mod, "Y_SUBTITULO", 1060))
+        draw_caption_big(ctx, ch, T, y=caption_y(mod, T), size=getattr(mod, "TAM_SUBTITULO", 150))
     else:
         draw_captions(ctx, ch, T)
 
