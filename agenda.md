@@ -1,9 +1,9 @@
 # Agenda de Shorts programados (canal "Wait, What.")
 
-3 Shorts al día: 17:00, 20:00 y 23:00 (Madrid). La tarea diaria (11:41) solo hace los huecos de HOY que sigan libres aquí.
+Horario: L–V 20:00, 23:00 y 01:00 (del día siguiente); S–D 20:00 y 23:00 (Madrid). La tarea diaria (11:41) solo hace los huecos de HOY que sigan libres aquí.
 Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí en cuanto están en Studio.
 
-**Ritmo actual (desde el 25/11/2026, orden del dueño): de lunes a viernes 3 Shorts (17:00, 20:00, 23:00); sábado y domingo 2 Shorts (17:00, 20:00). Plan Creator de ElevenLabs (121.125 créditos/mes, compartido con Behind the HUD; renovación el 24).**
+**Ritmo y horario (orden del dueño, 25/11/2026; desde el 27/11/2026): de lunes a viernes 3 Shorts a las 20:00, 23:00 y 01:00 (el de la 01:00 se programa con la fecha del día siguiente); sábado y domingo 2 Shorts a las 20:00 y 23:00 (hora de Madrid). El 26/11 se queda con el horario antiguo (17:00, 20:00, 23:00), ya programado. Plan Creator de ElevenLabs (121.125 créditos/mes, compartido con Behind the HUD; renovación el 24).**
 
 | Fecha | Hora | Vídeo | Enlace |
 |---|---|---|---|

@@ -1,8 +1,14 @@
 # Rutina diaria: 2 Shorts de curiosidades
 
 Canal: curiosidades de todo tipo. **TODO EN INGLÉS AMERICANO** (guion, voz, textos en pantalla, subtítulos, título, descripción y hashtags), pensado para público de EE. UU. Categorías (ir rotando, que no se repita la misma dos días seguidos): animales, historia, cuerpo humano, ingeniería, **aviación**, **astronomía y espacio**, ciencia, geografía, tecnología, comida, océanos, mente y psicología…
-**Ritmo (orden del dueño, 25/11/2026): de lunes a viernes 3 Shorts (17:00, 20:00 y 23:00) y sábado y domingo 2 Shorts (17:00 y 20:00), hora Europe/Madrid** (= 11:00, 14:00 y 17:00 en Nueva York). Se suben a YouTube Studio en **privado y programados**. Muchos días ya habrá vídeos preparados por adelantado: mira `agenda.md` y haz solo los huecos libres de HOY. El dueño los revisa antes y borra o edita los que no le gusten.
+**Ritmo y horario (orden del dueño, 25/11/2026; horario nuevo desde el 27/11/2026): de lunes a viernes 3 Shorts a las 20:00, 23:00 y 01:00, y sábado y domingo 2 Shorts a las 20:00 y 23:00, hora Europe/Madrid** (= 14:00, 17:00 y 19:00 en Nueva York; el público principal es de EE. UU. y su pico de Shorts es de 18:00 a 23:00, hora local). **El hueco de la 01:00 del día D se programa con la fecha D+1 a la 01:00** (p. ej. el 3.º Short del jueves 27/11 → viernes 28/11 01:00). El domingo no hay hueco de 01:00. El Short con el tema más fuerte del día va al hueco de más audiencia: 01:00 entre semana, 23:00 en fin de semana. Ver «Horario» más abajo. Se suben a YouTube Studio en **privado y programados**. Muchos días ya habrá vídeos preparados por adelantado: mira `agenda.md` y haz solo los huecos libres de HOY. El dueño los revisa antes y borra o edita los que no le gusten.
 (Plan ElevenLabs Starter: 30.000 créditos/mes. Modelo `eleven_v4`, la voz buena: ~1 crédito por carácter. Guiones de 600–750 caracteres → ~680 créditos/vídeo. Con 2 vídeos/día el plan Starter NO llega a todo el mes: el freno de créditos para la tarea cuando se acaban.)
+
+## Horario (análisis del 25/11/2026)
+- Studio aún no muestra «horas de actividad» del canal (pocos datos). Audiencia: EE. UU. 28 %, Reino Unido 10 %, Filipinas 7 %, India 4 %, España 3,5 %; 99,6 % espectadores nuevos (llegan por el feed).
+- Datos propios (13 Shorts): media de vistas por hora de subida (Madrid): 17:00 ≈ 760 · 20:00 ≈ 840 · 23:00 ≈ 1.080.
+- Estudios (Buffer, 1,8 M vídeos; SocialPilot, 301 K): los Shorts rinden más de 18:00 a 23:00 hora local; mejor día el viernes (16:00–19:00), luego sábado y jueves; peor lunes/martes; el domingo por la noche baja. Los Shorts siguen recibiendo vistas días después: la constancia importa más que la hora exacta.
+- Por eso: L–V 20:00 / 23:00 / 01:00 y S–D 20:00 / 23:00 (Madrid). Cuando Studio muestre las horas reales del canal, revisar este horario.
 
 ## 0. Preparar
 1. `add_repo` ch1qu1t1t0tumadre-eng/shorts-curiosidades con access "push", clonarlo en /home/claude/shorts-curiosidades.
@@ -36,8 +42,8 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 **Guarda `work/vNN/guion.md`** con: nicho/ángulo, el texto exacto para la voz y una tabla por bloque: tiempo · voz · escena/plano de cámara (zoom, paneo, primer plano…) · elementos visuales (equivalente a b-roll en animación) · texto en pantalla (≤ 4 palabras) · caption. Ese guion manda en el diseño de las escenas (paso 3). En la tabla, una fila cada 2–3 s (13–18 filas), no por bloques.
 
 ## 2. Voz (ElevenLabs, conector MCP)
-- Antes de nada, mira `agenda.md`: los huecos de hoy (L–V: 17:00, 20:00, 23:00 · S–D: 17:00, 20:00) que ya tengan vídeo programado NO se hacen. Si todos están ocupados, no generes nada: solo comprueba en Studio que siguen programados y avisa al dueño.
-- Luego `account_get_usage`: `quedan = character_limit - character_count`. Aplica la regla de créditos de abajo ("Créditos y ritmo"): hasta 3 vídeos al día de lunes a viernes y 2 el fin de semana. Prioridad de huecos: 20:00, 23:00, 17:00 (fin de semana: 20:00, 17:00). Si no cabe ninguno, no generes nada y avisa al dueño (en español) de cuándo se renuevan los créditos.
+- Antes de nada, mira `agenda.md`: los huecos de hoy (L–V: 20:00, 23:00 y 01:00 de la madrugada siguiente · S–D: 20:00, 23:00) que ya tengan vídeo programado NO se hacen. Si todos están ocupados, no generes nada: solo comprueba en Studio que siguen programados y avisa al dueño.
+- Luego `account_get_usage`: `quedan = character_limit - character_count`. Aplica la regla de créditos de abajo ("Créditos y ritmo"): hasta 3 vídeos al día de lunes a viernes y 2 el fin de semana. Prioridad de huecos: 01:00, 23:00, 20:00 (fin de semana: 23:00, 20:00). Si no cabe ninguno, no generes nada y avisa al dueño (en español) de cuándo se renuevan los créditos.
 - Cada vídeo que hagas, apúntalo en `agenda.md` (fecha, hora, título, enlace) y haz commit + push.
   - Indica en el resumen final cuántos vídeos se hicieron y por qué.
 - Etiquetas de eleven_v4: como mucho 1–2, en inglés, para el pico (`[intrigued]` al inicio, `[shocked]` o `[dramatic]` justo antes del "In other words"). Si alguna se lee en voz alta, quítala.
@@ -103,7 +109,7 @@ URL de cada vídeo: `https://raw.githubusercontent.com/ch1qu1t1t0tumadre-eng/sho
 
 ## 5. Subir a YouTube Studio (navegador integrado, `mcp__remote-devices__Claude_Browser__*`)
 Canal: https://studio.youtube.com/channel/UC-xRUl9MD0FkZ94w83yAFKQ — la sesión ya está iniciada y los sitios permitidos.
-Para cada vídeo, en el hueco que le toque según `agenda.md` (17:00, 20:00 o 23:00):
+Para cada vídeo, en el hueco que le toque según `agenda.md` (20:00, 23:00 o 01:00 del día siguiente; fin de semana 20:00 o 23:00):
 1. `navigate` a `https://studio.youtube.com/channel/UC-xRUl9MD0FkZ94w83yAFKQ/videos/upload?d=ud`
 2. `javascript_tool` (inyecta el archivo interceptando el selector de archivos):
 ```js
@@ -137,7 +143,7 @@ Si el ordenador no responde (navegador integrado offline): guardar igualmente lo
 
 ## 6. Cerrar
 - Añadir los 2 temas a `temas_usados.md`, commit y push a `main`.
-- Enviar al dueño (SendUserMessage + notificación): título, hora y enlace de cada vídeo, créditos de ElevenLabs que quedan, y recordarle que los revise antes de las 17:00. Indicar cualquier problema.
+- Enviar al dueño (SendUserMessage + notificación): título, hora y enlace de cada vídeo, créditos de ElevenLabs que quedan, y recordarle que los revise antes de las 20:00. Indicar cualquier problema.
 
 ## Coste aproximado
 Voz con eleven_v4: ~680 créditos por vídeo (35–45 s) → 2/día ≈ 41.000/mes. Plan Starter: 30.000 → da para ~44 vídeos/mes. Plan Creator (121.000) daría de sobra.
@@ -148,7 +154,7 @@ Si `agenda.md` marca un hueco de hoy como **PREPARADO**, el vídeo ya está hech
 - Si el panel del navegador está oculto (`document.visibilityState === 'hidden'`), la fecha y la hora de programación no se pueden elegir: avisa al dueño para que deje visible la app de Claude.
 
 ## Ritmo: 3 al día mientras se pueda, luego bajar (orden del dueño, 19/11)
-- Objetivo: L–V 3 vídeos (17:00, 20:00, 23:00); S–D 2 vídeos (17:00, 20:00).
+- Objetivo: L–V 3 vídeos (20:00, 23:00, 01:00 del día siguiente); S–D 2 vídeos (20:00, 23:00).
 - Antes de generar voz, mira los créditos de ElevenLabs (`account_get_usage`). Cada vídeo gasta ~800. **Plan Creator (121.125/mes, renovación el día 24) compartido con Behind the HUD**, que hace 2 vídeos al día (decisión del dueño, 25/11/2026: Wait, What. 3/día + Behind the HUD 2/día).
 - Cada día haz tantos vídeos como quepan, hasta el máximo del día (3 entre semana, 2 en fin de semana): `min(MAX_DIA, (créditos_libres − 3.000) // 850)`, menos los huecos ya PREPARADOS (los 3.000 de reserva protegen los 2 vídeos diarios de Behind the HUD).
   - Si caben 3 → 3. Si solo caben 2 → 2 (20:00 y 23:00). Si cabe 1 → 1 (20:00). Si no cabe ninguno → no generes; sube solo lo PREPARADO y avisa al dueño de que los créditos se renuevan el día X.
