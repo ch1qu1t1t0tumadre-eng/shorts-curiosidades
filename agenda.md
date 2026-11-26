@@ -34,6 +34,8 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 
 **Tarea del 26/11:** los 3 huecos del 26/11 ya están programados (no hagas vídeos nuevos). Solo pon la miniatura a v13 (24oAEf1RlmQ), v14 (uBkty7dI6W4) y v26 (972RBMjUwZw, media-prueba/media/v26.jpg) con el paso 4b «vídeo ya subido» (el 25/11 YouTube pidió la verificación única al llegar al límite diario de miniaturas).
 
+**Resultado 26/11 (11:45):** los 4 vídeos (lkiQvLvHIOs, 24oAEf1RlmQ, uBkty7dI6W4, 972RBMjUwZw) siguen «Programado» en Studio. Al intentar la miniatura de v13 YouTube volvió a pedir la *Verificación única obligatoria* → cancelada; v13, v14 y v26 siguen SIN miniatura. **Tarea pendiente para el 27/11 (hacer primero):** reintentar las miniaturas de v13 (media-lote/media/v13.jpg), v14 (media-lote/media/v14.jpg) y v26 (media-prueba/media/v26.jpg) con el paso 4b «vídeo ya subido»; si sigue la verificación, cancelar y avisar (solo el dueño puede verificar el canal con el teléfono).
+
 **Aviso 19/11 (20:10):** YouTube ha alcanzado el *límite diario de subidas* y pide la *verificación única* (también para miniaturas). Hasta que el dueño verifique el canal con el teléfono, sube como mucho los 3 vídeos de cada día.
 
 ## Vídeos PREPARADOS por adelantado (lote del 19/11)
