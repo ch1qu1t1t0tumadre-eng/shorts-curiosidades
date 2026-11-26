@@ -2,6 +2,20 @@
 
 Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 con ×N y alarmas (≥ 10×).
 
+## Ronda 26/11/2026 · 20:37 (Madrid)
+- Revisados: 733 Shorts (12 búsquedas fijas con los filtros "Shorts" y "este mes" + "thanksgiving leftovers animation" y "grandpa animation funny", y los 10 Shorts más nuevos de 32 canales de referencia y vigilados); 573 de los últimos 14 días, todos con mediana de canal (310 canales). Descartados por derechos o por no ser animados: American Dad (Curtis Cook ×469), Pokémon (Ray's Studio ×303), South Park (Mickiiyy ×31), Simpsons (ItsWolfMan ×79, TwinCoconuts, Untaxtoon, 인사이트 월드 TV), Nichijou (TierRawr ×11), Dandy's World, FNAF, TF2, Rick and Morty, Mario, Jujutsu, anime (World of Anime), rotoscopia (rog art), mascotas reales con voz (Chuckle Critters ×18,8), famosos (Stick Briefly con Kai Cenat ×54), K-pop (Itz_Sproutxd) y dibujos infantiles en hindi (Deepak Comedy, Cartoonvideo2, Lalchand, AWDHESH KI MASTI, Rishabh Kabdwal, Vikram Singh Fitness, Amrit) y contenido religioso infantil.
+- **Subtema caliente: abuela/familia** (vuelve; supera a idiomas). Suma 5,7 M de vistas a ×3 o más en los últimos 7 días: «Moms Be Like» (Nutshell, ×3,3, 2,6 M), «POV: Grandma saved the day» (Thakur Animation, ×9,2, 862 mil), «Never steal grandma's rice» (Lumiveils, ×19,5, 799 mil), «When kids look like grandparents» (TGM Cartoon, ×6,5, 785 mil) y «Pretending to sleep» (Unsaid Films, ×545, 599 mil). Siguen dinero (4,5 M, «If You're Homeless…» de Nutshell) e idiomas (4,3 M, «Learning Spanish»). Aparte, 2 M en dramas de boda/suegra con karma inmediato (AI Production Studio, 6 Shorts a ×4–×13; no aptos). **Black Friday es mañana**: 6 Shorts nuevos a ×14–×127, todos de canales pequeños. Para nosotros: «TEDDY!» desde el rincón de Nana, Teddy cruza el piso corriendo y era para el mando que tiene al lado; o Teddy que dice que sí a todo y cada «sí» le pesa más.
+- Top 5 por multiplicador:
+  1. ×3658 · [This turkey saw the oven preheating and said NOPE](https://www.youtube.com/shorts/LUr12uhgtD4) · BublooTales · 176 mil · Acción de Gracias (ya avisado)
+  2. ×882,6 · [The MONKEY Caught the WRONG Criminal!](https://www.youtube.com/shorts/7Zisk97crmE) · BabyBop TV · 26 mil · animales policía (ya avisado)
+  3. ×553,7 · [Ice Chewer](https://www.youtube.com/shorts/_4CmfHVsqaI) · Imako · 609 mil · manía imparable (ya avisado)
+  4. ×550 · [The Price of Saying Yes 👜](https://www.youtube.com/shorts/1ciqrfu7V80) · Almost Fictional · 2,2 mil · decir que sí a todo (canal nuevo, mediana 4)
+  5. ×544,5 · [Pretending to sleep.](https://www.youtube.com/shorts/jgADTsBUq80) · Unsaid Films · 599 mil · abuela/familia (ya avisado)
+  - Siguen: ×375 [Some Dad jokes for your perusal](https://www.youtube.com/shorts/QkC_5dZ2gw8) (2,9 M) · ×297 [She Wanted a Divorce… He Was TOO Ready](https://www.youtube.com/shorts/5bjvGQSJGN0) · ×146 [Thanksgiving Leftovers Revolt in the Fridge!](https://www.youtube.com/shorts/CZQ8cZAw0Rw) · ×127 [Black Friday Disaster](https://www.youtube.com/shorts/kD0UhYsHbcw) · ×118 [She Asked for a Divorce… He Said "Okay"](https://www.youtube.com/shorts/N7Q-EuscWUk) · ×27 [Bro had ZERO hesitation on that one](https://www.youtube.com/shorts/yYOohwdBccc) · ×11,5 [SAVAGE MUM 16](https://www.youtube.com/shorts/EbV-xZE0j00) (11,2 M).
+- **Alarmas (≥ 10×), 22 nuevas:** 1ciqrfu7V80 (×550: cada «sí» a un favor hace más pesado el bolso; Teddy, que dice que sí a todo, y Nana le enseña a decir que no con una mirada), CZQ8cZAw0Rw (×146: las sobras se pelean en la nevera y llega la sombra; Teddy y Moe por la última sobra y Nana ya se la comió), kD0UhYsHbcw (×127: espera toda la noche, gana la tele y era más barata online; Nana la compró desde el sofá), N7Q-EuscWUk (×118: divorcio con «vale» al instante; no apto, solo la estructura), NWaYyEgXwWQ (×80: «nunca me casaré» y cambia en un segundo; no apto), rQS7gA3zvHE (×55: cómo se tienen guardados en el móvil; no apto), yYOohwdBccc (×27: réplica genial en 12 s; Nana despacha a Teddy sin levantar la vista), 3BZWQl8L2DQ (×22,5: el jefe llama en domingo y las excusas empeoran), 2xwUsfeOBws (×20,6: pollitos enamorados sin diálogo; no apto), 11Ym62C04lo (×18,2: una tele y cien compradores), Z9j7Xwr1YO0 (×17,2: misma nota mala en dos casas, pantalla partida; apto con Teddy y Nana), qkHIJdYK09g (×15,8: enfadada hasta oír «bonus»; Moe hasta oír «galletas»), DR8xaj2kRk4 (×14,8: la lógica del abuelo), Tixlhe1JlDU (×14,6: la oferta que costaba lo mismo el mes pasado), 44wfaRFSl_4 (×13,5: manía imparable de Lumiveils en guerra; solo la estructura), 7iATHSyOPtc (×12,7: drama de boda con karma; no apto), avmHTUWQW70 (×11,8: un mes de silencio que dura nada; Teddy no aguanta ni un segundo), EbV-xZE0j00 (×11,5: la madre imbatible contra el ladrón, 11 M; fórmula «Nana siempre gana» sin violencia), UG3GJ33CLC8 (×11,2: mamá llama desde el otro cuarto y era para el mando), _8n313gJkN4 (×11: drama familiar de AI Production; no apto), _OR6Yt-8NeM (×10,8: gag de piscina de Avenu) y KZCAZp_WSEU (×10,3: tienes seguro y pagas igual; tema adulto). Avisado a Félix en el panel.
+- Canales nuevos a vigilar: Almost Fictional (mediana 4, serie original de humor adulto), Kitchen war (7), StickoVerse / Sticko Verse (10 y 44), MAN OF THE DAY ANIMATION (29), Blunt Studios (1,3 mil), Stickman Comedy (56), Zid (69), Luna_Luna (70, «Funny Trends»), SheddiAnime (972 mil, serie «Savage Mum»), Thakur Animation (94 mil), TGM Cartoon (121 mil), Under Studio (97 mil, «Mushie & Birdie»), Charlie and Katie (3,2 mil).
+- Nota técnica: la búsqueda (vista de resultados) trae `videoRenderer` con canal, vistas y fecha relativa abreviada ("hace 3 d", "hace 2 sem.", "hace 8 m" = meses); con `sp=EgQIBBAJ` (Shorts + este mes) salen muchos más recientes. `/shorts/<id>` volvió a traer `viewCount`, `publishDate` y `channelId` (733 fichas sin fallos con 3 en paralelo y 0,6 s de pausa). Las búsquedas fallaron a ráfagas con "Failed to fetch": un `fetch` con reintentos (4 intentos, 4–16 s de espera, alternando `credentials`) lo resolvió.
+
 ## Ronda 26/11/2026 · 8:37 (Madrid, ejecutada a las 12:13) · Acción de Gracias
 - Revisados: 515 Shorts candidatos (10 búsquedas fijas con el filtro "Shorts" + "thanksgiving animation funny", "black friday animation funny" y "turkey animation funny", y los 10 Shorts más nuevos de 34 canales de referencia y vigilados); 272 de los últimos 14 días, 262 con mediana de canal. Descartados por derechos o por no ser animados: American Dad (Curtis Cook ×453), Family Guy (NoCanDoo ×200), Pokémon (Ray's Studio ×139), Dandy's World (×92), Simpsons (Bart Kuts, Untaxtoon…), Mario, Sonic, Bubu y Dudu (×35,8), Roblox/K-pop (Itz_Sproutxd ×21,7), rotoscopia (rog art), imagen real (Preston Anderson «Moms are a different animal on Thanksgiving» ×44,9 y Certified MindRot ×39,4), famosos (Stick Briefly con Kai Cenat ×51,7), anuncios de juegos (Baijid Game) y una resubida sin canal claro (Vikram Singh Fitness ×10,6). Ruido (< 1.000 vistas): USA Cartoon Kids ×29,7, Stick Briefly GTA ×28,9/×23,2, Ray Storey ×15,3. No hubo rondas el 23–25/11.
 - **Subtema caliente: idiomas** (nuevo; acaba la racha de manía imparable). Suma 3,85 M de vistas a ×3 o más en los últimos 7 días: «Learning Spanish» (Nutshell, ×4,9, 3,8 M) y «What If You Could Speak Every Language?» (Sketchly Daily, ×28); «Spanish is easy!» de Avenu (×5, 481 mil) queda justo fuera de la semana. Muy cerca: **familia/mamá** (3,6 M: «Moms Be Like» de Nutshell, la abuela del arroz ×21,3, la boda ×12,8) y **manía imparable** (2,4 M; LostClips6868 ahora se llama **Lumiveils**: «gallows» ×51,5). **Black Friday es mañana**: 4 Shorts a ×20–×41 (la oferta que es 0 %, pelea por el último producto). **Pregunta trampa** nueva subida (Maximations ×43,9 y Toon Moments ×10). Para nosotros: Teddy aprende otro idioma con una app y Nana le contesta con soltura; o Nana pregunta «¿Qué jersey me queda mejor?» y nadie sabe qué decir.
@@ -171,3 +185,25 @@ Olga añade aquí cada ronda (lo más nuevo, arriba): subtema caliente, top 5 co
 - XjxirvqTYDI (26/11/2026 mañana, ×11,6)
 - qGHHElS2uQg (26/11/2026 mañana, ×10,4)
 - x5Q3bVdHWto (26/11/2026 mañana, ×10)
+- 1ciqrfu7V80 (26/11/2026 noche, ×550)
+- CZQ8cZAw0Rw (26/11/2026 noche, ×146)
+- kD0UhYsHbcw (26/11/2026 noche, ×127)
+- N7Q-EuscWUk (26/11/2026 noche, ×118)
+- NWaYyEgXwWQ (26/11/2026 noche, ×80)
+- rQS7gA3zvHE (26/11/2026 noche, ×55)
+- yYOohwdBccc (26/11/2026 noche, ×27)
+- 3BZWQl8L2DQ (26/11/2026 noche, ×22,5)
+- 2xwUsfeOBws (26/11/2026 noche, ×20,6)
+- 11Ym62C04lo (26/11/2026 noche, ×18,2)
+- Z9j7Xwr1YO0 (26/11/2026 noche, ×17,2)
+- qkHIJdYK09g (26/11/2026 noche, ×15,8)
+- DR8xaj2kRk4 (26/11/2026 noche, ×14,8)
+- Tixlhe1JlDU (26/11/2026 noche, ×14,6)
+- 44wfaRFSl_4 (26/11/2026 noche, ×13,5)
+- 7iATHSyOPtc (26/11/2026 noche, ×12,7)
+- avmHTUWQW70 (26/11/2026 noche, ×11,8)
+- EbV-xZE0j00 (26/11/2026 noche, ×11,5)
+- UG3GJ33CLC8 (26/11/2026 noche, ×11,2)
+- _8n313gJkN4 (26/11/2026 noche, ×11)
+- _OR6Yt-8NeM (26/11/2026 noche, ×10,8)
+- KZCAZp_WSEU (26/11/2026 noche, ×10,3)
