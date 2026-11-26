@@ -30,3 +30,4 @@ Formato: fecha | id | categoría | tema
 - 2026-11-25 | v25 | CIENCIA / HISTORIA (EN) | Nikola Tesla y la paloma blanca ("as a man loves a woman", murió en 1922, hoteles y palomas) — PREPARADO (26/11 20:00)
 
 - 2026-11-25 | v26 | INGENIERÍA / HISTORIA (EN) | PRUEBA estilo Mr omi: la Torre de Pisa salvada por una guerra (pausa de ~100 años, suelo como esponja, torre curvada) — sin programar (rama media-prueba)
+- 2026-11-26 | v27 | INGENIERÍA (EN) | PRUEBA formato historia (inventada, física real): por qué las aceras tienen líneas (juntas de control) — sin programar (rama media-prueba)
