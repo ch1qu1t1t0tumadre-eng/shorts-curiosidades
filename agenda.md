@@ -27,12 +27,14 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-25 | 19:30 | Einstein's Brain Was Kept In A Cider Box 🧠 #shorts | youtube.com/shorts/-28MdcGWz2Q (ciencia/v23, con miniatura) |
 | 2026-11-25 | 21:30 | Nikola Tesla Fell In Love With A Pigeon 🕊️ #shorts | youtube.com/shorts/mZ5vv8LvDL4 (ciencia/v25, con miniatura) |
 | 2026-11-25 | 22:30 | Tycho Brahe Wore A Metal Nose 👃 #shorts | youtube.com/shorts/141QbZheovg (ciencia/v24, con miniatura) |
-| 2026-11-26 | 17:00 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | youtube.com/shorts/lkiQvLvHIOs (lote/v20, con miniatura) |
-| 2026-11-26 | 20:00 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | youtube.com/shorts/24oAEf1RlmQ (lote/v13, sin miniatura: límite diario → poner media-lote/media/v13.jpg) |
-| 2026-11-26 | 23:00 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | youtube.com/shorts/uBkty7dI6W4 (lote/v14, sin miniatura: límite diario → poner media-lote/media/v14.jpg) |
+| 2026-11-26 | 17:00 | Why He Shipped His Chips Half Empty 🥔 #shorts | youtube.com/shorts/OG0L6GLIfX8 (v28, formato HISTORIA, subtítulos abajo · miniatura PENDIENTE: media-prueba/media/v28.jpg) |
+| 2026-11-26 | 20:00 | Why He Cut Grooves Into His Perfect Tires 🏎️ #shorts | youtube.com/shorts/W0lMAxRJNC4 (v29, formato HISTORIA · miniatura PENDIENTE: media-prueba/media/v29.jpg) |
+| 2026-11-26 | 23:00 | Why He Made His Airplane Windows Round ✈️ #shorts | youtube.com/shorts/s8z1W3rHfis (v30, formato HISTORIA · miniatura PENDIENTE: media-prueba/media/v30.jpg) |
 | 2026-11-27 (jue, hueco 01:00 → 28/11 01:00) | 01:00 | The Leaning Tower Of Pisa Was Saved By A War ⚔️ #shorts | youtube.com/shorts/972RBMjUwZw (v26, PRIMER Short del FORMATO v3 · miniatura PENDIENTE por límite diario: media-prueba/media/v26.jpg) |
 
-**Tarea del 26/11:** los 3 huecos del 26/11 ya están programados (no hagas vídeos nuevos). Solo pon la miniatura a v13 (24oAEf1RlmQ), v14 (uBkty7dI6W4) y v26 (972RBMjUwZw, media-prueba/media/v26.jpg) con el paso 4b «vídeo ya subido» (el 25/11 YouTube pidió la verificación única al llegar al límite diario de miniaturas).
+**Cambio del 26/11 (orden del dueño):** los 3 del lote que iban el 26/11 se quitaron de la programación y están **subidos en PRIVADO sin fecha** (no borrados) para usarlos otro día: v20 Lincoln Secret Service (youtube.com/shorts/lkiQvLvHIOs, con miniatura), v13 Chaplin (youtube.com/shorts/24oAEf1RlmQ, sin miniatura → media-lote/media/v13.jpg), v14 Lincoln 299 wins (youtube.com/shorts/uBkty7dI6W4, sin miniatura → media-lote/media/v14.jpg). Para reutilizarlos: /video/ID/edit → Visibilidad → Programar. En su lugar van 3 vídeos nuevos en formato HISTORIA (v28–v30).
+
+**Miniaturas PENDIENTES (YouTube pidió la verificación única; no se mete ningún código):** v26 (972RBMjUwZw), v28 (OG0L6GLIfX8), v29 (W0lMAxRJNC4), v30 (s8z1W3rHfis) → `media-prueba/media/vNN.jpg`; v13 y v14 → `media-lote/media/vNN.jpg`. Ponlas con el paso 4b «vídeo ya subido» cuando el canal esté verificado.
 
 **Resultado 26/11 (11:45):** los 4 vídeos (lkiQvLvHIOs, 24oAEf1RlmQ, uBkty7dI6W4, 972RBMjUwZw) siguen «Programado» en Studio. Al intentar la miniatura de v13 YouTube volvió a pedir la *Verificación única obligatoria* → cancelada; v13, v14 y v26 siguen SIN miniatura. **Tarea pendiente para el 27/11 (hacer primero):** reintentar las miniaturas de v13 (media-lote/media/v13.jpg), v14 (media-lote/media/v14.jpg) y v26 (media-prueba/media/v26.jpg) con el paso 4b «vídeo ya subido»; si sigue la verificación, cancelar y avisar (solo el dueño puede verificar el canal con el teléfono).
 

@@ -1,0 +1,8 @@
+# v29 — formato «historia»: Why He Cut Grooves Into His Perfect Tires 🏎️ #shorts (26/11/2026)
+
+Historia inventada, física/ciencia real (se dice en la descripción). Subtítulos ABAJO (Y_SUBTITULO 1430).
+
+**Texto de la voz:**
+[intrigued] This guy cut grooves into a perfectly smooth tire on purpose. See, two teams are racing for one giant trophy, and the winner gets every car company in the country. His boss sees him carving lines into the rubber. Kid, you're throwing away grip. And he's right. On a dry road, smooth tires grip better. More rubber touches the road. The other team runs perfectly smooth tires. They win lap after lap. Everybody laughs at the kid. Then, on race day, it rains. Past fifty miles an hour, the smooth tires start floating. A thin sheet of water lifts them off the road. The cars spin like hockey pucks. The kid's grooved tires slice right through. You see, every groove is a tiny gutter. It squeezes the water out from under the tire, so the rubber can still touch the road. Like the drains in a street. [dramatic] In other words, the smooth tires didn't lose grip. They lost the road. That's why the tires on your car have grooves. Because, just like
+
+**Descripción:** Two teams race for one giant trophy. One kid carves grooves into his perfectly smooth tires, and his boss says he's throwing away grip. Then it rains. The story is made up, but the physics is real: on a dry road smooth tires grip better, but on a wet road a thin layer of water can lift a tire off the road (hydroplaning, usually above roughly 45 to 55 mph). Tread grooves channel the water out from under the tire so the rubber keeps touching the road. #didyouknow #cars #physics #science #curiosities #shorts

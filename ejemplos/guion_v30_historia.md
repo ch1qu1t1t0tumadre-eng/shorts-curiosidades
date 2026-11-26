@@ -1,0 +1,8 @@
+# v30 — formato «historia»: Why He Made His Airplane Windows Round ✈️ #shorts (26/11/2026)
+
+Historia inventada, física/ciencia real (se dice en la descripción). Subtítulos ABAJO (Y_SUBTITULO 1430).
+
+**Texto de la voz:**
+[intrigued] This guy made the windows on his airplane round on purpose. See, two companies are building jets, and the airline will buy whichever one looks the most modern. His boss sees the round windows. Kid, it looks like a washing machine. The other company goes square. Big, sharp, beautiful windows. Passengers love them. Then the planes start flying. Every flight, the cabin is pumped full of air, and the whole body stretches like a balloon. Then it lands and shrinks back. Flight one, nothing. Flight one thousand, a hairline crack. Right at a sharp corner. You see, when metal stretches, the force flows around a window like water around a rock. A round window lets it flow. A sharp corner traps it all in one tiny point. Like ripping paper, it always tears at the notch. [dramatic] In other words, the square windows weren't weak. Their corners were. That's why the window next to your airplane seat is round. Because, just like
+
+**Descripción:** Two companies build jets, and the airline will buy the most modern one. One kid makes his windows round, and his boss says they look like a washing machine. Then the planes start flying. The story is made up, but the physics is real: every flight the cabin is pressurized and the body stretches, then shrinks after landing. Stress flows around a window opening and piles up at sharp corners (stress concentration), where fatigue cracks start. Rounded corners spread the stress out, which is why airplane windows are round. #didyouknow #aviation #engineering #physics #curiosities #shorts

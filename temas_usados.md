@@ -31,3 +31,6 @@ Formato: fecha | id | categoría | tema
 
 - 2026-11-25 | v26 | INGENIERÍA / HISTORIA (EN) | PRUEBA estilo Mr omi: la Torre de Pisa salvada por una guerra (pausa de ~100 años, suelo como esponja, torre curvada) — sin programar (rama media-prueba)
 - 2026-11-26 | v27 | INGENIERÍA (EN) | PRUEBA formato historia (inventada, física real): por qué las aceras tienen líneas (juntas de control) — sin programar (rama media-prueba)
+- 2026-11-26 | v28 | COMIDA / CIENCIA (EN) | Formato HISTORIA: por qué las bolsas de patatas van medio vacías (nitrógeno contra el oxígeno + cojín) — 26/11 17:00
+- 2026-11-26 | v29 | COCHES / FÍSICA (EN) | Formato HISTORIA: por qué los neumáticos tienen surcos (aquaplaning) — 26/11 20:00
+- 2026-11-26 | v30 | AVIACIÓN / INGENIERÍA (EN) | Formato HISTORIA: por qué las ventanillas del avión son redondas (concentración de tensiones en esquinas) — 26/11 23:00
