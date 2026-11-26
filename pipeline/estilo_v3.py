@@ -224,3 +224,16 @@ def rain(ctx, T, a=1.0, n=70, seed=3):
         x = (rng.uniform(-200, 1300) + T * 180) % 1400 - 160
         y = (rng.uniform(0, 1920) + T * 1700) % 2000 - 40
         ctx.move_to(x, y); ctx.line_to(x - 12, y + 46); stroke(ctx, (0.75, 0.85, 1.0), 4, 0.6 * a)
+
+
+def gancho(ctx, lineas, T, t_fin=2.8, y=200, size=110):
+    """Texto de GANCHO fijo arriba desde el fotograma 0 (análisis 26/11/2026: los Shorts que más gente
+    retiene enseñan la pregunta/contradicción en grande antes de que hable la voz). lineas = ["WHY", ("ROUND?", WHITE)].
+    Se va con un fundido rápido en t_fin. Los subtítulos van abajo, así que no chocan."""
+    a = 1.0 if T < t_fin else max(0.0, 1 - (T - t_fin) / 0.25)
+    if a <= 0.01:
+        return
+    ctx.push_group()
+    thumb_text(ctx, lineas, y=y, size=size)
+    ctx.pop_group_to_source()
+    ctx.paint_with_alpha(a)

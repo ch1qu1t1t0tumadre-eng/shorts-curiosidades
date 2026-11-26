@@ -12,7 +12,8 @@ FLASH = False          # sin destello blanco entre escenas
 WHOOSH = False         # sin whoosh automático en cada corte (solo en los cortes grandes, vía SFX)
 MUSICA_GAIN = 0.42     # música más presente (antes 0.22)
 FX_GAIN = 0.30         # efectos más presentes (antes 0.14)
-Y_SUBTITULO = 300      # subtítulo arriba, sobre el cielo: nunca tapa la torre
+Y_SUBTITULO = 1430     # subtítulos ABAJO (orden del dueño, 26/11/2026)
+CORTES = [(2.68, 3.58)]  # quitado "And it's real." (relleno; análisis 26/11)
 TAM_SUBTITULO = 135
 
 INKC = (0.13, 0.08, 0.16)       # tinta: casi negro violáceo (nunca negro puro)
@@ -277,14 +278,15 @@ def hero_frame(ctx, lt, T, z0, z1, dur):
     world(ctx, T, P)
     tower(ctx, W / 2 + 10, 1250, T, P, floors=8, tilt=4.0, curve=0.35, s=0.95)
     ctx.restore()
-    ficha(ctx, "LEANING TOWER OF PISA", "ITALY · BUILT 1173–1372", W / 2, 1500, 1.0, "🔔", GOLD)
+    ficha(ctx, "LEANING TOWER OF PISA", "ITALY · BUILT 1173–1372", W / 2, 1640, 1.0, "🔔", GOLD)
 
 
 # ---------------- escenas ----------------
 # 0.00 "The Leaning Tower of Pisa was saved by a war. And it's real."
 def e1(ctx, lt, dur, T):
-    hero_frame(ctx, lt, T, 1.0, 1.10, dur)
-    badge(ctx, "100% REAL", 860, 760, pop(lt, 2.75), size=54, bg=(0.20, 0.62, 0.32))
+    hero_frame(ctx, lt, T, 1.25, 1.05, dur)
+    from estilo_v3 import gancho
+    gancho(ctx, ["SAVED", ("BY A WAR?", WHITE)], T, t_fin=2.6, y=210, size=120)
 
 
 # 3.60 "1173. Pisa starts building a bell tower. Floor one. Perfect. Floor two. Still perfect."
@@ -302,9 +304,9 @@ def e2(ctx, lt, dur, T):
     builder(ctx, 230, 960, 0.75, T, col=(0.85, 0.35, 0.30), k=1, mood="feliz")
     builder(ctx, 860, 970, 0.7, T, col=(0.25, 0.50, 0.85), k=2, mood="feliz")
     ctx.restore()
-    cal(ctx, W / 2, 1400, 0.8 * pop(lt, 0.0), "YEAR", "1173")
-    check(ctx, 330, 1360, 1.1, pop(lt, 7.00 - 3.60), ok=True)
-    check(ctx, 750, 1360, 1.1, pop(lt, 8.33 - 3.60), ok=True)
+    cal(ctx, W / 2, 1220, 0.8 * pop(lt, 0.0), "YEAR", "1173")
+    check(ctx, 330, 1240, 1.1, pop(lt, 7.00 - 3.60), ok=True)
+    check(ctx, 750, 1240, 1.1, pop(lt, 8.33 - 3.60), ok=True)
     label(ctx, "BUILDERS", 230, 840, pop(lt, 2.4), rgb=GOLD, size=36)
 
 
@@ -321,9 +323,9 @@ def e3(ctx, lt, dur, T):
     tower(ctx, W / 2, 1250 + 14 * sink, T, P, floors=fl, tilt=3.2 * sink, s=1.0, bell=False, wobble=0.25 * sink)
     builder(ctx, 200, 980, 0.72, T, col=(0.85, 0.35, 0.30), k=1, mood="triste" if sink > 0.5 else "normal", look=1)
     ctx.restore()
-    arrow(ctx, 660, 1000, 660, 1300, clamp((T - 10.4) / 0.4), rgb=RED, w=16)
-    label(ctx, "SINKING!", 660, 1390, pop(lt, 10.56 - 8.82), rgb=RED, size=52)
-    label(ctx, "FLOOR 3", 260, 1390, pop(lt, 0.3), rgb=GOLD, size=50)
+    arrow(ctx, 660, 1000, 660, 1200, clamp((T - 10.4) / 0.4), rgb=RED, w=16)
+    label(ctx, "SINKING!", 660, 1270, pop(lt, 10.56 - 8.82), rgb=RED, size=52)
+    label(ctx, "FLOOR 3", 260, 1270, pop(lt, 0.3), rgb=GOLD, size=50)
 
 
 # 11.64 "Then Pisa goes to war. Construction stops. For almost a hundred years."
@@ -353,7 +355,7 @@ def e4(ctx, lt, dur, T):
         ctx.restore()
     if T > 14.05:
         yrs = int(counter(T - 14.05, 0, 94, 1.1))
-        label(ctx, f"{yrs} YEARS", W / 2, 1380, 1.0, rgb=GOLD, size=62)
+        label(ctx, f"{yrs} YEARS", W / 2, 1260, 1.0, rgb=GOLD, size=62)
 
 
 # 15.71 "You see, the ground under Pisa is soft clay and sand. Like a wet sponge."  (luz azul)
@@ -371,10 +373,10 @@ def e5(ctx, lt, dur, T):
     # "Like a wet sponge": la tierra se convierte en esponja
     a = ease(clamp((T - 18.80) / 0.45))
     if a > 0:
-        ctx.save(); ctx.translate(W / 2, 1450); ctx.scale(a, a); ctx.translate(-W / 2, -1450)
-        sponge(ctx, W / 2, 1550, 520, 260, T, P)
+        ctx.save(); ctx.translate(W / 2, 1150); ctx.scale(a, a); ctx.translate(-W / 2, -1150)
+        sponge(ctx, W / 2, 1150, 520, 260, T, P)
         ctx.restore()
-        label(ctx, "= WET SPONGE", W / 2, 1180, a, rgb=(1.0, 0.84, 0.30), size=52)
+        label(ctx, "= WET SPONGE", W / 2, 930, a, rgb=(1.0, 0.84, 0.30), size=52)
 
 
 # 19.64 "Put something heavy on a sponge, and it slowly squeezes out the water and gets firmer."
@@ -399,7 +401,7 @@ def e6(ctx, lt, dur, T):
                 circle(ctx, dx, dy, 14 * (1 - ph * 0.4)); fill_ink(ctx, (0.45, 0.72, 1.0), 2.5)
     ctx.restore()
     label(ctx, "HEAVY", 230, 540, pop(lt, 20.05 - 19.64), rgb=RED, size=52)
-    label(ctx, "WATER OUT", W / 2, 1420, pop(lt, 22.49 - 19.64), rgb=(0.45, 0.72, 1.0), size=56)
+    label(ctx, "WATER OUT", W / 2, 1270, pop(lt, 22.49 - 19.64), rgb=(0.45, 0.72, 1.0), size=56)
     label(ctx, "FIRMER", 850, 540, pop(lt, 23.18 - 19.64), rgb=(0.30, 0.78, 0.40), size=52)
 
 
@@ -416,7 +418,7 @@ def e7(ctx, lt, dur, T):
     ctx.restore()
     yr = int(counter(lt, 1178, 1272, 1.8))
     cal(ctx, 210, 560, 0.6, "YEAR", str(yr), col=(0.30, 0.45, 0.85))
-    label(ctx, "FIRM", W / 2, 1400, pop(lt, 25.75 - 23.63), rgb=(0.30, 0.78, 0.40), size=66)
+    label(ctx, "FIRM", W / 2, 1270, pop(lt, 25.75 - 23.63), rgb=(0.30, 0.78, 0.40), size=66)
 
 
 # 26.07 "In other words, if Pisa had kept building, the tower would have fallen."
@@ -497,7 +499,10 @@ def e13(ctx, lt, dur, T):
     hero_frame(ctx, lt, T, 0.92, 1.0, dur)
 
 
-e9.cap_y = 1430  # aquí el cielo lleva las etiquetas: subtítulo sobre el césped
+
+
+for _f in (e9, e10, e11, e12):
+    _f.cap_y = 1640   # base de la torre en y≈1400: el subtítulo va más abajo, sobre el césped
 
 ESCENAS = [(0.0, e1), (3.60, e2), (8.82, e3), (11.64, e4), (15.71, e5), (19.64, e6), (23.63, e7), (26.07, e8),
            (29.45, e9), (33.35, e10), (36.30, e11), (38.98, e12), (41.58, e13)]

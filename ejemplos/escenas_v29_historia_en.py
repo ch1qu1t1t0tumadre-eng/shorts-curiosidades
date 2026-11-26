@@ -9,6 +9,7 @@ FX_GAIN = 0.30
 Y_SUBTITULO = 1430     # subtítulos ABAJO
 TAM_SUBTITULO = 135
 set_azul(33.80, 44.48)  # "You see" -> "They lost the road."
+CORTES = [(6.52, 9.07)]  # quitado "and the winner gets every car company in the country." (relleno 4-9 s)
 
 KID = (0.25, 0.50, 0.85)
 RIV = (0.88, 0.25, 0.25)
@@ -101,10 +102,10 @@ def speedo(ctx, x, y, s, v, a=1.0):
     ctx.restore()
 
 
-def hero(ctx, lt, T, dur, z0, z1):
+def hero(ctx, lt, T, dur, z0, z1, labels=True):
     P = pal(T)
     ctx.save()
-    camera(ctx, keyframes(lt, [(0, z0), (dur, z1)]), W / 2, 820)
+    camera(ctx, keyframes(lt, [(0, z0), (dur, z1)]), W / 2 - 60, 780)
     sky(ctx, T, P)
     ground(ctx, 1150, P, col=P["conc"])
     # neumático gigante a medio tallar
@@ -122,13 +123,28 @@ def hero(ctx, lt, T, dur, z0, z1):
     ctx.restore()
     worker(ctx, 960, 860, 0.75, T, col=KID, k=1, mood="feliz", hat_kind="cap", hat=KID, arm=0.6 + 0.3 * math.sin(T * 8))
     ctx.restore()
-    label(ctx, "SMOOTH", 260, 330, 1.0, rgb=(0.75, 0.75, 0.8), size=46)
-    label(ctx, "GROOVES", 700, 330, 1.0, rgb=YELLOW, size=46)
+    if labels:
+        label(ctx, "SMOOTH", 260, 330, 1.0, rgb=(0.75, 0.75, 0.8), size=46)
+        label(ctx, "GROOVES", 700, 330, 1.0, rgb=YELLOW, size=46)
 
 
 # 0.03 "This guy cut grooves into a perfectly smooth tire on purpose."
 def e1(ctx, lt, dur, T):
-    hero(ctx, lt, T, dur, 1.0, 1.08)
+    if T < 2.13:   # primer plano del neumático a medio tallar, con la cámara entrando
+        hero(ctx, lt, T, dur, 1.35, 1.12, labels=False)
+    else:          # "smooth tire" -> corte seco: lisa ✗ en lluvia contra surcos ✓
+        P = pal(T)
+        ctx.save()
+        camera(ctx, keyframes(lt - 2.13, [(0, 1.08), (dur - 2.13, 1.0)]), W / 2, 800)
+        sky(ctx, T, P, sun=False)
+        ctx.set_source_rgba(0.15, 0.18, 0.28, 0.35); ctx.paint()
+        tread(ctx, 300, 800, 300, 560, grooves=False)
+        tread(ctx, 780, 800, 300, 560, grooves=True)
+        ctx.restore()
+        rain(ctx, T, 1.0, 50, 4)
+        check(ctx, 300, 1200, 0.9, pop(lt, 2.13 + 0.25), ok=False)
+        check(ctx, 780, 1200, 0.9, pop(lt, 2.13 + 0.05), ok=True)
+    gancho(ctx, ["WHY DO TIRES", ("HAVE GROOVES?", WHITE)], T, t_fin=3.0, size=100)
 
 
 # 3.79 "See, two teams are racing for one giant trophy, and the winner gets every car company in the country."
@@ -370,13 +386,13 @@ def e12(ctx, lt, dur, T):
 
 # 46.78 "Because, just like" -> bucle
 def e13(ctx, lt, dur, T):
-    hero(ctx, lt, T, dur, 0.95, 1.0)
+    hero(ctx, lt, T, dur, 1.12, 1.35, labels=False)   # acaba en el mismo plano que el fotograma 0
 
 
 ESCENAS = [(0.0, e1), (3.79, e2), (9.10, e3), (12.87, e4), (17.24, e5), (22.74, e6), (27.49, e7), (31.52, e8),
            (33.80, e9), (39.92, e10), (41.07, e11), (44.63, e12), (46.78, e13)]
 
-SFX = [(0.1, "squish"), (3.75, "whoosh"), (5.7, "ding"), (7.4, "pop"), (9.05, "whoosh"), (10.4, "crack"), (11.4, "drum"),
+SFX = [(0.1, "squish"), (2.13, "thud"), (2.4, "pop"), (3.75, "whoosh"), (5.7, "ding"), (7.4, "pop"), (9.05, "whoosh"), (10.4, "crack"), (11.4, "drum"),
        (12.85, "whoosh"), (14.7, "pop"), (15.9, "ding"), (17.2, "whoosh"), (19.9, "bell"), (21.2, "pop"),
        (22.7, "whoosh"), (23.96, "thud"), (24.7, "rise"), (27.0, "squish"), (27.45, "whoosh"), (28.6, "rise"),
        (29.7, "crack"), (30.76, "thud"), (31.5, "whoosh"), (32.96, "crack"), (33.75, "whoosh"), (35.54, "pop"),

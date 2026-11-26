@@ -9,6 +9,7 @@ FX_GAIN = 0.30
 Y_SUBTITULO = 1430     # subtítulos ABAJO
 TAM_SUBTITULO = 135
 set_azul(27.06, 41.13)  # "You see" -> "Their corners were."
+CORTES = [(4.96, 7.52)]  # quitado "and the airline will buy whichever one looks the most modern." (relleno en el tramo 4-9 s)
 
 KID = (0.25, 0.50, 0.85)
 RIV = (0.88, 0.25, 0.25)
@@ -97,7 +98,29 @@ def hero(ctx, lt, T, dur, z0, z1):
 
 # 0.03 "This guy made the windows on his airplane round on purpose."
 def e1(ctx, lt, dur, T):
-    hero(ctx, lt, T, dur, 1.0, 1.08)
+    if T < 1.95:   # 0-1.95: primer plano de la ventanilla redonda, entrando con la cámara (nada estático)
+        P = pal(T)
+        ctx.save()
+        camera(ctx, keyframes(lt, [(0, 1.35), (1.95, 1.15)]), 470, 760)
+        sky(ctx, T, P)
+        ground(ctx, 1150, P, col=P["conc"])
+        rrect(ctx, 120, 420, 700, 640, 40); fill_ink(ctx, BODY, 6)
+        window(ctx, 470, 740, 300, 400, rnd=True)
+        ctx.restore()
+    else:          # "round" -> corte seco: redonda ✓ contra cuadrada con grieta ✗
+        P = pal(T)
+        ctx.save()
+        camera(ctx, keyframes(lt - 1.95, [(0, 1.08), (dur - 1.95, 1.0)]), W / 2, 800)
+        sky(ctx, T, P)
+        rrect(ctx, 60, 470, W - 120, 640, 40); fill_ink(ctx, BODY, 6)
+        window(ctx, 300, 790, 250, 340, rnd=True)
+        window(ctx, 780, 790, 270, 330, rnd=False)
+        crack_path(ctx, zig(915, 625, 1010, 520, 4, 10, 2), 6)
+        hot(ctx, 915, 625, 45, T)
+        ctx.restore()
+        check(ctx, 300, 1230, 0.9, pop(lt, 1.95 + 0.05), ok=True)
+        check(ctx, 780, 1230, 0.9, pop(lt, 1.95 + 0.25), ok=False)
+    gancho(ctx, ["WHY ARE PLANE", ("WINDOWS ROUND?", WHITE)], T, t_fin=2.9, size=100)
 
 
 # 3.21 "See, two companies are building jets, and the airline will buy whichever one looks the most modern."
@@ -344,13 +367,21 @@ def e11(ctx, lt, dur, T):
 
 # 43.72 "Because, just like" -> bucle
 def e12(ctx, lt, dur, T):
-    hero(ctx, lt, T, dur, 0.95, 1.0)
+    # termina en el mismo plano que el fotograma 0 (bucle)
+    P = pal(T)
+    ctx.save()
+    camera(ctx, keyframes(lt, [(0, 1.0), (dur, 1.35)]), 470, 760)
+    sky(ctx, T, P)
+    ground(ctx, 1150, P, col=P["conc"])
+    rrect(ctx, 120, 420, 700, 640, 40); fill_ink(ctx, BODY, 6)
+    window(ctx, 470, 740, 300, 400, rnd=True)
+    ctx.restore()
 
 
 ESCENAS = [(0.0, e1), (3.21, e2), (7.56, e3), (11.16, e4), (15.87, e5), (22.86, e6), (27.06, e7), (31.44, e8),
            (35.62, e9), (38.08, e10), (41.25, e11), (43.72, e12)]
 
-SFX = [(0.1, "pop"), (3.2, "whoosh"), (5.2, "ding"), (7.0, "pop"), (7.5, "whoosh"), (9.4, "drum"), (10.5, "squish"),
+SFX = [(0.1, "pop"), (1.95, "thud"), (2.3, "crack"), (3.2, "whoosh"), (5.2, "ding"), (7.0, "pop"), (7.5, "whoosh"), (9.4, "drum"), (10.5, "squish"),
        (11.1, "whoosh"), (12.3, "pop"), (13.2, "pop"), (14.7, "ding"), (15.8, "whoosh"), (18.3, "rise"),
        (20.6, "squish"), (21.7, "squish"), (22.8, "whoosh"), (23.4, "ding"), (23.84, "tick"), (24.0, "tick"),
        (24.2, "tick"), (25.03, "crack"), (26.5, "thud"), (27.0, "whoosh"), (28.8, "rise"), (30.3, "pop"),

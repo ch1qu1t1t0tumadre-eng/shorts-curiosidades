@@ -607,7 +607,8 @@ def caption_y(mod, T):
     3) 1060 (centro, estilo antiguo).
     Regla (25/11/2026): el subtítulo NUNCA tapa lo esencial: va en una franja libre (cielo o suelo vacío)."""
     esc = sorted(getattr(mod, "ESCENAS", []), key=lambda e: e[0])
-    k = max([j for j, e in enumerate(esc) if e[0] <= T] or [0]) if esc else None
+    To = _old_t(mod, T) if getattr(mod, "CORTES", None) else T   # las escenas van en tiempo original
+    k = max([j for j, e in enumerate(esc) if e[0] <= To] or [0]) if esc else None
     if k is not None and hasattr(esc[k][1], "cap_y"):
         return esc[k][1].cap_y
     y = getattr(mod, "Y_SUBTITULO", 1060)
@@ -731,6 +732,27 @@ def thumb_vignette(ctx, a=0.55):
     ctx.paint()
 
 
+# ---------- recortes de voz (CORTES) ----------
+def _old_t(mod, T):
+    """CORTES = [(t0, t1), ...] en tiempo ORIGINAL: el audio ya está recortado (pipeline/recortar.py);
+    las escenas siguen escritas en tiempo original y aquí se traduce tiempo nuevo -> original."""
+    for a, b in sorted(getattr(mod, "CORTES", [])):
+        if T >= a:
+            T += b - a
+    return T
+
+
+def _new_t(mod, To):
+    """Tiempo original -> nuevo (None si cae dentro de un corte)."""
+    d = 0.0
+    for a, b in sorted(getattr(mod, "CORTES", [])):
+        if a <= To < b:
+            return None
+        if To >= b:
+            d += b - a
+    return To - d
+
+
 # ---------- render ----------
 def render(workdir):
     spec_mod = importlib.util.spec_from_file_location("escenas", os.path.join(workdir, "escenas.py"))
@@ -749,8 +771,11 @@ def render(workdir):
     sys.path.insert(0, HERE)
     import sonido
     eventos = [(e[0] - 0.12, "whoosh") for e in escenas[1:]] + [x for x in getattr(mod, "SFX", []) if x[1] in sonido.SFX]
+    if getattr(mod, "CORTES", None):
+        eventos = [(_new_t(mod, t), n) for t, n in eventos if _new_t(mod, t) is not None]
     if not getattr(mod, "WHOOSH", True):
-        eventos = [x for x in eventos if x[1] != "whoosh" or x in getattr(mod, "SFX", [])]
+        sfx_new = [(_new_t(mod, t), n) for t, n in getattr(mod, "SFX", [])]
+        eventos = [x for x in eventos if x[1] != "whoosh" or x in sfx_new]
     fx_path = os.path.join(workdir, "fx.wav")
     sonido.mezcla(dur, eventos, fx_path, seed=abs(hash(os.path.basename(os.path.abspath(workdir)))) % 1000,
                   fx_gain=getattr(mod, "FX_GAIN", 0.14), mus_gain=getattr(mod, "MUSICA_GAIN", 0.22))
@@ -772,10 +797,11 @@ def render(workdir):
             "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-t", f"{nframes / FPS:.3f}", "-movflags", "+faststart", out]
     ff = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     for i in range(nframes):
-        T = i / FPS
+        Tn = i / FPS
+        T = _old_t(mod, Tn)
         k = max([j for j, e in enumerate(escenas) if e[0] <= T] or [0])
         t0, fn = escenas[k][0], escenas[k][1]
-        t1 = escenas[k + 1][0] if k + 1 < len(escenas) else dur
+        t1 = escenas[k + 1][0] if k + 1 < len(escenas) else _old_t(mod, dur)
         ctx = cairo.Context(surf)
         ctx.set_antialias(cairo.ANTIALIAS_GOOD)
         ctx.scale(SCALE, SCALE)
@@ -786,9 +812,9 @@ def render(workdir):
         if k > 0 and T - t0 < 0.12 and getattr(mod, "FLASH", True):
             ctx.set_source_rgba(1, 1, 1, 0.18 * (1 - (T - t0) / 0.12))
             ctx.paint()
-        ch = next((c for c in chunks if c["start"] <= T < c["end"]), None)
+        ch = next((c for c in chunks if c["start"] <= Tn < c["end"]), None)
         if ch:
-            _captions(ctx, mod, ch, T)
+            _captions(ctx, mod, ch, Tn)
         surf.flush()
         ff.stdin.write(bytes(surf.get_data()))
         if i == 0:
@@ -810,7 +836,8 @@ def preview(workdir, times):
     escenas = sorted(mod.ESCENAS, key=lambda e: e[0])
     chunks = build_chunks(words, getattr(mod, "PALABRAS_POR_SUBTITULO", 1 if getattr(mod, "ESTILO_SUBTITULO", "grande") == "grande" else 2))
     paths = []
-    for T in times:
+    for Tn in times:
+        T = _old_t(mod, Tn)
         k = max([j for j, e in enumerate(escenas) if e[0] <= T] or [0])
         t1 = escenas[k + 1][0] if k + 1 < len(escenas) else T + 5
         surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
@@ -818,10 +845,10 @@ def preview(workdir, times):
         ctx.save()
         escenas[k][1](ctx, T - escenas[k][0], t1 - escenas[k][0], T)
         ctx.restore()
-        ch = next((c for c in chunks if c["start"] <= T < c["end"]), None)
+        ch = next((c for c in chunks if c["start"] <= Tn < c["end"]), None)
         if ch:
-            _captions(ctx, mod, ch, T)
-        p = os.path.join(workdir, f"prev_{T:.1f}.png")
+            _captions(ctx, mod, ch, Tn)
+        p = os.path.join(workdir, f"prev_{Tn:.1f}.png")
         surf.write_to_png(p)
         paths.append(p)
     return paths
