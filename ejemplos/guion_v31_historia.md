@@ -1,0 +1,8 @@
+# v31 — formato «historia»: Why He Hung His Power Lines Loose ⚡ #shorts (27/11/2026)
+
+Historia inventada, física real. Fuentes: electricaltechnology.org «Why are overhead power lines loose on utility poles?»; howeverythingworks.com «Power lines are designed to sag». Apertura nueva (gancho fijo + corte a 1,6 s + último plano = fotograma 0). Voz: 819 créditos.
+
+**Texto de la voz:**
+[intrigued] This guy hung his power lines loose on purpose. See, two crews are wiring the same town. His boss sees the cables drooping between the poles. Kid, it looks lazy. The other crew pulls every wire tight. Straight as a ruler. The whole town loves it. Then winter comes. And cold metal shrinks. Every night, the tight wires get a little shorter, pulling harder and harder on the poles. Ten below, the poles start to lean. Twenty below, snap. The whole street goes dark. The kid's wires just lose a little droop. You see, a sagging wire has room to shrink. A tight wire doesn't. Like a rubber band already stretched all the way, one more pull and it breaks. [dramatic] In other words, the tight wires weren't strong. They had nowhere to go. That's why the power lines on your street hang loose. Because, just like
+
+**Descripción:** Two crews wire the same town. One kid leaves his power lines drooping, and his boss says it looks lazy. Then winter comes. The story is made up, but the physics is real: metal shrinks in the cold, so overhead power lines are hung with some sag. A line pulled tight in summer has no slack left, and when it contracts in the cold, the tension can rise enough to damage the line or the poles. #didyouknow #engineering #physics #science #curiosities #shorts

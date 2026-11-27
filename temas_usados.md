@@ -34,3 +34,5 @@ Formato: fecha | id | categoría | tema
 - 2026-11-26 | v28 | COMIDA / CIENCIA (EN) | Formato HISTORIA: por qué las bolsas de patatas van medio vacías (nitrógeno contra el oxígeno + cojín) — 26/11 17:00
 - 2026-11-26 | v29 | COCHES / FÍSICA (EN) | Formato HISTORIA: por qué los neumáticos tienen surcos (aquaplaning) — 26/11 20:00
 - 2026-11-26 | v30 | AVIACIÓN / INGENIERÍA (EN) | Formato HISTORIA: por qué las ventanillas del avión son redondas (concentración de tensiones en esquinas) — 26/11 23:00
+- 2026-11-27 | v27 | INGENIERÍA (EN) | Aceras con líneas (juntas de control), rehecho con apertura nueva — 27/11 20:00 rwYaNaUTb0E
+- 2026-11-27 | v31 | INGENIERÍA / FÍSICA (EN) | Formato HISTORIA: por qué los cables eléctricos cuelgan flojos (el metal encoge con el frío) — 27/11 23:00 3zbpHI190KQ

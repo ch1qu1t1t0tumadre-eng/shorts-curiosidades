@@ -7,8 +7,9 @@ FLASH = False
 WHOOSH = False
 MUSICA_GAIN = 0.42
 FX_GAIN = 0.30
-Y_SUBTITULO = 300
+Y_SUBTITULO = 1430     # subtítulos ABAJO (orden del dueño, 26/11/2026)
 TAM_SUBTITULO = 135
+CORTES = [(5.44, 7.98)]  # quitado "and the city will hire whoever builds the best sidewalk." (relleno 4-9 s)
 
 INKC = (0.13, 0.08, 0.16)
 T_AZUL0, T_AZUL1 = 33.10, 41.60   # "You see" -> "hid them."
@@ -320,13 +321,25 @@ def hero(ctx, lt, T, dur, z0, z1):
     worker(ctx, W / 2 - ww / 2 + ww * p + 50, yy - 265, 0.85, T, k=1, mood="feliz", arm=0.6)
     blade(ctx, W / 2 - ww / 2 + ww * p + 10, yy - 2, 0.9, rot=0.3)
     ctx.restore()
-    label(ctx, "ON PURPOSE?", W / 2, 1460, 1.0, rgb=RED, size=56)
 
 
 # ---------------- escenas ----------------
 # 0.00 "This guy cut lines into his brand-new sidewalk on purpose."
 def e1(ctx, lt, dur, T):
-    hero(ctx, lt, T, dur, 1.5, 1.62)
+    from estilo_v3 import gancho
+    if T < 2.10:
+        hero(ctx, lt, T, dur, 1.75, 1.6)
+    else:   # "sidewalk" -> corte seco: lisa y rota ✗ contra con líneas ✓
+        P = pal(T)
+        ctx.save()
+        camera(ctx, keyframes(lt - 2.1, [(0, 1.08), (dur - 2.1, 1.0)]), W / 2, 800)
+        sky(ctx, T, P)
+        ctx.restore()
+        slab_top(ctx, 290, 820, 360, 620, P, joints=0, crack=1.0, kind="random", seed=3, T=T)
+        slab_top(ctx, 790, 820, 360, 620, P, joints=3, crack=0.0, T=T)
+        check(ctx, 290, 1230, 0.9, pop(lt, 2.15), ok=False)
+        check(ctx, 790, 1230, 0.9, pop(lt, 2.35), ok=True)
+    gancho(ctx, ["WHY DO SIDEWALKS", ("HAVE LINES?", WHITE)], T, t_fin=3.2, size=100)
 
 
 # 3.44 "See, two crews are paving the same street, and the city will hire whoever builds the best sidewalk."
@@ -372,7 +385,7 @@ def e3(ctx, lt, dur, T):
     ctx.restore()
     label(ctx, "BOSS", 200, 600, pop(lt, 0.3), rgb=GOLD, size=42)
     label(ctx, "THE KID", 760, 640, pop(lt, 0.6), rgb=(0.35, 0.60, 1.0), size=42)
-    bubble(ctx, "KID, YOU'RE RUINING IT!", W / 2, 1480, pop(lt, 10.78 - 8.02), size=46)
+    bubble(ctx, "KID, YOU'RE RUINING IT!", W / 2, 300, pop(lt, 10.78 - 8.02), size=46)
 
 
 # 11.92 "But the kid keeps going. A line every ten feet, one inch deep."
@@ -394,7 +407,7 @@ def e4(ctx, lt, dur, T):
         a = pop(lt, 14.66 - 11.92)
         label(ctx, "1 IN DEEP", 760, 1240, a, rgb=RED, size=50)
         arrow(ctx, 740, 1180, 690, 900, a, rgb=RED, w=10)
-    label(ctx, "CONCRETE", W / 2, 1460, pop(lt, 0.4), rgb=STONE, size=48)
+    label(ctx, "CONCRETE", W / 2, 300, pop(lt, 0.4), rgb=STONE, size=48)
 
 
 # 15.13 "The other crew pours theirs perfectly smooth. Like a mirror. Everybody loves the smooth one."
@@ -412,7 +425,7 @@ def e5(ctx, lt, dur, T):
     worker(ctx, 930, 1010, 0.7, T, col=(0.85, 0.25, 0.25), k=2, hat=(0.95, 0.95, 0.95), mood="feliz")
     ctx.restore()
     label(ctx, "RIVAL CREW", 880, 640, pop(lt, 0.2), rgb=RED, size=40)
-    label(ctx, "PERFECTLY SMOOTH", W / 2, 1460, pop(lt, 17.10 - 15.13), rgb=YELLOW, size=50)
+    label(ctx, "PERFECTLY SMOOTH", W / 2, 300, pop(lt, 17.10 - 15.13), rgb=YELLOW, size=50)
 
 
 # 19.82 "Then the concrete dries, and drying concrete shrinks."
@@ -454,7 +467,7 @@ def e7(ctx, lt, dur, T):
     ctx.restore()
     label(ctx, "RIVAL'S PERFECT SIDEWALK", W / 2, 530, 1.0, rgb=RED, size=40)
     step = "WEEK 1" if T < 23.80 else ("MONTH 1" if T < 25.09 else "WINTER")
-    cal(ctx, W / 2, 1420, 0.7, "TIME", step, col=(0.30, 0.45, 0.85) if step == "WINTER" else RED)
+    cal(ctx, W / 2, 300, 0.7, "TIME", step, col=(0.30, 0.45, 0.85) if step == "WINTER" else RED)
 
 
 # 28.01 "His boss runs to check theirs. Cracks too. But every single crack is hiding at the bottom of a line."
@@ -470,7 +483,7 @@ def e8(ctx, lt, dur, T):
     ctx.restore()
     label(ctx, "THE KID'S SIDEWALK", W / 2 + 40, 530, 1.0, rgb=(0.35, 0.60, 1.0), size=40)
     if T > 31.5:
-        check(ctx, W / 2, 1420, 1.2, pop(lt, 31.5 - 28.01), ok=True)
+        check(ctx, W / 2, 300, 1.2, pop(lt, 31.5 - 28.01), ok=True)
         label(ctx, "ONLY IN THE LINES", W / 2, 1300, pop(lt, 31.7 - 28.01), rgb=(0.30, 0.78, 0.40), size=44)
 
 
@@ -486,7 +499,7 @@ def e9(ctx, lt, dur, T):
     ctx.restore()
     label(ctx, "NO LINE: ANYWHERE", W / 2, 520, pop(lt, 0.4), rgb=RED, size=42)
     check(ctx, 960, 700, 0.8, pop(lt, 34.5 - 33.10), ok=False)
-    label(ctx, "LINE: RIGHT HERE", W / 2, 1420, pop(lt, 34.93 - 33.10), rgb=(0.30, 0.78, 0.40), size=42)
+    label(ctx, "LINE: RIGHT HERE", W / 2, 300, pop(lt, 34.93 - 33.10), rgb=(0.30, 0.78, 0.40), size=42)
     check(ctx, 960, 1180, 0.8, pop(lt, 35.4 - 33.10), ok=True)
     if T > 35.3:
         arrow(ctx, W / 2 + 200, 1330, W / 2 + 20, 1110, clamp((T - 35.3) / 0.4), rgb=YELLOW, w=12)
@@ -501,7 +514,7 @@ def e10(ctx, lt, dur, T):
     spotlight(ctx, W / 2, 900, 500, 0.3, (1, 0.9, 0.7))
     choco(ctx, W / 2, 900, 1.3, T, snap=ease_back(clamp((T - 37.6) / 0.35)))
     ctx.restore()
-    label(ctx, "SNAPS IN THE GROOVE", W / 2, 1460, pop(lt, 37.7 - 36.0), rgb=YELLOW, size=46)
+    label(ctx, "SNAPS IN THE GROOVE", W / 2, 300, pop(lt, 37.7 - 36.0), rgb=YELLOW, size=46)
 
 
 # 38.90 "In other words, he didn't stop the cracks. He hid them."
@@ -514,7 +527,7 @@ def e11(ctx, lt, dur, T):
     section(ctx, W / 2, 900, 900, 380, P, grooves=(0.5,), crack_at=0.5, crack=1.0, seed=13)
     ctx.restore()
     spotlight(ctx, W / 2, 760, 160, 0.5, (1, 0.95, 0.6))
-    stamp(ctx, "HIDDEN", W / 2, 1400, (T - 41.2) / 0.25, col=(0.30, 0.78, 0.40), size=110)
+    stamp(ctx, "HIDDEN", W / 2, 300, (T - 41.2) / 0.25, col=(0.30, 0.78, 0.40), size=110)
 
 
 # 41.70 "That's why the sidewalk outside your house has lines."
@@ -526,20 +539,20 @@ def e12(ctx, lt, dur, T):
     house(ctx, 760, 700, 0.8, P, (0.95, 0.82, 0.48))
     persp_walk(ctx, W / 2 - 120, P, seed=14)
     ctx.restore()
-    label(ctx, "YOUR SIDEWALK", 300, 1460, pop(lt, 42.19 - 41.70), rgb=YELLOW, size=50)
+    label(ctx, "YOUR SIDEWALK", 300, 300, pop(lt, 42.19 - 41.70), rgb=YELLOW, size=50)
     for k, (ax, ay) in enumerate(((560, 1330), (620, 1180))):
         arrow(ctx, ax + 180, ay + 80, ax, ay, clamp((T - 43.4 - 0.15 * k) / 0.35), rgb=YELLOW, w=10)
 
 
 # 44.44 "Because, just like"  -> bucle: "This guy cut lines into his brand-new sidewalk on purpose."
 def e13(ctx, lt, dur, T):
-    hero(ctx, lt, T, dur, 1.4, 1.5)
+    hero(ctx, lt, T, dur, 1.55, 1.75)   # acaba en el encuadre del fotograma 0 (bucle)
 
 
 ESCENAS = [(0.0, e1), (3.44, e2), (8.02, e3), (11.92, e4), (15.13, e5), (19.82, e6), (22.61, e7), (28.01, e8),
            (33.10, e9), (36.00, e10), (38.90, e11), (41.70, e12), (44.44, e13)]
 
-SFX = [(0.1, "tick"), (3.40, "whoosh"), (5.74, "pop"), (7.30, "ding"), (8.9, "tick"), (10.75, "drum"),
+SFX = [(0.1, "tick"), (2.1, "thud"), (2.3, "crack"), (3.40, "whoosh"), (5.74, "pop"), (7.30, "ding"), (8.9, "tick"), (10.75, "drum"),
        (12.3, "tick"), (12.9, "tick"), (13.5, "tick"), (13.95, "pop"), (14.66, "pop"), (15.1, "whoosh"),
        (17.4, "ding"), (18.8, "pop"), (19.8, "whoosh"), (22.0, "squish"), (23.35, "crack"), (24.5, "crack"),
        (26.3, "crack"), (27.5, "thud"), (28.0, "whoosh"), (29.5, "crack"), (31.6, "ding"), (33.05, "whoosh"),

@@ -30,11 +30,13 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-26 | 17:00 | Why He Shipped His Chips Half Empty 🥔 #shorts | youtube.com/shorts/OG0L6GLIfX8 (v28, formato HISTORIA, subtítulos abajo · miniatura puesta a las 19:45 · 64 % se quedaron, 595 vistas en 2 h) |
 | 2026-11-26 | 20:00 | Why He Cut Grooves Into His Perfect Tires 🏎️ #shorts | youtube.com/shorts/SknGOsyv4Hw (v29 con apertura nueva: gancho + corte a 2 s + relleno quitado; con miniatura. La versión anterior W0lMAxRJNC4 queda en privado) |
 | 2026-11-26 | 23:00 | Why He Made His Airplane Windows Round ✈️ #shorts | youtube.com/shorts/EusHMH_q1Cs (v30 con apertura nueva; con miniatura. La versión anterior s8z1W3rHfis queda en privado) |
+| 2026-11-27 | 20:00 | Why He Cut Lines Into His Brand-New Sidewalk 🚧 #shorts | youtube.com/shorts/rwYaNaUTb0E (v27 con apertura nueva y subtítulos abajo · miniatura PENDIENTE: media-prueba/media/v27.jpg) |
+| 2026-11-27 | 23:00 | Why He Hung His Power Lines Loose ⚡ #shorts | youtube.com/shorts/3zbpHI190KQ (v31 nuevo, formato historia · miniatura PENDIENTE: media-prueba/media/v31.jpg) |
 | 2026-11-27 (jue, hueco 01:00 → 28/11 01:00) | 01:00 | The Leaning Tower Of Pisa Was Saved By A War ⚔️ #shorts | youtube.com/shorts/YScXMoBdEZI (v26 rehecho el 26/11: subtítulos abajo, gancho "SAVED BY A WAR?", sin "And it's real."; con miniatura. La versión anterior 972RBMjUwZw queda en privado) |
 
 **Cambio del 26/11 (orden del dueño):** los 3 del lote que iban el 26/11 se quitaron de la programación y están **subidos en PRIVADO sin fecha** (no borrados) para usarlos otro día: v20 Lincoln Secret Service (youtube.com/shorts/lkiQvLvHIOs, con miniatura), v13 Chaplin (youtube.com/shorts/24oAEf1RlmQ, sin miniatura → media-lote/media/v13.jpg), v14 Lincoln 299 wins (youtube.com/shorts/uBkty7dI6W4, sin miniatura → media-lote/media/v14.jpg). Para reutilizarlos: /video/ID/edit → Visibilidad → Programar. En su lugar van 3 vídeos nuevos en formato HISTORIA (v28–v30).
 
-**Miniaturas PENDIENTES:** solo v13 (24oAEf1RlmQ) y v14 (uBkty7dI6W4), que están en privado sin fecha → `media-lote/media/vNN.jpg` cuando se usen. El 26/11 a las 19:45 YouTube volvió a aceptar miniaturas.
+**Miniaturas PENDIENTES:** v27 (rwYaNaUTb0E) y v31 (3zbpHI190KQ) → `media-prueba/media/vNN.jpg` (27/11: YouTube volvió a pedir la verificación única); y v13 (24oAEf1RlmQ) y v14 (uBkty7dI6W4), que están en privado sin fecha → `media-lote/media/vNN.jpg` cuando se usen. El 26/11 a las 19:45 YouTube volvió a aceptar miniaturas.
 
 **Versiones antiguas en privado (26/11, no borradas):** W0lMAxRJNC4 (v29), s8z1W3rHfis (v30), 972RBMjUwZw (v26). Se sustituyeron por versiones con la apertura nueva del análisis de retención.
 
