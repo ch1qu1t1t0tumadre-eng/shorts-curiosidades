@@ -39,6 +39,8 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 | 2026-11-28 (sáb) | 20:00 | Why He Hung A Giant Ball Inside His Skyscraper 🏙️ #shorts | youtube.com/shorts/b-YFFZyhGIU (v33, formato historia, con miniatura) |
 | 2026-11-28 (sáb) | 23:00 | Why He Made His Manhole Covers Round 🕳️ #shorts | youtube.com/shorts/BnrbuRRQn9I (v32, formato historia, con miniatura) |
 
+**Resultado 28/11 (13:30):** los 2 huecos del sábado ya estaban ocupados (v33 20:00, v32 23:00), ambos siguen «Programado» en Studio. Sin vídeo nuevo ni créditos gastados (ElevenLabs: 101.255 restantes). Ningún Short de pendientes.md tiene aún ≥3 días (v28 los cumple el 29/11 a las 17:00): análisis aplazado. **Huecos libres próximos: domingo 29/11 20:00 y 23:00.**
+
 **Cambio del 26/11 (orden del dueño):** los 3 del lote que iban el 26/11 se quitaron de la programación y están **subidos en PRIVADO sin fecha** (no borrados) para usarlos otro día: v20 Lincoln Secret Service (youtube.com/shorts/lkiQvLvHIOs, con miniatura), v13 Chaplin (youtube.com/shorts/24oAEf1RlmQ, sin miniatura → media-lote/media/v13.jpg), v14 Lincoln 299 wins (youtube.com/shorts/uBkty7dI6W4, sin miniatura → media-lote/media/v14.jpg). Para reutilizarlos: /video/ID/edit → Visibilidad → Programar. En su lugar van 3 vídeos nuevos en formato HISTORIA (v28–v30).
 
 **Miniaturas PENDIENTES:** v27 y v31 ya tienen miniatura (puestas el 27/11 a las 19:20, sin verificación). Quedan v13 (24oAEf1RlmQ) y v14 (uBkty7dI6W4), que están en privado sin fecha → `media-lote/media/vNN.jpg` cuando se usen. El 26/11 a las 19:45 YouTube volvió a aceptar miniaturas.
