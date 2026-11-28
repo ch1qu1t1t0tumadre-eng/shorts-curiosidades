@@ -35,6 +35,14 @@ Actúa como un creador de vídeos cortos de primer nivel, experto en todos los t
 6. Cada Short nuevo que subas se añade a `analisis/pendientes.md` con su carpeta, ID y fecha.
 
 **LECCIONES DE LOS VÍDEOS (se añaden aquí, la más reciente arriba):**
+- 28/11/2026 — Pisa (01:00) vs aceras (20:00) y cables (23:00), datos de Studio a las 12:20 del 28/11:
+  - Aceras: **74,1 % se quedaron, 3,3 K vistas** (récord del canal, aún sumando ~580/h). Cables: 59,7 %, 1,3 K. **Pisa: 35,5 % se quedaron, 299 vistas** (64,5 % deslizó).
+  - El fallo de Pisa NO es la hora: con dos de cada tres deslizando, YouTube deja de enseñarlo a cualquier hora (seguía saliendo en el feed: 37 vistas en la última hora). Es el arranque y el tema:
+    1. Fotograma 0 = postal de un monumento que todo el mundo ya conoce + ficha informativa abajo → parece un documental; nadie hace nada raro. Las aceras abren con una PERSONA HACIENDO ALGO "MAL" A PROPÓSITO (el chico cortando el cemento) → curiosidad inmediata.
+    2. A los 3 s Pisa salta a un calendario "1173" y a "Floor one. Perfect. Floor two…": clase de historia justo en el tramo 3–9 s donde más gente se va. Las aceras a los 3 s ya tienen dos cuadrillas rivales y a los 7 s el jefe dice "Kid, you're ruining it" (conflicto antes del segundo 8).
+    3. Tema: los monumentos/personajes históricos del canal se quedan en 35–46 % (Pisa 35, Eiffel 38, Hope 38, Nobel 40, Einstein 46). Los objetos cotidianos con un "¿por qué?" que todo el mundo se ha preguntado están en 59–74 %.
+    4. Cables (60 %) vs aceras (74 %): mismo formato, pero en los cables el chico está quieto en el fotograma 0 y el cable flojo casi no se ve. **La acción del protagonista en el fotograma 0 marca la diferencia.**
+  - REGLAS desde hoy: (a) nada de monumentos, fechas ni personajes históricos como tema principal; solo objetos cotidianos con un "¿por qué?" que la gente se ha preguntado alguna vez; (b) fotograma 0 = el chico haciendo la cosa rara, grande y en movimiento (rodando, cortando, colgando…), con el objeto ocupando media pantalla; (c) el rival/jefe y el primer conflicto antes del segundo 8; (d) ni un año ni un calendario en los primeros 10 s; (e) la franja de 01:00 se mantiene de lunes a viernes: se volverá a mirar cuando tenga un vídeo del formato historia (Pisa no sirve para medir la hora).
 - 27/11/2026 (20 Shorts, sin curvas aún de v26–v31): se mantienen las reglas de RETENCIÓN del 26/11. Primeros datos del formato historia: patatas 62 % / 1,0 K, neumáticos (apertura nueva) 59 % / 1,3 K, ventanillas (apertura nueva) 64 % / 990 en 1 día: el formato historia arranca mejor que los de famosos del 25/11 (46–52 %).
 
 **RETENCIÓN — análisis del 26/11/2026 (orden del dueño: "mira qué falla y corrígelo"). Datos de Studio de los 20 Shorts publicados:**

@@ -36,3 +36,5 @@ Formato: fecha | id | categoría | tema
 - 2026-11-26 | v30 | AVIACIÓN / INGENIERÍA (EN) | Formato HISTORIA: por qué las ventanillas del avión son redondas (concentración de tensiones en esquinas) — 26/11 23:00
 - 2026-11-27 | v27 | INGENIERÍA (EN) | Aceras con líneas (juntas de control), rehecho con apertura nueva — 27/11 20:00 rwYaNaUTb0E
 - 2026-11-27 | v31 | INGENIERÍA / FÍSICA (EN) | Formato HISTORIA: por qué los cables eléctricos cuelgan flojos (el metal encoge con el frío) — 27/11 23:00 3zbpHI190KQ
+- 2026-11-28 | v33 | INGENIERÍA / FÍSICA (EN) | Formato HISTORIA: la bola gigante dentro de los rascacielos (amortiguador de masa) — 28/11 20:00 b-YFFZyhGIU
+- 2026-11-28 | v32 | INGENIERÍA / GEOMETRÍA (EN) | Formato HISTORIA: por qué las tapas de alcantarilla son redondas — 28/11 23:00 BnrbuRRQn9I

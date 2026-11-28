@@ -11,3 +11,5 @@ Los vídeos sin carpeta work/ (lote, ciencia) se analizan igual con su escenas d
 | work/v27 | rwYaNaUTb0E | 27/11 20:00 |
 | work/v31 | 3zbpHI190KQ | 27/11 23:00 |
 | work/v26 | YScXMoBdEZI | 28/11 01:00 |
+| work/v33 | b-YFFZyhGIU | 28/11 20:00 |
+| work/v32 | BnrbuRRQn9I | 28/11 23:00 |
