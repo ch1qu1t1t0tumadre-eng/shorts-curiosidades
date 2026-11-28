@@ -36,6 +36,9 @@ Los vídeos preparados por adelantado se suben ya programados y se apuntan aquí
 
 **Resultado 27/11 (19:20):** los 3 huecos del viernes 27/11 ya estaban ocupados (v27 20:00, v31 23:00, v26 Pisa 28/11 01:00); no se hizo vídeo nuevo ni se gastaron créditos. Los 3 siguen «Programado» en Studio. **Huecos libres próximos: sábado 28/11 20:00 y 23:00.**
 
+| 2026-11-28 (sáb) | 13:45 | Abraham Lincoln: 299 Wins, 1 Loss 🤼 #shorts | youtube.com/shorts/uBkty7dI6W4 (lote/v14, estaba en privado; publicado por orden del dueño · sin miniatura: verificación) |
+| 2026-11-28 (sáb) | 16:30 | Lincoln Created The Secret Service… The Day He Was Shot 🕶️ #shorts | youtube.com/shorts/lkiQvLvHIOs (lote/v20, se publica a las 16:30 con recordatorio programado) |
+| 2026-11-28 (sáb) | 18:30 | Who Stole Charlie Chaplin's Coffin? ⚰️ #shorts | youtube.com/shorts/24oAEf1RlmQ (lote/v13, se publica a las 18:30 con recordatorio programado · sin miniatura) |
 | 2026-11-28 (sáb) | 20:00 | Why He Hung A Giant Ball Inside His Skyscraper 🏙️ #shorts | youtube.com/shorts/b-YFFZyhGIU (v33, formato historia, con miniatura) |
 | 2026-11-28 (sáb) | 23:00 | Why He Made His Manhole Covers Round 🕳️ #shorts | youtube.com/shorts/BnrbuRRQn9I (v32, formato historia, con miniatura) |
 
@@ -84,3 +87,5 @@ Se suben igual que los del lote (privado + programado, con miniatura). No genera
 
 
 **Formato v3 desde el 26/11/2026 (aprobado por el dueño):** todos los Shorts nuevos siguen el FORMATO v3 «EXPLICACIÓN» de INSTRUCCIONES.md (modelo: v26 Pisa). El 27/11 ya tiene ocupado el hueco de la 01:00 (Pisa): ese día solo faltan 20:00 y 23:00.
+
+**28/11 — privados revisados (orden del dueño: "publícalos todos hoy"):** se publican los 3 del lote (v14, v20, v13). NO se publican W0lMAxRJNC4 (neumáticos, versión antigua) ni s8z1W3rHfis (ventanillas, versión antigua): son copias de SknGOsyv4Hw y EusHMH_q1Cs, ya públicos (contenido duplicado). La versión antigua de Pisa (972RBMjUwZw) ya no existe en Studio (da error al abrirla).
